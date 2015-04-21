@@ -1,0 +1,13 @@
+C:\Users\Dominik\Documents\GitHub\bsk\BSK\klient\bin\Debug\klient.exe.config
+C:\Users\Dominik\Documents\GitHub\bsk\BSK\klient\bin\Debug\klient.exe
+C:\Users\Dominik\Documents\GitHub\bsk\BSK\klient\bin\Debug\klient.pdb
+C:\Users\Dominik\Documents\GitHub\bsk\BSK\klient\obj\Debug\klient.csprojResolveAssemblyReference.cache
+C:\Users\Dominik\Documents\GitHub\bsk\BSK\klient\obj\Debug\MainWindow.baml
+C:\Users\Dominik\Documents\GitHub\bsk\BSK\klient\obj\Debug\MainWindow.g.cs
+C:\Users\Dominik\Documents\GitHub\bsk\BSK\klient\obj\Debug\App.g.cs
+C:\Users\Dominik\Documents\GitHub\bsk\BSK\klient\obj\Debug\klient_MarkupCompile.cache
+C:\Users\Dominik\Documents\GitHub\bsk\BSK\klient\obj\Debug\klient.g.resources
+C:\Users\Dominik\Documents\GitHub\bsk\BSK\klient\obj\Debug\klient.Properties.Resources.resources
+C:\Users\Dominik\Documents\GitHub\bsk\BSK\klient\obj\Debug\klient.csproj.GenerateResource.Cache
+C:\Users\Dominik\Documents\GitHub\bsk\BSK\klient\obj\Debug\klient.exe
+C:\Users\Dominik\Documents\GitHub\bsk\BSK\klient\obj\Debug\klient.pdb

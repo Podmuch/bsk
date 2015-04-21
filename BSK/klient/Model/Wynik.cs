@@ -11,13 +11,13 @@ namespace klient.Model
         public Prowadzacy ProwadzacyKtoryWstawilOcene;
         public Student StudentKtoryOtrzymalOcene;
         public SkladowaPrzedmiotu SkladowaPrzedmiotuZKtoregoOcenaZostalaWstawiona;
-        public float Wynik;
-        public Wynik(Prowadzacy prowadzacy, Student student, SkladowaPrzedmiotu skladowaPrzedmiotu, float wynik)
+        public float Ocena;
+        public Wynik(Prowadzacy prowadzacy, Student student, SkladowaPrzedmiotu skladowaPrzedmiotu, float ocena)
         {
             ProwadzacyKtoryWstawilOcene = prowadzacy;
             StudentKtoryOtrzymalOcene = student;
             SkladowaPrzedmiotuZKtoregoOcenaZostalaWstawiona = skladowaPrzedmiotu;
-            Wynik = wynik;
+            Ocena = ocena;
         }
     }
 }

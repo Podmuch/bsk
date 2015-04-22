@@ -1,0 +1,13 @@
+C:\Users\hairox\Documents\GitHub\bsk\BSK\klient\bin\Release\klient.exe.config
+C:\Users\hairox\Documents\GitHub\bsk\BSK\klient\bin\Release\klient.exe
+C:\Users\hairox\Documents\GitHub\bsk\BSK\klient\bin\Release\klient.pdb
+C:\Users\hairox\Documents\GitHub\bsk\BSK\klient\obj\Release\klient.csprojResolveAssemblyReference.cache
+C:\Users\hairox\Documents\GitHub\bsk\BSK\klient\obj\Release\MainWindow.baml
+C:\Users\hairox\Documents\GitHub\bsk\BSK\klient\obj\Release\MainWindow.g.cs
+C:\Users\hairox\Documents\GitHub\bsk\BSK\klient\obj\Release\App.g.cs
+C:\Users\hairox\Documents\GitHub\bsk\BSK\klient\obj\Release\klient_MarkupCompile.cache
+C:\Users\hairox\Documents\GitHub\bsk\BSK\klient\obj\Release\klient.g.resources
+C:\Users\hairox\Documents\GitHub\bsk\BSK\klient\obj\Release\klient.Properties.Resources.resources
+C:\Users\hairox\Documents\GitHub\bsk\BSK\klient\obj\Release\klient.csproj.GenerateResource.Cache
+C:\Users\hairox\Documents\GitHub\bsk\BSK\klient\obj\Release\klient.exe
+C:\Users\hairox\Documents\GitHub\bsk\BSK\klient\obj\Release\klient.pdb

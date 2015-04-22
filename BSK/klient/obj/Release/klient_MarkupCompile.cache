@@ -4,11 +4,11 @@
 winexe
 C#
 .cs
-C:\Users\hairox\Documents\GitHub\bsk\BSK\klient\obj\Debug\
+C:\Users\hairox\Documents\GitHub\bsk\BSK\klient\obj\Release\
 klient
 none
 false
-DEBUG;TRACE
+TRACE
 C:\Users\hairox\Documents\GitHub\bsk\BSK\klient\App.xaml
 11151548125
 

@@ -12,5 +12,10 @@
             <ComboBox Name="RoleBox" HorizontalAlignment="Left" Margin="169,203,0,0" VerticalAlignment="Top" Width="120"/>
             <Label Content="Role:" HorizontalAlignment="Left" Height="26" Margin="88,203,0,0" VerticalAlignment="Top" Width="62"/>
         </Grid>
+        <Grid Name="StudentWindow" Visibility="Hidden">
+            <Label Name="StudentNameLabel" HorizontalAlignment="Left" Margin="88,97,0,0" VerticalAlignment="Top"/>
+            <Label Name="StudentFornameLabel" HorizontalAlignment="Left" Margin="88,149,0,0" VerticalAlignment="Top"/>
+            <Button Name="StudentLogOutButton" Click="StudentLogOutButton_Click" Content="Log out" HorizontalAlignment="Left" Height="26" Margin="88,203,0,0" VerticalAlignment="Top" Width="62" />
+        </Grid>
     </Grid>
 </Window>

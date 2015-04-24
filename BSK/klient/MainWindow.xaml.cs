@@ -52,6 +52,7 @@ namespace klient
             {
                 RoleBox.Items.Add(row[0]);
             }
+            RoleBox.SelectedIndex = 0;
 #else
             RoleBox.Items.Add("Administrator");
             RoleBox.Items.Add("Student");
@@ -83,7 +84,11 @@ namespace klient
 #if !DEBUG
 
             DataTable table = Baza.pobierz_dane("select * from t_uzytkownicy where c_nazwa = '" + Login + "'");
-            if(table.Rows[0][4].ToString()==Password)
+            if (table.Rows.Count == 0)
+            {
+                MessageBox.Show("Błędne dane logowania");
+            }
+            else if(table.Rows[0][4].ToString()==Password)
             {
                 DataTable table2 = Baza.pobierz_dane(
                     "select * from t_przywileje join t_role on c_id_roli = c_Fk_id_roli where c_Fk_id_uzytkownika = '" + table.Rows[0][0] + "'" +
@@ -91,13 +96,20 @@ namespace klient
                     );
                 if (table2.Rows.Count > 0)
                 {
-                    LoginWindow.Visibility = System.Windows.Visibility.Hidden;
-                    StudentWindow.Visibility = System.Windows.Visibility.Visible;
-                    DataTable table3 = Baza.pobierz_dane(
-                        "select * from t_studenci join t_uzytkownicy on c_Nr_indeksu = c_Fk_nr_indeksu where c_Id_uzytkownika = '" + table2.Rows[0][1] + "'"
-                        );
-                    StudentNameLabel.Content = "Imię: " + table3.Rows[0][2];
-                    StudentFornameLabel.Content = "Nazwisko: " + table3.Rows[0][3];
+                    if(Rola.ToLower() == "student")
+                    {
+                        LoginWindow.Visibility = System.Windows.Visibility.Hidden;
+                        StudentWindow.Visibility = System.Windows.Visibility.Visible;
+                        DataTable table3 = Baza.pobierz_dane(
+                            "select * from t_studenci join t_uzytkownicy on c_Nr_indeksu = c_Fk_nr_indeksu where c_Id_uzytkownika = '" + table2.Rows[0][1] + "'"
+                            );
+                        StudentNameLabel.Content = "Imię: " + table3.Rows[0][2];
+                        StudentFornameLabel.Content = "Nazwisko: " + table3.Rows[0][3];
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Użytkownik nie posiada wybranej roli");
                 }
             }
             else

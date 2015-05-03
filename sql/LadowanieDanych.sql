@@ -1,13 +1,13 @@
 use szkola
 GO
 /* nale¿y zmieniæ œcie¿kê */
-BULK INSERT dbo.t_Prowadzacy FROM 'D:/bulki/prowadzacy.bulk' WITH (FIELDTERMINATOR=';')
-BULK INSERT dbo.t_Przedmioty FROM 'D:/bulki/przedmioty.bulk' WITH (FIELDTERMINATOR=';')
-BULK INSERT dbo.t_Studenci FROM 'D:/bulki/studenci.bulk' WITH (FIELDTERMINATOR=';')
-BULK INSERT dbo.t_Wyniki FROM 'D:/bulki/wyniki.bulk' WITH (FIELDTERMINATOR=';')
-BULK INSERT dbo.t_Rodzaje_skladowych FROM 'D:/bulki/rodzaje_skladowych.bulk' WITH (FIELDTERMINATOR=';')
-BULK INSERT dbo.t_Skladowe_przedmiotow FROM 'D:/bulki/skladowe_przedmiotow.bulk' WITH (FIELDTERMINATOR=';')
-BULK INSERT dbo.t_Prowadzacy_skladowych_czesci FROM 'D:/bulki/prowadzacy_skladowych_czesci.bulk' WITH (FIELDTERMINATOR=';')
+BULK INSERT dbo.t_Prowadzacy FROM 'C:/bulki/prowadzacy.bulk' WITH (FIELDTERMINATOR=';')
+BULK INSERT dbo.t_Przedmioty FROM 'C:/bulki/przedmioty.bulk' WITH (FIELDTERMINATOR=';')
+BULK INSERT dbo.t_Studenci FROM 'C:/bulki/studenci.bulk' WITH (FIELDTERMINATOR=';')
+BULK INSERT dbo.t_Wyniki FROM 'C:/bulki/wyniki.bulk' WITH (FIELDTERMINATOR=';')
+BULK INSERT dbo.t_Rodzaje_skladowych FROM 'C:/bulki/rodzaje_skladowych.bulk' WITH (FIELDTERMINATOR=';')
+BULK INSERT dbo.t_Skladowe_przedmiotow FROM 'C:/bulki/skladowe_przedmiotow.bulk' WITH (FIELDTERMINATOR=';')
+BULK INSERT dbo.t_Prowadzacy_skladowych_czesci FROM 'C:/bulki/prowadzacy_skladowych_czesci.bulk' WITH (FIELDTERMINATOR=';')
 
 /*
 	2 - user
@@ -42,24 +42,51 @@ INSERT INTO dbo.t_Akcje(c_akcja, c_tabela, c_status) values ('activate', 't_Akcj
 */
 
 INSERT INTO dbo.t_Uzytkownicy(c_Fk_nr_indeksu, c_Fk_id_pracownika, c_nazwa, c_haslo) 
-	values (550, NULL, 'student1', '04c72343945e2a6ef09221862164ac3a9e914373') -- haslo123
+	values (600, NULL, 'student1', '04c72343945e2a6ef09221862164ac3a9e914373') -- haslo123
 	
 INSERT INTO dbo.t_Uzytkownicy(c_Fk_nr_indeksu, c_Fk_id_pracownika, c_nazwa, c_haslo) 
 	values (NULL, 0, 'prowadzacy1', '04c72343945e2a6ef09221862164ac3a9e914373') -- haslo123
 	
 INSERT INTO dbo.t_Uzytkownicy(c_Fk_nr_indeksu, c_Fk_id_pracownika, c_nazwa, c_haslo) 
 	values (NULL, NULL, 'admin1', '04c72343945e2a6ef09221862164ac3a9e914373') -- haslo123
-	
-INSERT INTO dbo.t_Role(c_rola) values ('Administrator')
-INSERT INTO dbo.t_Role(c_rola) values ('Student')
-INSERT INTO dbo.t_Role(c_rola) values ('Prowadzacy')
-INSERT INTO dbo.t_Role(c_rola) values ('Planista')
 
-INSERT INTO dbo.t_Przywileje(c_Fk_id_roli, c_Fk_id_uzytkownika) 
-	values (2,1) 
+
+INSERT INTO dbo.t_Operacje(c_active, c_operacja) 
+	values (1, 'zmiana hasla')
+
+INSERT INTO dbo.t_Operacje(c_active, c_operacja) 
+	values (1, 'edycja imienia')
+
+INSERT INTO dbo.t_Operacje(c_active, c_operacja) 
+	values (1, 'edycja nazwiska')
+
+INSERT INTO dbo.t_Operacje(c_active, c_operacja) 
+	values (1, 'wyswietlenie listy studentów')
+
+INSERT INTO dbo.t_Operacje(c_active, c_operacja) 
+	values (1, 'zmiana grupy studenta')
+
 	
-INSERT INTO dbo.t_Przywileje(c_Fk_id_roli, c_Fk_id_uzytkownika) 
-	values (3,2) 
+INSERT INTO dbo.t_Role(c_nazwa, c_grupy_ktorych_dotyczy) 
+	values ('Administrator', 16)
+INSERT INTO dbo.t_Role(c_nazwa, c_grupy_ktorych_dotyczy) 
+	values ('Student', 2)
+INSERT INTO dbo.t_Role(c_nazwa, c_grupy_ktorych_dotyczy) 
+	values ('Prowadzacy', 4)
+INSERT INTO dbo.t_Role(c_nazwa, c_grupy_ktorych_dotyczy) 
+	values ('Planista', 8)
+
+INSERT INTO dbo.t_Przywileje(c_Fk_id_roli, c_id_operacji) 
+	values (1,1) 
 	
-INSERT INTO dbo.t_Przywileje(c_Fk_id_roli, c_Fk_id_uzytkownika) 
+INSERT INTO dbo.t_Przywileje(c_Fk_id_roli, c_id_operacji) 
+	values (1,2) 
+	
+INSERT INTO dbo.t_Przywileje(c_Fk_id_roli, c_id_operacji) 
 	values (1,3) 
+
+INSERT INTO dbo.t_Przywileje(c_Fk_id_roli, c_id_operacji) 
+	values (1,4) 
+
+INSERT INTO dbo.t_Przywileje(c_Fk_id_roli, c_id_operacji) 
+	values (1,5) 

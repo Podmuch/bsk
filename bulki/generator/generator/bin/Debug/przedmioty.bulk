@@ -1,0 +1,196 @@
+Ergonomia;10;60;2;38
+Geometria wykreślna I;5;60;1;46
+Historia architektury powszechnej I;10;60;6;33
+Matematyka I;10;15;2;26
+Materiałoznawstwo budowlane I;6;15;1;39
+Projektowanie architektoniczne I;6;15;4;12
+Rysunek architektoniczny, techniki graficzne;7;60;2;47
+Rysunek, malarstwo I;1;45;6;28
+Techniki komputerowe w projektowaniu I;1;15;1;33
+Budownictwo ogólne I;9;15;1;26
+Geometria wykreślna II;1;30;6;3
+Historia architektury powszechnej II;4;30;3;47
+Matematyka II;4;15;5;22
+Materiałoznawstwo budowlane II;1;30;5;44
+Mechanika budowli;5;15;1;30
+Praktyka budowlana ;6;15;6;18
+Projektowanie architektoniczne II;1;30;5;42
+Rysunek, malarstwo II;1;45;4;16
+Techniki komputerowe w projektowaniu II;1;45;5;8
+Budownictwo ogólne II;1;30;6;14
+Historia architektury powszechnej III;4;30;4;45
+Historia urbanistyki I;10;45;4;31
+Mechanika budowli - wstęp do konstrukcji II;4;15;2;38
+Projektowanie architektoniczne III;1;30;6;41
+Projektowanie ruralistyczne;5;45;1;49
+Rysunek, malarstwo III;7;45;6;34
+Teoria projektowania ruralistycznego;5;30;3;27
+Architektura współczesna I;6;45;5;48
+Budownictwo ogólne III;3;60;2;12
+Historia urbanistyki II;6;60;3;24
+Konstrukcje budowlane I;9;15;3;40
+Projektowanie architektoniczne IV;5;60;2;29
+Projektowanie urbanistyczne I;6;60;5;25
+Rysunek, malarstwo IV;5;60;4;33
+Rzeźba I;4;60;3;28
+Socjologia środowiska zbudowanego I;1;60;1;39
+Teoria projektowania architektonicznego I;5;30;4;7
+Akustyka architektoniczna i urbanistyczna I;2;45;2;22
+Budownictwo ogólne IV;2;45;1;30
+Fizyka budowli I;2;15;2;29
+Historia architektury polskiej I;1;60;1;30
+Inżynieria drogowa;9;30;4;16
+Kompozycja materiałowo-fakturowo-kolorystyczna w architekturze I;3;45;6;32
+Konstrukcje budowlane II;6;60;3;46
+Percepcja przestrzeni;10;45;3;8
+Projektowanie architektonicze V;4;15;3;41
+Projektowanie urbanistyczne II;8;30;3;41
+Rzeźba II;8;15;3;13
+Akustyka architektoniczna i urbanistyczna II;7;60;4;12
+Architektura krajobrazu;10;30;6;7
+Fizyka budowli II;7;15;6;24
+Historia architektury polskiej II;9;45;6;15
+Instalacje budowlane;2;15;4;23
+Inżynieria miejska (infrastruktura);8;15;2;47
+Organizacja procesów projektowych i procesów inwestycyjnych;4;15;6;25
+Projektowanie architektoniczne VI;10;45;4;9
+Ekonomika projektowania;2;45;1;34
+Etyka zawodu architekta;4;15;6;28
+Historia sztuki I;8;15;3;4
+Podstawy samorządności terytorialnej;3;60;6;5
+Prawodawstwo: Prawo budowlane;4;15;5;31
+Teoria regionalistyki, projektowanie i planowanie regionalne;5;15;4;25
+Algorytmy grafowe;6;45;6;37
+Algorytmy optymalizacji dyskretnej;6;30;2;47
+Algorytmy równoległe i rozproszone;7;45;3;14
+Języki programowania na platformie .NET;6;15;6;49
+Języki skryptowe i ich zastosowania;2;15;5;23
+Modelowanie Internetu;7;15;5;20
+Obliczenia kwantowe;3;60;1;46
+Podstawy kryptografii;1;60;5;6
+Podstawy programowania;1;45;1;38
+Programowanie lokalnych aplikacji .NET;3;15;1;11
+Realizacja aplikacji internetowych;1;45;3;23
+Synteza aplikacji biznesowych;7;45;4;8
+Systemy z bazą wiedzy;1;45;3;18
+Technologie internetowe w Javie;3;15;6;19
+Wybrane problemy algorytmiczne i technologiczne;9;30;4;36
+Zaawansowane techniki obiektowe;4;30;6;38
+Animacja Komputerowa;10;15;2;3
+Biblioteki Cyfrowe;2;15;5;46
+Dokumenty Cyfrowe;1;45;3;4
+Grafika Komputerowa;9;30;5;27
+Grafika Trójwymiarowa;3;60;6;19
+Hipertekst i Hipermedia;5;30;6;47
+Jakość Systemów Informacyjnych;7;45;6;41
+Języki Programowania;8;30;6;38
+Konstrukcja Kompilatorów;7;45;4;20
+Metody Reprezentacji Informacji;5;30;1;41
+Multimedia i Interfejsy;10;45;3;35
+Multimedialne Systemy Interaktywne;7;60;4;27
+Problemy i Zastosowania Informatyki;7;60;3;19
+Projektowanie gier komputerowych;4;30;2;27
+Przetwarzanie Języka Naturalnego;4;30;3;19
+Przetwarzanie Obrazów;3;60;2;34
+Rzeczywistość Wirtualna;7;45;3;9
+Systemy Graficzne;8;30;1;38
+Systemy Uczące się;9;15;3;46
+Sztuczna Inteligencja;1;15;2;40
+Widzenie Komputerowe;2;30;1;36
+Wirtualne Zespoły Robocze;9;45;3;8
+Wizualizacja Informacji;3;60;1;5
+Administrowanie systemami komputerowymi;1;45;4;4
+Aplikacje mobilne w środowisku JME;4;45;1;48
+Architektura komputerów;4;30;5;16
+Architektury Komputerów i Systemy Operacyjne;9;45;3;17
+Architektury Usług Internetowych;1;30;3;9
+Automatyzacja procesów biznesowych;10;45;2;42
+Bezpieczeństwo Systemów Komputerowych;8;30;6;7
+Biznes elektroniczny;3;30;6;40
+Inteligentne usługi informacyjne;3;15;5;10
+Jakość Oprogramowania;5;30;4;19
+Metodologia OpenSource;1;30;3;37
+Narzędzia i aplikacje Java EE;7;60;6;6
+Nowoczesne Technologie Przemysłowe;1;15;1;44
+Oprogramowanie Systemowe;5;60;1;20
+Platformy technologiczne;5;45;3;40
+Programowanie w internecie;9;60;5;5
+Projektowanie aplikacji internetowych;5;60;1;41
+Projektowanie Systemów Dedykowanych;10;30;6;36
+Przetwarzanie rozproszone;8;15;1;33
+Przetwarzanie Równoległe CUDA/CELL;2;30;2;46
+Przetwarzanie zespołowe;7;45;1;13
+Rozproszone bazy danych;2;15;3;20
+Serwisy internetowe .NET;9;30;5;37
+Systemy Agentowe;10;60;4;9
+Systemy Obliczeniowe Wysokiej Wydajności;7;30;2;31
+Wytwarzanie Aplikacji Internetowych;8;15;1;37
+Aplikacje Baz Danych;2;30;1;17
+Bazy Danych;8;30;2;47
+Bazy Wiedzy;5;30;2;4
+Bezpieczeństwo Systemów;8;30;6;24
+Eksploracja Danych;7;45;6;34
+Hurtownie Danych;6;15;5;47
+Integracja Systemów;6;60;1;42
+Inżynieria Oprogramowania;3;45;2;28
+Inżynieria Wymagań;7;30;1;39
+Modelowanie i Analiza Systemów;9;60;4;21
+Nierelacyjne Bazy Danych;1;60;2;29
+Projektowanie Systemów Obiektowych;7;30;3;10
+Społeczne Aspekty Informatyki;4;60;6;7
+Strategie Informatyzacji;2;30;2;1
+Struktury Baz Danych;7;15;5;44
+Systemy Operacyjne;5;30;5;44
+Warsztat Profesjonalisty;3;45;3;20
+Wykłady Monograficzne;4;15;4;33
+Zaawansowane Technologie Baz Danych;10;45;4;34
+Zapewnianie Jakości Oprogramowania;9;15;3;3
+Zarządzanie Ewolucją Oprogramowania;6;60;3;23
+Zarządzanie Projektem Informatycznym;7;15;3;7
+Zarządzanie Systemami Baz Danych;2;15;1;34
+Analiza ekonomiczna;2;45;1;34
+Financial analysis of business;1;30;3;49
+International Finance;10;60;6;10
+International Financial Management;2;30;2;30
+Modele ubezpieczeń zdrowotnych w Europie;9;45;1;24
+Modelowanie upadłości firm;9;45;3;31
+Niematerialna wartość firmy;10;30;2;11
+Rachunkowość finansowa;2;30;2;10
+Rachunkowość przedsiębiorstw;1;60;3;12
+Rachunkowość zarządcza;5;60;4;24
+Wprowadzenie do rachunkowości;8;30;1;25
+Podstawy marketingu;9;15;2;14
+Badania marketingowe;9;60;2;29
+Wprowadzenie do marketingu;10;45;6;21
+Reklama;4;30;5;41
+Marketing przemysłowy;2;15;5;33
+Marketing międzynarodowy;8;45;2;10
+Marketing usług;9;60;1;46
+Media a zachowania rynkowe konsumentów;10;45;5;24
+Marketing w turystyce;7;60;5;34
+Marketing relacji;10;60;3;15
+E-marketing;1;45;2;18
+Zarządzanie sprzedażą;1;15;6;5
+Analiza rynku;2;60;3;32
+Projektowanie systemów marketingu;6;30;5;9
+E-administracja;1;15;3;46
+Turystyka międzynarodowa;8;30;4;12
+Ekonometria;10;30;5;24
+Ekonomia;7;15;6;7
+Ekonomika przedsiębiorstwa;8;45;4;3
+Ekonomika środowiska;5;60;1;39
+Finansowanie działalności MSP;1;60;5;9
+Funkcjonowanie i rola MSP w gospodarce;4;15;6;13
+Integracja ekonomiczna Europy;1;45;4;40
+Introductory econometrics;6;30;4;31
+Makroekonomia;1;15;3;34
+Mikroekonomia;3;30;3;3
+Podstawy franchisingu;9;15;6;49
+Podstawy statystyki;8;45;5;12
+Polityka społeczna;10;45;6;37
+Prognozowanie gospodarcze;6;30;6;44
+Prognozowanie i symulacje;5;30;3;4
+Rachunek kosztów;5;15;4;15
+Rachunkowość;10;15;1;19
+Statystyka;4;30;4;31
+Ubezpieczenia gospodarcze;6;45;3;4

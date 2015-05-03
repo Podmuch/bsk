@@ -10,10 +10,14 @@ namespace klient.Model
     {
         public int Id;
         public string Nazwa;
-        public Rola(int id, string nazwa)
+        public bool Aktywna;
+        public int Grupy_ktorych_dotyczy;
+        public Rola(int id, string nazwa, bool aktywna, int grupy_ktorych_dotyczy)
         {
             Id = id;
             Nazwa = nazwa;
+            Aktywna = aktywna;
+            Grupy_ktorych_dotyczy = grupy_ktorych_dotyczy;
         }
     }
 }

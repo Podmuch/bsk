@@ -10,31 +10,35 @@ namespace klient.Model
     {
         public int Id;
         public int Wiek;
-        public string Login;
-        public string Haslo;
+        public int Staz;
+        //public string Login;
+        //public string Haslo;
+        public string Pesel;
         public string Imie;
         public string Nazwisko;
         public string Katedra;
         public string Tytul;
         public string Wydzial;
-        public List<Rola> Role;
-        public Prowadzacy(int id, int wiek, string login, string haslo, string imie, string nazwisko, string katedra, string tytul, string wydzial)
+        //public List<Rola> Role;
+        public Prowadzacy(int id, int wiek, int staz, string pesel, string imie, string nazwisko, string katedra, string tytul, string wydzial)
         {
             Id = id;
             Wiek = wiek;
-            Login = login;
-            Haslo = haslo;
+            Staz = staz;
+            Pesel = pesel;
+            //Login = login;
+            //Haslo = haslo;
             Imie = imie;
             Nazwisko = nazwisko;
             Katedra = katedra;
             Tytul = tytul;
             Wydzial = wydzial;
-            Role = new List<Rola>();
+            //Role = new List<Rola>();
         }
 
         public void DodajRole(List<Rola> role)
         {
-            Role.AddRange(role);
+            //Role.AddRange(role);
         }
     }
 }

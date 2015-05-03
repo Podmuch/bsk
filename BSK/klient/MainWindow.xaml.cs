@@ -24,11 +24,22 @@ namespace klient
     {
         private Rola zalogowanaRola;
         private List<Wynik> Wyniki;
-        private Prowadzacy Prowadzacy;
+        private List<Prowadzacy> Prowadzacy;
         private List<Przedmiot> Przedmioty;
-        private Student Student;
+        private List<Student> Studenci;
         private List<SkladowaPrzedmiotu> SkladowePrzedmiotow;
+
         private DataBase Baza;
+
+        private List<Uzytkownik> Uzytkownicy;
+        private List<Rola> Role;
+        private List<Przywilej> Przywileje;
+        private List<Operacja> Operacje;
+
+        private Student ZalogowanyStudent;
+        private Prowadzacy ZalogowanyProwadzacy;
+        private Rola aktualnaRola;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -38,28 +49,49 @@ namespace klient
         private void Init()
         {
             LoginWindow.Visibility = Visibility.Visible;
-            zalogowanaRola = null;
+            /*zalogowanaRola = null;
             Prowadzacy = null;
             Student = null;
             Wyniki = new List<Wynik>();
             Przedmioty = new List<Przedmiot>();
-            SkladowePrzedmiotow = new List<SkladowaPrzedmiotu>();
-#if !DEBUG
+            SkladowePrzedmiotow = new List<SkladowaPrzedmiotu>();*/
+//#if !DEBUG
             Baza = new DataBase("user123", "haslo123", "localhost", "szkola");
-            DataTable table = Baza.pobierz_dane("select c_rola from t_Role");
+            DataTable table = Baza.pobierz_dane("select c_nazwa from t_Role");
+
+            // REMOVE IT            
+            try
+            {
+                Prowadzacy = Baza.pobierzProwadzacych();
+                Przedmioty = Baza.pobierzPrzedmioty();
+                Studenci = Baza.pobierzStudentow();
+                SkladowePrzedmiotow = Baza.pobierzSkladowePrzedmiotow();
+                Wyniki = Baza.pobierzWyniki();
+
+                Uzytkownicy = Baza.pobierzUzytkownikow();
+                Role = Baza.pobierzRole();
+                Przywileje = Baza.pobierzPrzywileje();
+                Operacje = Baza.pobierzOperacje();
+            }
+            catch (Exception e )
+            {
+                MessageBox.Show("COs sie zjebalo: " + e.Message);
+            }
+            // REMOVE IT
+
             DataRowCollection rows = table.Rows;
             foreach(DataRow row in rows)
             {
                 RoleBox.Items.Add(row[0]);
             }
             RoleBox.SelectedIndex = 0;
-#else
+/*#else
             RoleBox.Items.Add("Administrator");
             RoleBox.Items.Add("Student");
             RoleBox.Items.Add("Prowadzący");
             RoleBox.Items.Add("Planista");
             RoleBox.SelectedIndex = 0;
-#endif  
+#endif*/  
         }
 
         private void LogIn_Click(object sender, RoutedEventArgs e)

@@ -3,6 +3,88 @@
   dslVersion="1.0.0.0"
   Id="b584a8fb-a582-4170-a89a-f4ce7193cd2c"
   name="BSK_diagram" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
+  <appliedStereotypesInternal>
+    <stereotypeInstance
+      Id="2378784b-d701-407b-a631-6c64d76b091b"
+      name="namespace"
+      profile="CSharpProfile">
+      <propertyInstances>
+        <stereotypeInstanceHasPropertyInstances
+          Id="d1a40f09-6de7-4600-9662-7e47060c9be5">
+          <propertyInstance
+            Id="b63bd2f7-5fe9-4133-b86c-10894347c06f"
+            name="BaseName" />
+        </stereotypeInstanceHasPropertyInstances>
+        <stereotypeInstanceHasPropertyInstances
+          Id="6773a89b-31e7-497e-a916-9a96ce98f737">
+          <propertyInstance
+            Id="75c50508-93a9-496b-a0d7-e59e2b427a86"
+            name="ClrAttributes" />
+        </stereotypeInstanceHasPropertyInstances>
+        <stereotypeInstanceHasPropertyInstances
+          Id="977cf449-92c1-4d76-980f-d48d89cce0fb">
+          <propertyInstance
+            Id="2d6fd521-066b-45b0-befb-f301f9378e45"
+            name="Usings" />
+        </stereotypeInstanceHasPropertyInstances>
+      </propertyInstances>
+    </stereotypeInstance>
+    <stereotypeInstance
+      Id="01221525-94d8-4522-8511-690a887ce03c"
+      name="TextTemplateBindings"
+      profile="TextTemplateBindings">
+      <propertyInstances>
+        <stereotypeInstanceHasPropertyInstances
+          Id="c11c801e-8054-44e6-afdc-30603007217a">
+          <propertyInstance
+            Id="e9784fc6-3530-426f-8d83-3670a69ebb8e"
+            name="Alias"
+            value="ClassTemplate|EnumTemplate|InterfaceTemplate|StructTemplate" />
+        </stereotypeInstanceHasPropertyInstances>
+        <stereotypeInstanceHasPropertyInstances
+          Id="9e3e98e0-d24b-4338-bb91-56fbdf29f469">
+          <propertyInstance
+            Id="ff1f043d-acd1-40c1-b9bb-76fa7feab305"
+            name="TemplateFilePath"
+            value="ClassTemplate=C:\PROGRAM FILES (X86)\MICROSOFT VISUAL STUDIO 12.0\COMMON7\IDE\EXTENSIONS\MICROSOFT\ARCHITECTURE TOOLS\EXTENSIBILITY\Templates\Text\ClassTemplate.t4|EnumTemplate=C:\PROGRAM FILES (X86)\MICROSOFT VISUAL STUDIO 12.0\COMMON7\IDE\EXTENSIONS\MICROSOFT\ARCHITECTURE TOOLS\EXTENSIBILITY\Templates\Text\EnumTemplate.t4|InterfaceTemplate=C:\PROGRAM FILES (X86)\MICROSOFT VISUAL STUDIO 12.0\COMMON7\IDE\EXTENSIONS\MICROSOFT\ARCHITECTURE TOOLS\EXTENSIBILITY\Templates\Text\InterfaceTemplate.t4|StructTemplate=C:\PROGRAM FILES (X86)\MICROSOFT VISUAL STUDIO 12.0\COMMON7\IDE\EXTENSIONS\MICROSOFT\ARCHITECTURE TOOLS\EXTENSIBILITY\Templates\Text\StructTemplate.t4" />
+        </stereotypeInstanceHasPropertyInstances>
+        <stereotypeInstanceHasPropertyInstances
+          Id="5d23644e-613d-46bd-9a0a-b1c9e2d2664a">
+          <propertyInstance
+            Id="927aaac7-1bd0-47de-9a25-485418547b4f"
+            name="ProjectPath"
+            value="ClassTemplate=..\BSK_diagramLib\BSK_diagramLib.csproj|EnumTemplate=..\BSK_diagramLib\BSK_diagramLib.csproj|InterfaceTemplate=..\BSK_diagramLib\BSK_diagramLib.csproj|StructTemplate=..\BSK_diagramLib\BSK_diagramLib.csproj" />
+        </stereotypeInstanceHasPropertyInstances>
+        <stereotypeInstanceHasPropertyInstances
+          Id="3e63f47f-64fc-442a-a34e-49085094906a">
+          <propertyInstance
+            Id="24aed1e9-97d6-4158-aa2d-5a5bee435f4c"
+            name="TargetDirectory"
+            value="ClassTemplate=GeneratedCode\{PackageStructure}|EnumTemplate=GeneratedCode\{PackageStructure}|InterfaceTemplate=GeneratedCode\{PackageStructure}|StructTemplate=GeneratedCode\{PackageStructure}" />
+        </stereotypeInstanceHasPropertyInstances>
+        <stereotypeInstanceHasPropertyInstances
+          Id="44efaf83-90ee-41be-bda1-41cfdbd3cfc8">
+          <propertyInstance
+            Id="f283f35e-c956-4939-9279-f21f4c84ed17"
+            name="TargetName"
+            value="ClassTemplate={Name}|EnumTemplate={Name}|InterfaceTemplate={Name}|StructTemplate={Name}" />
+        </stereotypeInstanceHasPropertyInstances>
+        <stereotypeInstanceHasPropertyInstances
+          Id="2dbc421d-88f0-4d12-94b7-82f50438fdc7">
+          <propertyInstance
+            Id="b9fd8fb1-18f9-4c2e-a10b-d5ada86493b2"
+            name="Overwrite"
+            value="ClassTemplate=True|EnumTemplate=True|InterfaceTemplate=True|StructTemplate=True" />
+        </stereotypeInstanceHasPropertyInstances>
+        <stereotypeInstanceHasPropertyInstances
+          Id="e5d12d38-587e-48e9-a44a-5f1834d5daab">
+          <propertyInstance
+            Id="8105b568-8655-4c5d-ab4b-de8d1cdd0e5a"
+            name="Parameters" />
+        </stereotypeInstanceHasPropertyInstances>
+      </propertyInstances>
+    </stereotypeInstance>
+  </appliedStereotypesInternal>
   <profileInstances>
     <packageHasProfileInstances
       Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b">
@@ -16,12 +98,24 @@
         Id="532ea607-fb19-44b8-8502-3351b05452be"
         name="StandardProfileL3" />
     </packageHasProfileInstances>
+    <packageHasProfileInstances
+      Id="346d7ce6-1a4a-48b4-b964-a87fec0f4e82">
+      <profileInstance
+        Id="096fc4ce-4a80-45e1-bcfb-3405707db011"
+        name="CSharpProfile" />
+    </packageHasProfileInstances>
+    <packageHasProfileInstances
+      Id="31b0a8af-0e50-4a63-9053-bfaae9893737">
+      <profileInstance
+        Id="88745ca6-ba33-472f-be70-5226dec0deb8"
+        name="TextTemplateBindings" />
+    </packageHasProfileInstances>
   </profileInstances>
   <packagedElements>
     <packageHasNamedElement>
       <class
         Id="7f6ae5cc-c57c-4b0c-b5dd-d340db3ce031"
-        name="Prowadzacy"
+        name="T_Prowadzacy"
         isAbstract="false"
         isLeaf="false"
         isActiveClass="false">
@@ -35,7 +129,7 @@
             isAbstract="false">
             <classMoniker
               Id="690a3c3f-337e-44ef-89a7-07b3d7c65fab"
-              LastKnownName="Wyniki"
+              LastKnownName="T_Wyniki"
               LastKnownLocation="BSK_diagram.uml" />
             <relationshipOwnedElementsInternal>
               <associationHasOwnedEnds>
@@ -100,7 +194,7 @@
             isAbstract="false">
             <classMoniker
               Id="d221a29a-2580-4433-95fc-4883b794e7d7"
-              LastKnownName="Przedmioty"
+              LastKnownName="T_Przedmioty"
               LastKnownLocation="BSK_diagram.uml" />
             <relationshipOwnedElementsInternal>
               <associationHasOwnedEnds>
@@ -152,7 +246,7 @@
             isAbstract="false">
             <classMoniker
               Id="118f513e-73c0-4345-96c5-54ce40c5fcff"
-              LastKnownName="Skladowe_Przedmiotu"
+              LastKnownName="T_Skladowe_Przedmiotu"
               LastKnownLocation="BSK_diagram.uml" />
             <relationshipOwnedElementsInternal>
               <associationHasOwnedEnds>
@@ -370,25 +464,13 @@
             isDerivedUnion="false"
             aggregation="None"
             isComposite="false" />
-          <property
-            Id="d68f98f6-7fd7-42df-aff3-4a10e6d5ea06"
-            name="haslo"
-            visibility="Private"
-            isLeaf="false"
-            isStatic="false"
-            isReadOnly="false"
-            isUnique="false"
-            isDerived="false"
-            isDerivedUnion="false"
-            aggregation="None"
-            isComposite="false" />
         </ownedAttributesInternal>
       </class>
     </packageHasNamedElement>
     <packageHasNamedElement>
       <class
         Id="d221a29a-2580-4433-95fc-4883b794e7d7"
-        name="Przedmioty"
+        name="T_Przedmioty"
         isAbstract="false"
         isLeaf="false"
         isActiveClass="false">
@@ -402,7 +484,7 @@
             isAbstract="false">
             <classMoniker
               Id="118f513e-73c0-4345-96c5-54ce40c5fcff"
-              LastKnownName="Skladowe_Przedmiotu"
+              LastKnownName="T_Skladowe_Przedmiotu"
               LastKnownLocation="BSK_diagram.uml" />
             <relationshipOwnedElementsInternal>
               <associationHasOwnedEnds>
@@ -512,7 +594,7 @@
     <packageHasNamedElement>
       <class
         Id="690a3c3f-337e-44ef-89a7-07b3d7c65fab"
-        name="Wyniki"
+        name="T_Wyniki"
         isAbstract="false"
         isLeaf="false"
         isActiveClass="false">
@@ -571,7 +653,7 @@
     <packageHasNamedElement>
       <class
         Id="bf987b75-e377-41ec-8f51-acb69c9af559"
-        name="Studenci"
+        name="T_Studenci"
         isAbstract="false"
         isLeaf="false"
         isActiveClass="false">
@@ -585,7 +667,7 @@
             isAbstract="false">
             <classMoniker
               Id="690a3c3f-337e-44ef-89a7-07b3d7c65fab"
-              LastKnownName="Wyniki"
+              LastKnownName="T_Wyniki"
               LastKnownLocation="BSK_diagram.uml" />
             <relationshipOwnedElementsInternal>
               <associationHasOwnedEnds>
@@ -791,18 +873,6 @@
             isDerivedUnion="false"
             aggregation="None"
             isComposite="false" />
-          <property
-            Id="8c181442-f8a6-424c-8833-faa5a5dd410d"
-            name="haslo"
-            visibility="Private"
-            isLeaf="false"
-            isStatic="false"
-            isReadOnly="false"
-            isUnique="false"
-            isDerived="false"
-            isDerivedUnion="false"
-            aggregation="None"
-            isComposite="false" />
         </ownedAttributesInternal>
       </class>
     </packageHasNamedElement>
@@ -844,7 +914,7 @@
     <packageHasNamedElement>
       <class
         Id="118f513e-73c0-4345-96c5-54ce40c5fcff"
-        name="Skladowe_Przedmiotu"
+        name="T_Skladowe_Przedmiotu"
         isAbstract="false"
         isLeaf="false"
         isActiveClass="false">
@@ -858,7 +928,7 @@
             isAbstract="false">
             <classMoniker
               Id="690a3c3f-337e-44ef-89a7-07b3d7c65fab"
-              LastKnownName="Wyniki"
+              LastKnownName="T_Wyniki"
               LastKnownLocation="BSK_diagram.uml" />
             <relationshipOwnedElementsInternal>
               <associationHasOwnedEnds>
@@ -1016,7 +1086,7 @@
     <packageHasNamedElement>
       <class
         Id="d63e4fa3-0c9e-4935-b7a2-0ad66fee631c"
-        name="Role"
+        name="T_Role"
         isAbstract="false"
         isLeaf="false"
         isActiveClass="false">
@@ -1111,6 +1181,67 @@
             isDerivedUnion="false"
             aggregation="None"
             isComposite="false" />
+        </ownedAttributesInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="a54ac872-b289-4d53-8049-88a6570d5736"
+        name="T_Przywileje"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="9dfb0d4f-32cf-4a40-8866-58cba44f7477"
+        name="T_Operacje"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <ownedAttributesInternal>
+          <property
+            Id="075260db-e169-4658-b8cd-f4752238ac9d"
+            name="id_operacji"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false" />
+          <property
+            Id="aecca775-9eeb-4646-b9cc-8cbdd1ac3bff"
+            name="operacja"
+            visibility="Private"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false" />
+          <property
+            Id="9f9b5bcc-b07f-43d2-8872-cbcbad73e919"
+            name="aktywna"
+            visibility="Private"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <type_NamedElement>
+              <primitiveTypeMoniker
+                Id="8943dc84-709e-4f62-b15a-a3273aa6f165"
+                LastKnownName="Boolean"
+                LastKnownLocation="BSK_diagram.uml" />
+            </type_NamedElement>
+          </property>
         </ownedAttributesInternal>
       </class>
     </packageHasNamedElement>

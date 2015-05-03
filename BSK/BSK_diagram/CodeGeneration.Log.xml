@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="file:///C:/PROGRAM FILES (X86)/MICROSOFT VISUAL STUDIO 12.0/COMMON7/IDE/EXTENSIONS/MICROSOFT/ARCHITECTURE TOOLS/EXTENSIBILITY/Logging/CodeGenLog.xslt"?>
+<Log xmlns="http://schemas.microsoft.com/VisualStudio/2010/CodeGen.RE.Log" Label="Code Generation/Text Transformation Log">
+  <MessageClass Name="Message" Label="Message" Option="Show informational messages" />
+  <MessageClass Name="Warning" Label="Warning" Option="Show warnings" />
+  <MessageClass Name="Error" Label="Error" Option="Show errors" />
+  <MessageClass Name="Property" Label="Property" Option="Show metadata" />
+  <MessageClass Name="Diagnostic" Label="Message" Option="Show diagnostic messages" />
+  <Message Timestamp="2015-05-03T16:58:26" Importance="High" Text="Code generation or text transformation started." />
+  <Message Timestamp="2015-05-03T16:58:26" Importance="Diagnostic" Text="Name = ClassTemplate" />
+  <Message Timestamp="2015-05-03T16:58:26" Importance="Diagnostic" Text="Overwrite = True" />
+  <Message Timestamp="2015-05-03T16:58:26" Importance="Diagnostic" Text="ProjectPath = ..\BSK_diagramLib\BSK_diagramLib.csproj" />
+  <Message Timestamp="2015-05-03T16:58:26" Importance="Diagnostic" Text="TargetDirectory = GeneratedCode\{PackageStructure}" />
+  <Message Timestamp="2015-05-03T16:58:26" Importance="Diagnostic" Text="TargetName = {Name}" />
+  <Message Timestamp="2015-05-03T16:58:26" Importance="Diagnostic" Text="TemplateFilePath = C:\PROGRAM FILES (X86)\MICROSOFT VISUAL STUDIO 12.0\COMMON7\IDE\EXTENSIONS\MICROSOFT\ARCHITECTURE TOOLS\EXTENSIBILITY\Templates\Text\ClassTemplate.t4" />
+  <Message Timestamp="2015-05-03T16:58:26" Importance="Diagnostic" Text="ResolvedTemplateFilePath = C:\PROGRAM FILES (X86)\MICROSOFT VISUAL STUDIO 12.0\COMMON7\IDE\EXTENSIONS\MICROSOFT\ARCHITECTURE TOOLS\EXTENSIBILITY\Templates\Text\ClassTemplate.t4" />
+  <Message Timestamp="2015-05-03T16:58:26" Importance="Medium" Text="BSK_diagram's Text Template Binding: 'ClassTemplate' will apply ClassTemplate.t4 to: 'BSK_diagram::T_Prowadzacy' -  (Class), 'BSK_diagram::T_Przedmioty' -  (Class), 'BSK_diagram::T_Wyniki' -  (Class), 'BSK_diagram::T_Studenci' -  (Class), 'BSK_diagram::Prowadzacy_Skladowych_Przedmiotu' -  (Class), 'BSK_diagram::T_Skladowe_Przedmiotu' -  (Class), 'BSK_diagram::Posiadacze Ról' -  (Class), 'BSK_diagram::T_Role' -  (Class), 'BSK_diagram::T_Przywileje' -  (Class), 'BSK_diagram::T_Operacje' -  (Class) " />
+  <Message Timestamp="2015-05-03T16:58:31" Importance="Medium" Text="Project Added: E:\git\bsk\BSK\BSK_diagramLib\BSK_diagramLib.csproj" />
+  <Message Timestamp="2015-05-03T16:58:31" Importance="Medium" Text="'BSK_diagram::T_Prowadzacy' -  (Class) : success (file created) - E:\git\bsk\BSK\BSK_diagramLib\GeneratedCode\T_Prowadzacy.cs" />
+  <Message Timestamp="2015-05-03T16:58:32" Importance="Medium" Text="'BSK_diagram::T_Przedmioty' -  (Class) : success (file created) - E:\git\bsk\BSK\BSK_diagramLib\GeneratedCode\T_Przedmioty.cs" />
+  <Message Timestamp="2015-05-03T16:58:32" Importance="Medium" Text="'BSK_diagram::T_Wyniki' -  (Class) : success (file created) - E:\git\bsk\BSK\BSK_diagramLib\GeneratedCode\T_Wyniki.cs" />
+  <Message Timestamp="2015-05-03T16:58:33" Importance="Medium" Text="'BSK_diagram::T_Studenci' -  (Class) : success (file created) - E:\git\bsk\BSK\BSK_diagramLib\GeneratedCode\T_Studenci.cs" />
+  <Message Timestamp="2015-05-03T16:58:33" Importance="Medium" Text="'BSK_diagram::Prowadzacy_Skladowych_Przedmiotu' -  (Class) : success (file created) - E:\git\bsk\BSK\BSK_diagramLib\GeneratedCode\Prowadzacy_Skladowych_Przedmiotu.cs" />
+  <Message Timestamp="2015-05-03T16:58:34" Importance="Medium" Text="'BSK_diagram::T_Skladowe_Przedmiotu' -  (Class) : success (file created) - E:\git\bsk\BSK\BSK_diagramLib\GeneratedCode\T_Skladowe_Przedmiotu.cs" />
+  <Message Timestamp="2015-05-03T16:58:34" Importance="Medium" Text="'BSK_diagram::Posiadacze Ról' -  (Class) : success (file created) - E:\git\bsk\BSK\BSK_diagramLib\GeneratedCode\Posiadacze Ról.cs" />
+  <Message Timestamp="2015-05-03T16:58:34" Importance="Medium" Text="'BSK_diagram::T_Role' -  (Class) : success (file created) - E:\git\bsk\BSK\BSK_diagramLib\GeneratedCode\T_Role.cs" />
+  <Message Timestamp="2015-05-03T16:58:35" Importance="Medium" Text="'BSK_diagram::T_Przywileje' -  (Class) : success (file created) - E:\git\bsk\BSK\BSK_diagramLib\GeneratedCode\T_Przywileje.cs" />
+  <Message Timestamp="2015-05-03T16:58:35" Importance="Medium" Text="'BSK_diagram::T_Operacje' -  (Class) : success (file created) - E:\git\bsk\BSK\BSK_diagramLib\GeneratedCode\T_Operacje.cs" />
+  <Message Timestamp="2015-05-03T16:58:35" Importance="Diagnostic" Text="Name = StructTemplate" />
+  <Message Timestamp="2015-05-03T16:58:35" Importance="Diagnostic" Text="Overwrite = True" />
+  <Message Timestamp="2015-05-03T16:58:35" Importance="Diagnostic" Text="ProjectPath = ..\BSK_diagramLib\BSK_diagramLib.csproj" />
+  <Message Timestamp="2015-05-03T16:58:35" Importance="Diagnostic" Text="TargetDirectory = GeneratedCode\{PackageStructure}" />
+  <Message Timestamp="2015-05-03T16:58:35" Importance="Diagnostic" Text="TargetName = {Name}" />
+  <Message Timestamp="2015-05-03T16:58:35" Importance="Diagnostic" Text="TemplateFilePath = C:\PROGRAM FILES (X86)\MICROSOFT VISUAL STUDIO 12.0\COMMON7\IDE\EXTENSIONS\MICROSOFT\ARCHITECTURE TOOLS\EXTENSIBILITY\Templates\Text\StructTemplate.t4" />
+  <Message Timestamp="2015-05-03T16:58:35" Importance="Diagnostic" Text="ResolvedTemplateFilePath = C:\PROGRAM FILES (X86)\MICROSOFT VISUAL STUDIO 12.0\COMMON7\IDE\EXTENSIONS\MICROSOFT\ARCHITECTURE TOOLS\EXTENSIBILITY\Templates\Text\StructTemplate.t4" />
+  <Message Timestamp="2015-05-03T16:58:35" Importance="Medium" Text="BSK_diagram's Text Template Binding: 'StructTemplate' will apply StructTemplate.t4 to: 'BSK_diagram::T_Prowadzacy' -  (Class), 'BSK_diagram::T_Przedmioty' -  (Class), 'BSK_diagram::T_Wyniki' -  (Class), 'BSK_diagram::T_Studenci' -  (Class), 'BSK_diagram::Prowadzacy_Skladowych_Przedmiotu' -  (Class), 'BSK_diagram::T_Skladowe_Przedmiotu' -  (Class), 'BSK_diagram::Posiadacze Ról' -  (Class), 'BSK_diagram::T_Role' -  (Class), 'BSK_diagram::T_Przywileje' -  (Class), 'BSK_diagram::T_Operacje' -  (Class) " />
+  <Message Timestamp="2015-05-03T16:58:36" Importance="Diagnostic" Text="'BSK_diagram::T_Prowadzacy' -  (Class): no file generated because the 'AppliesToElement' method of the template 'StructTemplate.t4' evaluated to false." />
+  <Message Timestamp="2015-05-03T16:58:36" Importance="Diagnostic" Text="'BSK_diagram::T_Przedmioty' -  (Class): no file generated because the 'AppliesToElement' method of the template 'StructTemplate.t4' evaluated to false." />
+  <Message Timestamp="2015-05-03T16:58:36" Importance="Diagnostic" Text="'BSK_diagram::T_Wyniki' -  (Class): no file generated because the 'AppliesToElement' method of the template 'StructTemplate.t4' evaluated to false." />
+  <Message Timestamp="2015-05-03T16:58:36" Importance="Diagnostic" Text="'BSK_diagram::T_Studenci' -  (Class): no file generated because the 'AppliesToElement' method of the template 'StructTemplate.t4' evaluated to false." />
+  <Message Timestamp="2015-05-03T16:58:36" Importance="Diagnostic" Text="'BSK_diagram::Prowadzacy_Skladowych_Przedmiotu' -  (Class): no file generated because the 'AppliesToElement' method of the template 'StructTemplate.t4' evaluated to false." />
+  <Message Timestamp="2015-05-03T16:58:36" Importance="Diagnostic" Text="'BSK_diagram::T_Skladowe_Przedmiotu' -  (Class): no file generated because the 'AppliesToElement' method of the template 'StructTemplate.t4' evaluated to false." />
+  <Message Timestamp="2015-05-03T16:58:36" Importance="Diagnostic" Text="'BSK_diagram::Posiadacze Ról' -  (Class): no file generated because the 'AppliesToElement' method of the template 'StructTemplate.t4' evaluated to false." />
+  <Message Timestamp="2015-05-03T16:58:36" Importance="Diagnostic" Text="'BSK_diagram::T_Role' -  (Class): no file generated because the 'AppliesToElement' method of the template 'StructTemplate.t4' evaluated to false." />
+  <Message Timestamp="2015-05-03T16:58:36" Importance="Diagnostic" Text="'BSK_diagram::T_Przywileje' -  (Class): no file generated because the 'AppliesToElement' method of the template 'StructTemplate.t4' evaluated to false." />
+  <Message Timestamp="2015-05-03T16:58:36" Importance="Diagnostic" Text="'BSK_diagram::T_Operacje' -  (Class): no file generated because the 'AppliesToElement' method of the template 'StructTemplate.t4' evaluated to false." />
+  <Message Timestamp="2015-05-03T16:58:36" Importance="Diagnostic" Text="The selection included 10 elements which were not bound to a template." />
+  <Message Timestamp="2015-05-03T16:58:36" Importance="Diagnostic" Text="'BSK_diagram' -  (ModelStoreModel): no bound template." />
+  <Message Timestamp="2015-05-03T16:58:36" Importance="Diagnostic" Text="'BSK_diagram::' -  (Association): no bound template." />
+  <Message Timestamp="2015-05-03T16:58:36" Importance="Diagnostic" Text="'BSK_diagram::' -  (Association): no bound template." />
+  <Message Timestamp="2015-05-03T16:58:36" Importance="Diagnostic" Text="'BSK_diagram::' -  (Association): no bound template." />
+  <Message Timestamp="2015-05-03T16:58:36" Importance="Diagnostic" Text="'BSK_diagram::' -  (Association): no bound template." />
+  <Message Timestamp="2015-05-03T16:58:36" Importance="Diagnostic" Text="'BSK_diagram::' -  (Association): no bound template." />
+  <Message Timestamp="2015-05-03T16:58:36" Importance="Diagnostic" Text="'BSK_diagram::' -  (Association): no bound template." />
+  <Message Timestamp="2015-05-03T16:58:36" Importance="Diagnostic" Text="'BSK_diagram::' -  (Association): no bound template." />
+  <Message Timestamp="2015-05-03T16:58:36" Importance="Diagnostic" Text="'BSK_diagram::' -  (Association): no bound template." />
+  <Message Timestamp="2015-05-03T16:58:36" Importance="Diagnostic" Text="'BSK_diagram::' -  (Association): no bound template." />
+  <Message Timestamp="2015-05-03T16:58:36" Importance="High" Text="Code generation complete. Errors: 0. Warnings: 0." />
+</Log>

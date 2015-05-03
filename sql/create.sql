@@ -79,39 +79,42 @@ CREATE TABLE t_Prowadzacy_skladowych_czesci
 );
 GO
 
-/*CREATE TABLE t_Uzytkownicy
+CREATE TABLE t_Uzytkownicy
 (
-	c_Id_uzytkownika integer IDENTITY(1,1) PRIMARY KEY, 
+	c_id_uzytkownika integer IDENTITY(1,1) PRIMARY KEY, 
 	c_Fk_nr_indeksu integer REFERENCES t_Studenci(c_Nr_indeksu),
 	c_Fk_id_pracownika integer REFERENCES t_Prowadzacy(c_Id_pracownika),
 	c_nazwa varchar(30) not null,
 	c_grupa integer not null default 1,  -- do jakiej grupy nalezy uzytkownik
-	c_status integer not null default 1, -- czy user jest aktywny/usuniety/wylaczony itd
+	--c_status integer not null default 1, -- czy user jest aktywny/usuniety/wylaczony itd
 	c_haslo varchar(50) not null, -- sha1			
 );
 
-CREATE TABLE t_Akcje
+CREATE TABLE t_Operacje
 (
-	c_akcja varchar(20) not null, -- read/write/delete/passwd etc	
-	c_tabela varchar(30) not null, -- nazwa tabeli, której dotyczy przywilej
-	c_status integer not null default 1,  -- czy rola jest aktywna/usunieta/wylaczona itd
-	primary key (c_tabela, c_akcja)
+	c_id_operacji integer IDENTITY(1,1) PRIMARY KEY, 
+	c_active bit not null default 1,
+	c_operacja varchar(50) not null, -- zmiana has³a, edycja danych itd		
 );
+
+CREATE TABLE t_Role
+(
+	c_id_roli integer IDENTITY(1,1) PRIMARY KEY,
+	c_nazwa varchar(50) not null,
+	c_aktywna bit not null default 1,
+	c_grupy_ktorych_dotyczy integer not null default 1, -- wielokrotnosci dwójki
+)
 
 CREATE TABLE t_Przywileje
 (
-	c_rola varchar (10) not null, -- czego dotyczy przywilej grupa/user/self
-	c_powiazane_id integer not null default 0, -- id grupy lub usera (jeœli typ ustawiony na group/user)
-	c_akcja varchar(20) not null,  -- read/write/delete/passwd etc
-	c_typ varchar(20) not null, -- do czego odnosi siê rola - wiersz w tabeli/cala tabela
-	c_tabela varchar(30) not null, -- nazwa tabeli, której dotyczy przywilej
-	c_id_w_tabeli integer not null default 0, -- id wiersza w przypadku gdy przywilej odnosi siê do jednego wiersza
-	primary key (c_rola, c_powiazane_id, c_akcja, c_typ, c_tabela, c_id_w_tabeli)		
+	c_Fk_id_roli integer REFERENCES t_Role(c_id_roli),
+	c_id_operacji integer REFERENCES t_Operacje(c_id_operacji),
+	c_aktywny bit not null default 1,
 )
 
-*/
 
-CREATE TABLE t_Uzytkownicy
+
+/*CREATE TABLE t_Uzytkownicy
 (
 	c_Id_uzytkownika integer IDENTITY(1,1) PRIMARY KEY, 
 	c_Fk_nr_indeksu integer REFERENCES t_Studenci(c_Nr_indeksu),
@@ -130,4 +133,4 @@ CREATE TABLE t_Przywileje
 (
 	c_Fk_id_roli integer NOT NULL REFERENCES t_Role(c_id_roli),
 	c_Fk_id_uzytkownika integer NOT NULL REFERENCES t_Uzytkownicy(c_Id_uzytkownika),
-)
+)*/

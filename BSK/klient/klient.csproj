@@ -68,11 +68,14 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model\Operacja.cs" />
     <Compile Include="Model\Prowadzacy.cs" />
     <Compile Include="Model\Przedmiot.cs" />
+    <Compile Include="Model\Przywilej.cs" />
     <Compile Include="Model\Rola.cs" />
     <Compile Include="Model\SkladowaPrzedmiotu.cs" />
     <Compile Include="Model\Student.cs" />
+    <Compile Include="Model\Uzytkownik.cs" />
     <Compile Include="Model\Wynik.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>

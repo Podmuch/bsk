@@ -10,14 +10,20 @@ namespace klient.Model
     {
         public int Id;
         public string Nazwa;
-        public Przedmiot PrzedmiotMacierzysty;
-        public Prowadzacy OsobaOdpowiedzialna;
-        public SkladowaPrzedmiotu(int id, string nazwa, Przedmiot przedmiot, Prowadzacy odpowiedzialny)
+        //public Przedmiot PrzedmiotMacierzysty;
+        //public Prowadzacy OsobaOdpowiedzialna;
+        public int IloscGodzin;
+        public string Przedmiot;
+        public int IdOdpowiedzialnego;
+        public SkladowaPrzedmiotu(int id, string nazwa, int iloscGodzin, string przedmiot, int idOdpowiedzialnego)
         {
             Id = id;
             Nazwa = nazwa;
-            PrzedmiotMacierzysty = przedmiot;
-            OsobaOdpowiedzialna = odpowiedzialny;
+            //PrzedmiotMacierzysty = przedmiot;
+            //OsobaOdpowiedzialna = odpowiedzialny;
+            IloscGodzin = iloscGodzin;
+            Przedmiot = przedmiot;
+            IdOdpowiedzialnego = idOdpowiedzialnego;
         }
     }
 }

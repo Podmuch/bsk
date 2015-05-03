@@ -1,0 +1,68 @@
+c:\users\dominik\documents\visual studio 2013\Projects\generator\generator\bin\Debug\generator.exe.config
+c:\users\dominik\documents\visual studio 2013\Projects\generator\generator\bin\Debug\generator.exe
+c:\users\dominik\documents\visual studio 2013\Projects\generator\generator\bin\Debug\generator.pdb
+c:\users\dominik\documents\visual studio 2013\Projects\generator\generator\obj\Debug\generator.csprojResolveAssemblyReference.cache
+c:\users\dominik\documents\visual studio 2013\Projects\generator\generator\obj\Debug\MainWindow.baml
+c:\users\dominik\documents\visual studio 2013\Projects\generator\generator\obj\Debug\MainWindow.g.cs
+c:\users\dominik\documents\visual studio 2013\Projects\generator\generator\obj\Debug\App.g.cs
+c:\users\dominik\documents\visual studio 2013\Projects\generator\generator\obj\Debug\generator_MarkupCompile.cache
+c:\users\dominik\documents\visual studio 2013\Projects\generator\generator\obj\Debug\generator.g.resources
+c:\users\dominik\documents\visual studio 2013\Projects\generator\generator\obj\Debug\generator.Properties.Resources.resources
+c:\users\dominik\documents\visual studio 2013\Projects\generator\generator\obj\Debug\generator.csproj.GenerateResource.Cache
+c:\users\dominik\documents\visual studio 2013\Projects\generator\generator\obj\Debug\generator.exe
+c:\users\dominik\documents\visual studio 2013\Projects\generator\generator\obj\Debug\generator.pdb
+C:\Users\Dominik\Desktop\hd_generator\generator\generator\bin\Debug\generator.exe.config
+C:\Users\Dominik\Desktop\hd_generator\generator\generator\obj\Debug\generator.exe
+C:\Users\Dominik\Desktop\hd_generator\generator\generator\obj\Debug\generator.pdb
+C:\Users\Dominik\Desktop\hd_generator\generator\generator\bin\Debug\generator.exe
+C:\Users\Dominik\Desktop\hd_generator\generator\generator\bin\Debug\generator.pdb
+C:\Users\Dominik\Desktop\hd_generator\generator\generator\obj\Debug\generator.csprojResolveAssemblyReference.cache
+C:\Users\Dominik\Desktop\hd_generator\generator\generator\obj\Debug\MainWindow.baml
+C:\Users\Dominik\Desktop\hd_generator\generator\generator\obj\Debug\MainWindow.g.cs
+C:\Users\Dominik\Desktop\hd_generator\generator\generator\obj\Debug\App.g.cs
+C:\Users\Dominik\Desktop\hd_generator\generator\generator\obj\Debug\generator_MarkupCompile.cache
+C:\Users\Dominik\Desktop\hd_generator\generator\generator\obj\Debug\generator.g.resources
+C:\Users\Dominik\Desktop\hd_generator\generator\generator\obj\Debug\generator.Properties.Resources.resources
+C:\Users\Dominik\Desktop\hd_generator\generator\generator\obj\Debug\generator.csproj.GenerateResource.Cache
+D:\s5\HURTOWNIE_DANYCH\hd_generator\hd_generator\generator\generator\bin\Debug\generator.exe.config
+D:\s5\HURTOWNIE_DANYCH\hd_generator\hd_generator\generator\generator\obj\Debug\generator.exe
+D:\s5\HURTOWNIE_DANYCH\hd_generator\hd_generator\generator\generator\obj\Debug\generator.pdb
+D:\s5\HURTOWNIE_DANYCH\hd_generator\hd_generator\generator\generator\bin\Debug\generator.exe
+D:\s5\HURTOWNIE_DANYCH\hd_generator\hd_generator\generator\generator\bin\Debug\generator.pdb
+D:\s5\HURTOWNIE_DANYCH\hd_generator\hd_generator\generator\generator\obj\Debug\generator.csprojResolveAssemblyReference.cache
+D:\s5\HURTOWNIE_DANYCH\hd_generator\hd_generator\generator\generator\obj\Debug\MainWindow.baml
+D:\s5\HURTOWNIE_DANYCH\hd_generator\hd_generator\generator\generator\obj\Debug\MainWindow.g.cs
+D:\s5\HURTOWNIE_DANYCH\hd_generator\hd_generator\generator\generator\obj\Debug\App.g.cs
+D:\s5\HURTOWNIE_DANYCH\hd_generator\hd_generator\generator\generator\obj\Debug\generator_MarkupCompile.cache
+D:\s5\HURTOWNIE_DANYCH\hd_generator\hd_generator\generator\generator\obj\Debug\generator.g.resources
+D:\s5\HURTOWNIE_DANYCH\hd_generator\hd_generator\generator\generator\obj\Debug\generator.Properties.Resources.resources
+D:\s5\HURTOWNIE_DANYCH\hd_generator\hd_generator\generator\generator\obj\Debug\generator.csproj.GenerateResource.Cache
+C:\Users\Dominik\Desktop\hd_generator\hd_generator\generator\generator\bin\Debug\generator.exe.config
+C:\Users\Dominik\Desktop\hd_generator\hd_generator\generator\generator\obj\Debug\generator.exe
+C:\Users\Dominik\Desktop\hd_generator\hd_generator\generator\generator\obj\Debug\generator.pdb
+C:\Users\Dominik\Desktop\Infromatyka Semestr V\Hurtownie Danych\Projekt\generator\hd_generator\hd_generator\generator\generator\bin\Debug\generator.exe.config
+C:\Users\Dominik\Desktop\Infromatyka Semestr V\Hurtownie Danych\Projekt\generator\hd_generator\hd_generator\generator\generator\obj\Debug\generator.exe
+C:\Users\Dominik\Desktop\Infromatyka Semestr V\Hurtownie Danych\Projekt\generator\hd_generator\hd_generator\generator\generator\obj\Debug\generator.pdb
+C:\Users\Dominik\Desktop\Infromatyka Semestr V\Hurtownie Danych\Projekt\generator\hd_generator\hd_generator\generator\generator\bin\Debug\generator.exe
+C:\Users\Dominik\Desktop\Infromatyka Semestr V\Hurtownie Danych\Projekt\generator\hd_generator\hd_generator\generator\generator\bin\Debug\generator.pdb
+C:\Users\Dominik\Desktop\Infromatyka Semestr V\Hurtownie Danych\Projekt\generator\hd_generator\hd_generator\generator\generator\obj\Debug\generator.csprojResolveAssemblyReference.cache
+C:\Users\Dominik\Desktop\Infromatyka Semestr V\Hurtownie Danych\Projekt\generator\hd_generator\hd_generator\generator\generator\obj\Debug\MainWindow.baml
+C:\Users\Dominik\Desktop\Infromatyka Semestr V\Hurtownie Danych\Projekt\generator\hd_generator\hd_generator\generator\generator\obj\Debug\MainWindow.g.cs
+C:\Users\Dominik\Desktop\Infromatyka Semestr V\Hurtownie Danych\Projekt\generator\hd_generator\hd_generator\generator\generator\obj\Debug\App.g.cs
+C:\Users\Dominik\Desktop\Infromatyka Semestr V\Hurtownie Danych\Projekt\generator\hd_generator\hd_generator\generator\generator\obj\Debug\generator_MarkupCompile.cache
+C:\Users\Dominik\Desktop\Infromatyka Semestr V\Hurtownie Danych\Projekt\generator\hd_generator\hd_generator\generator\generator\obj\Debug\generator.g.resources
+C:\Users\Dominik\Desktop\Infromatyka Semestr V\Hurtownie Danych\Projekt\generator\hd_generator\hd_generator\generator\generator\obj\Debug\generator.Properties.Resources.resources
+C:\Users\Dominik\Desktop\Infromatyka Semestr V\Hurtownie Danych\Projekt\generator\hd_generator\hd_generator\generator\generator\obj\Debug\generator.csproj.GenerateResource.Cache
+C:\hurtownie\bulki\generator\generator\bin\Debug\generator.exe.config
+C:\hurtownie\bulki\generator\generator\obj\Debug\generator.exe
+C:\hurtownie\bulki\generator\generator\obj\Debug\generator.pdb
+C:\hurtownie\bulki\generator\generator\bin\Debug\generator.exe
+C:\hurtownie\bulki\generator\generator\bin\Debug\generator.pdb
+C:\hurtownie\bulki\generator\generator\obj\Debug\generator.csprojResolveAssemblyReference.cache
+C:\hurtownie\bulki\generator\generator\obj\Debug\MainWindow.baml
+C:\hurtownie\bulki\generator\generator\obj\Debug\MainWindow.g.cs
+C:\hurtownie\bulki\generator\generator\obj\Debug\App.g.cs
+C:\hurtownie\bulki\generator\generator\obj\Debug\generator_MarkupCompile.cache
+C:\hurtownie\bulki\generator\generator\obj\Debug\generator.g.resources
+C:\hurtownie\bulki\generator\generator\obj\Debug\generator.Properties.Resources.resources
+C:\hurtownie\bulki\generator\generator\obj\Debug\generator.csproj.GenerateResource.Cache

@@ -1,13 +1,13 @@
 use szkola
 GO
 /* nale¿y zmieniæ œcie¿kê */
-BULK INSERT dbo.t_Prowadzacy FROM 'C:/bulki/prowadzacy.bulk' WITH (FIELDTERMINATOR=';')
-BULK INSERT dbo.t_Przedmioty FROM 'C:/bulki/przedmioty.bulk' WITH (FIELDTERMINATOR=';')
-BULK INSERT dbo.t_Studenci FROM 'C:/bulki/studenci.bulk' WITH (FIELDTERMINATOR=';')
-BULK INSERT dbo.t_Wyniki FROM 'C:/bulki/wyniki.bulk' WITH (FIELDTERMINATOR=';')
-BULK INSERT dbo.t_Rodzaje_skladowych FROM 'C:/bulki/rodzaje_skladowych.bulk' WITH (FIELDTERMINATOR=';')
-BULK INSERT dbo.t_Skladowe_przedmiotow FROM 'C:/bulki/skladowe_przedmiotow.bulk' WITH (FIELDTERMINATOR=';')
-BULK INSERT dbo.t_Prowadzacy_skladowych_czesci FROM 'C:/bulki/prowadzacy_skladowych_czesci.bulk' WITH (FIELDTERMINATOR=';')
+BULK INSERT dbo.t_Prowadzacy FROM 'C:/Users/Dominik/Documents/GitHub/bsk/bulki/prowadzacy.bulk' WITH (FIELDTERMINATOR=';')
+BULK INSERT dbo.t_Przedmioty FROM 'C:/Users/Dominik/Documents/GitHub/bsk/bulki/przedmioty.bulk' WITH (FIELDTERMINATOR=';')
+BULK INSERT dbo.t_Studenci FROM 'C:/Users/Dominik/Documents/GitHub/bsk/bulki/studenci.bulk' WITH (FIELDTERMINATOR=';')
+BULK INSERT dbo.t_Wyniki FROM 'C:/Users/Dominik/Documents/GitHub/bsk/bulki/wyniki.bulk' WITH (FIELDTERMINATOR=';')
+BULK INSERT dbo.t_Rodzaje_skladowych FROM 'C:/Users/Dominik/Documents/GitHub/bsk/bulki/rodzaje_skladowych.bulk' WITH (FIELDTERMINATOR=';')
+BULK INSERT dbo.t_Skladowe_przedmiotow FROM 'C:/Users/Dominik/Documents/GitHub/bsk/bulki/skladowe_przedmiotow.bulk' WITH (FIELDTERMINATOR=';')
+BULK INSERT dbo.t_Prowadzacy_skladowych_czesci FROM 'C:/Users/Dominik/Documents/GitHub/bsk/bulki/prowadzacy_skladowych_czesci.bulk' WITH (FIELDTERMINATOR=';')
 
 /*
 	2 - user

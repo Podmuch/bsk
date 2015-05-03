@@ -55,7 +55,6 @@ namespace klient
             Wyniki = new List<Wynik>();
             Przedmioty = new List<Przedmiot>();
             SkladowePrzedmiotow = new List<SkladowaPrzedmiotu>();*/
-//#if !DEBUG
             Baza = new DataBase("user123", "haslo123", "localhost", "szkola");
             DataTable table = Baza.pobierz_dane("select c_nazwa from t_Role");
 
@@ -85,50 +84,22 @@ namespace klient
                 RoleBox.Items.Add(row[0]);
             }
             RoleBox.SelectedIndex = 0;
-/*#else
-            RoleBox.Items.Add("Administrator");
-            RoleBox.Items.Add("Student");
-            RoleBox.Items.Add("Prowadzący");
-            RoleBox.Items.Add("Planista");
-            RoleBox.SelectedIndex = 0;
-#endif*/  
         }
 
         private void LogIn_Click(object sender, RoutedEventArgs e)
         {
             string Login = LoginBox.Text;
-
-            
-            byte[] result = System.Security.Cryptography.SHA1.Create().ComputeHash(Encoding.UTF8.GetBytes(DataBase.SecureStringToString(PasswordBox.SecurePassword)));
-            //byte[] result = System.Security.Cryptography.SHA1.Create().ComputeHash(Encoding.UTF8.GetBytes("haslo123"));
-            StringBuilder s = new StringBuilder();
-            foreach (byte b in result)
-                s.Append(b.ToString("x2").ToLower());
-            string Password = s.ToString();
-
-            /*
-             * TO NIE DZIALA :/
-             * 
-             * string Password = System.Security.Cryptography.SHA1.Create(PasswordBox.SecurePassword.ToString()).ToString();
-             */
-
+            string Password = PobierzHaslo();
             string Rola = RoleBox.SelectedItem.ToString();
-#if !DEBUG
-
-            DataTable table = Baza.pobierz_dane("select * from t_uzytkownicy where c_nazwa = '" + Login + "'");
-            if (table.Rows.Count == 0)
+            if(CzyIstniejeUzytkownikODanymLoginie(Baza.pobierz_dane("SELECT C_NAZWA FROM T_UZYTKOWNICY"), Login)&&
+               CzyHasloJestPrawidlowe(Baza.pobierz_dane("SELECT C_HASLO FROM T_UZYTKOWNICY WHERE C_NAZWA = '"+Login+"'"), Password))
             {
-                MessageBox.Show("Błędne dane logowania");
-            }
-            else if(table.Rows[0][4].ToString()==Password)
-            {
-                DataTable table2 = Baza.pobierz_dane(
-                    "select * from t_przywileje join t_role on c_id_roli = c_Fk_id_roli where c_Fk_id_uzytkownika = '" + table.Rows[0][0] + "'" +
-                    "and c_rola = '" + Rola + "'"
-                    );
+                Uzytkownik uzytkownik = Baza.pobierzUzytkownikow("C_NAZWA = '" + Login + "'").First();
+                DataTable table2 = Baza.pobierz_dane("select * from t_przywileje join t_role on c_id_roli = c_Fk_id_roli "+
+                                                     "where c_Fk_id_uzytkownika = '" + uzytkownik.IdUzytkownika + "' and c_rola = '" + Rola + "'");
                 if (table2.Rows.Count > 0)
                 {
-                    if(Rola.ToLower() == "student")
+                    if (Rola.ToLower() == "student")
                     {
                         LoginWindow.Visibility = System.Windows.Visibility.Hidden;
                         StudentWindow.Visibility = System.Windows.Visibility.Visible;
@@ -148,9 +119,6 @@ namespace klient
             {
                 MessageBox.Show("Błędne hasło");
             }
-#else
-            
-#endif
         }
 
         private void StudentLogOutButton_Click(object sender, RoutedEventArgs e)
@@ -160,6 +128,44 @@ namespace klient
             StudentWindow.Visibility = System.Windows.Visibility.Hidden;
         }
 
+        private string PobierzHaslo()
+        {
+            byte[] result = System.Security.Cryptography.SHA1.Create().ComputeHash(Encoding.UTF8.GetBytes(DataBase.SecureStringToString(PasswordBox.SecurePassword)));
+            StringBuilder s = new StringBuilder();
+            foreach (byte b in result)
+                s.Append(b.ToString("x2").ToLower());
+            return s.ToString();
+        }
 
+        private bool CzyIstniejeUzytkownikODanymLoginie(DataTable table, string Login)
+        {
+            bool czyIstnieje = false;
+            for (int i = 0; i < table.Rows.Count; i++)
+            {
+                if (table.Rows[i][0].Equals(Login))
+                    czyIstnieje = true;
+            }
+            return czyIstnieje;
+        }
+
+        private bool CzyHasloJestPrawidlowe(DataTable table, string Password)
+        {
+            bool czyIstnieje = false;
+            if (table.Rows.Count>0)
+            {
+                czyIstnieje = table.Rows[0][0].Equals(Password);
+            } 
+            return czyIstnieje;
+        }
+
+        private void AddUser_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void RemoveUser_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

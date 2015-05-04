@@ -1,13 +1,13 @@
 use szkola
 GO
 /* nale¿y zmieniæ œcie¿kê */
-BULK INSERT dbo.t_Prowadzacy FROM 'C:/Users/Dominik/Documents/GitHub/bsk/bulki/prowadzacy.bulk' WITH (FIELDTERMINATOR=';')
-BULK INSERT dbo.t_Przedmioty FROM 'C:/Users/Dominik/Documents/GitHub/bsk/bulki/przedmioty.bulk' WITH (FIELDTERMINATOR=';')
-BULK INSERT dbo.t_Studenci FROM 'C:/Users/Dominik/Documents/GitHub/bsk/bulki/studenci.bulk' WITH (FIELDTERMINATOR=';')
-BULK INSERT dbo.t_Wyniki FROM 'C:/Users/Dominik/Documents/GitHub/bsk/bulki/wyniki.bulk' WITH (FIELDTERMINATOR=';')
-BULK INSERT dbo.t_Rodzaje_skladowych FROM 'C:/Users/Dominik/Documents/GitHub/bsk/bulki/rodzaje_skladowych.bulk' WITH (FIELDTERMINATOR=';')
-BULK INSERT dbo.t_Skladowe_przedmiotow FROM 'C:/Users/Dominik/Documents/GitHub/bsk/bulki/skladowe_przedmiotow.bulk' WITH (FIELDTERMINATOR=';')
-BULK INSERT dbo.t_Prowadzacy_skladowych_czesci FROM 'C:/Users/Dominik/Documents/GitHub/bsk/bulki/prowadzacy_skladowych_czesci.bulk' WITH (FIELDTERMINATOR=';')
+BULK INSERT dbo.t_Prowadzacy FROM 'C:/bulki/prowadzacy.bulk' WITH (FIELDTERMINATOR=';')
+BULK INSERT dbo.t_Przedmioty FROM 'C:/bulki/przedmioty.bulk' WITH (FIELDTERMINATOR=';')
+BULK INSERT dbo.t_Studenci FROM 'C:/bulki/studenci.bulk' WITH (FIELDTERMINATOR=';')
+BULK INSERT dbo.t_Wyniki FROM 'C:/bulki/wyniki.bulk' WITH (FIELDTERMINATOR=';')
+BULK INSERT dbo.t_Rodzaje_skladowych FROM 'C:/bulki/rodzaje_skladowych.bulk' WITH (FIELDTERMINATOR=';')
+BULK INSERT dbo.t_Skladowe_przedmiotow FROM 'C:/bulki/skladowe_przedmiotow.bulk' WITH (FIELDTERMINATOR=';')
+BULK INSERT dbo.t_Prowadzacy_skladowych_czesci FROM 'C:/bulki/prowadzacy_skladowych_czesci.bulk' WITH (FIELDTERMINATOR=';')
 
 /*
 	2 - user
@@ -41,14 +41,25 @@ INSERT INTO dbo.t_Akcje(c_akcja, c_tabela, c_status) values ('activate', 't_Akcj
 
 */
 
-INSERT INTO dbo.t_Uzytkownicy(c_Fk_nr_indeksu, c_Fk_id_pracownika, c_nazwa, c_haslo) 
-	values (600, NULL, 'student1', '04c72343945e2a6ef09221862164ac3a9e914373') -- haslo123
+/*
+	1 - user
+	2 - student
+	4 - prowadzacy
+	8 - planista
+	16 - admin
+	17 - admin + user itd
+*/
+
+
+
+INSERT INTO dbo.t_Uzytkownicy(c_Fk_nr_indeksu, c_Fk_id_pracownika, c_login, c_haslo, c_grupa) 
+	values (600, NULL, 'student1', '04c72343945e2a6ef09221862164ac3a9e914373', 3) -- haslo123
 	
-INSERT INTO dbo.t_Uzytkownicy(c_Fk_nr_indeksu, c_Fk_id_pracownika, c_nazwa, c_haslo) 
-	values (NULL, 0, 'prowadzacy1', '04c72343945e2a6ef09221862164ac3a9e914373') -- haslo123
+INSERT INTO dbo.t_Uzytkownicy(c_Fk_nr_indeksu, c_Fk_id_pracownika, c_login, c_haslo, c_grupa) 
+	values (NULL, 0, 'prowadzacy1', '04c72343945e2a6ef09221862164ac3a9e914373', 5) -- haslo123
 	
-INSERT INTO dbo.t_Uzytkownicy(c_Fk_nr_indeksu, c_Fk_id_pracownika, c_nazwa, c_haslo) 
-	values (NULL, NULL, 'admin1', '04c72343945e2a6ef09221862164ac3a9e914373') -- haslo123
+INSERT INTO dbo.t_Uzytkownicy(c_Fk_nr_indeksu, c_Fk_id_pracownika, c_login, c_haslo, c_grupa) 
+	values (NULL, NULL, 'admin1', '04c72343945e2a6ef09221862164ac3a9e914373', 31) -- haslo123
 
 
 INSERT INTO dbo.t_Operacje(c_active, c_operacja) 
@@ -67,13 +78,13 @@ INSERT INTO dbo.t_Operacje(c_active, c_operacja)
 	values (1, 'zmiana grupy studenta')
 
 	
-INSERT INTO dbo.t_Role(c_nazwa, c_grupy_ktorych_dotyczy) 
+INSERT INTO dbo.t_Role(c_rola, c_grupy_ktorych_dotyczy) 
 	values ('Administrator', 16)
-INSERT INTO dbo.t_Role(c_nazwa, c_grupy_ktorych_dotyczy) 
+INSERT INTO dbo.t_Role(c_rola, c_grupy_ktorych_dotyczy) 
 	values ('Student', 2)
-INSERT INTO dbo.t_Role(c_nazwa, c_grupy_ktorych_dotyczy) 
+INSERT INTO dbo.t_Role(c_rola, c_grupy_ktorych_dotyczy) 
 	values ('Prowadzacy', 4)
-INSERT INTO dbo.t_Role(c_nazwa, c_grupy_ktorych_dotyczy) 
+INSERT INTO dbo.t_Role(c_rola, c_grupy_ktorych_dotyczy) 
 	values ('Planista', 8)
 
 INSERT INTO dbo.t_Przywileje(c_Fk_id_roli, c_id_operacji) 

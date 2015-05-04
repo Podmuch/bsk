@@ -1,6 +1,7 @@
 ﻿using klient.Model;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data;
 using System.Linq;
 using System.Text;
@@ -32,7 +33,7 @@ namespace klient
         private DataBase Baza;
 
         private List<Uzytkownik> Uzytkownicy;
-        private List<Rola> Role;
+        public ObservableCollection<Rola> Role;
         private List<Przywilej> Przywileje;
         private List<Operacja> Operacje;
 
@@ -48,7 +49,8 @@ namespace klient
 
         private void Init()
         {
-            LoginWindow.Visibility = Visibility.Visible;
+            //LoginWindow.Visibility = Visibility.Visible;
+
             /*zalogowanaRola = null;
             Prowadzacy = null;
             Student = null;
@@ -56,12 +58,18 @@ namespace klient
             Przedmioty = new List<Przedmiot>();
             SkladowePrzedmiotow = new List<SkladowaPrzedmiotu>();*/
             Baza = new DataBase("user123", "haslo123", "localhost", "szkola");
-            DataTable table = Baza.pobierz_dane("select c_nazwa from t_Role");
+            DataTable table = Baza.pobierz_dane("select c_rola from t_Role");
 
             // REMOVE IT            
             try
             {
-                Prowadzacy = Baza.pobierzProwadzacych();
+
+                Role = new ObservableCollection<Rola>(Baza.pobierzRole());
+                RolesListView.ItemsSource = Role;             
+
+
+
+               /* Prowadzacy = Baza.pobierzProwadzacych();
                 Przedmioty = Baza.pobierzPrzedmioty();
                 Studenci = Baza.pobierzStudentow();
                 SkladowePrzedmiotow = Baza.pobierzSkladowePrzedmiotow();
@@ -70,11 +78,11 @@ namespace klient
                 Uzytkownicy = Baza.pobierzUzytkownikow();
                 Role = Baza.pobierzRole();
                 Przywileje = Baza.pobierzPrzywileje();
-                Operacje = Baza.pobierzOperacje();
+                Operacje = Baza.pobierzOperacje();*/
             }
             catch (Exception e )
             {
-                MessageBox.Show("COs sie zjebalo: " + e.Message);
+                MessageBox.Show("Błąd: " + e.Message);
             }
             // REMOVE IT
 
@@ -88,27 +96,41 @@ namespace klient
 
         private void LogIn_Click(object sender, RoutedEventArgs e)
         {
-            string Login = LoginBox.Text;
+            string Login = LoginBox.Text.Trim();
             string Password = PobierzHaslo();
             string Rola = RoleBox.SelectedItem.ToString();
-            if(CzyIstniejeUzytkownikODanymLoginie(Baza.pobierz_dane("SELECT C_NAZWA FROM T_UZYTKOWNICY"), Login)&&
-               CzyHasloJestPrawidlowe(Baza.pobierz_dane("SELECT C_HASLO FROM T_UZYTKOWNICY WHERE C_NAZWA = '"+Login+"'"), Password))
+            if(CzyIstniejeUzytkownikODanymLoginie(Login)&&
+               CzyHasloJestPrawidlowe(Login, Password))
             {
-                Uzytkownik uzytkownik = Baza.pobierzUzytkownikow("C_NAZWA = '" + Login + "'").First();
-                DataTable table2 = Baza.pobierz_dane("select * from t_przywileje join t_role on c_id_roli = c_Fk_id_roli "+
-                                                     "where c_Fk_id_uzytkownika = '" + uzytkownik.IdUzytkownika + "' and c_rola = '" + Rola + "'");
+                Uzytkownik uzytkownik = Baza.pobierzUzytkownikow("C_LOGIN = '" + Login + "'").First();
+                DataTable table2 = Baza.pobierz_dane("select * from t_uzytkownicy join t_role on c_grupa & c_grupy_ktorych_dotyczy > 0 " +
+                                                     "where c_Id_uzytkownika = " + uzytkownik.IdUzytkownika + " and c_rola = '" + Rola + "'");
                 if (table2.Rows.Count > 0)
                 {
-                    if (Rola.ToLower() == "student")
+                    LoginGrid.Visibility = System.Windows.Visibility.Hidden;
+                    UserZalogowanyGrid.Visibility = System.Windows.Visibility.Visible;
+                    UstawStatus(Login, Rola);
+                    if (Rola.ToLower() == "administrator")
                     {
-                        LoginWindow.Visibility = System.Windows.Visibility.Hidden;
-                        StudentWindow.Visibility = System.Windows.Visibility.Visible;
+                        UserGrid.Visibility = System.Windows.Visibility.Hidden;
+                        AdministratorGrid.Visibility = System.Windows.Visibility.Visible;
+                    }
+                    else
+                    {
+                        UserGrid.Visibility = System.Windows.Visibility.Visible;
+                        AdministratorGrid.Visibility = System.Windows.Visibility.Hidden;
+                    }
+
+                    /*if (Rola.ToLower() == "student")
+                    {
+                        LoginGrid.Visibility = System.Windows.Visibility.Hidden;
+                        UserGrid.Visibility = System.Windows.Visibility.Visible;
                         DataTable table3 = Baza.pobierz_dane(
                             "select * from t_studenci join t_uzytkownicy on c_Nr_indeksu = c_Fk_nr_indeksu where c_Id_uzytkownika = '" + table2.Rows[0][1] + "'"
                             );
-                        StudentNameLabel.Content = "Imię: " + table3.Rows[0][2];
-                        StudentFornameLabel.Content = "Nazwisko: " + table3.Rows[0][3];
-                    }
+                        UserNameLabel.Content = "Imię: " + table3.Rows[0][2];
+                        UserFornameLabel.Content = "Nazwisko: " + table3.Rows[0][3];
+                    }*/
                 }
                 else
                 {
@@ -124,8 +146,10 @@ namespace klient
         private void StudentLogOutButton_Click(object sender, RoutedEventArgs e)
         {
             PasswordBox.Clear();
-            LoginWindow.Visibility = System.Windows.Visibility.Visible;
-            StudentWindow.Visibility = System.Windows.Visibility.Hidden;
+            LoginGrid.Visibility = System.Windows.Visibility.Visible;
+            UserGrid.Visibility = System.Windows.Visibility.Hidden;
+            AdministratorGrid.Visibility = System.Windows.Visibility.Hidden;
+            UserZalogowanyGrid.Visibility = System.Windows.Visibility.Hidden;
         }
 
         private string PobierzHaslo()
@@ -137,8 +161,9 @@ namespace klient
             return s.ToString();
         }
 
-        private bool CzyIstniejeUzytkownikODanymLoginie(DataTable table, string Login)
+        private bool CzyIstniejeUzytkownikODanymLoginie(string Login)
         {
+            DataTable table = Baza.pobierz_dane("SELECT C_LOGIN FROM T_UZYTKOWNICY");
             bool czyIstnieje = false;
             for (int i = 0; i < table.Rows.Count; i++)
             {
@@ -148,8 +173,9 @@ namespace klient
             return czyIstnieje;
         }
 
-        private bool CzyHasloJestPrawidlowe(DataTable table, string Password)
+        private bool CzyHasloJestPrawidlowe(string Login, string Password)
         {
+            DataTable table = Baza.pobierz_dane("SELECT C_HASLO FROM T_UZYTKOWNICY WHERE C_LOGIN = '" + Login + "'");
             bool czyIstnieje = false;
             if (table.Rows.Count>0)
             {
@@ -158,14 +184,25 @@ namespace klient
             return czyIstnieje;
         }
 
-        private void AddUser_Click(object sender, RoutedEventArgs e)
+        private void UstawStatus(string login, string rola)
+        {
+            UserLoginStatus.Content = "Login:   " + login;
+            UserRoleStatus.Content = "Role:   " + rola;            
+        }
+
+        private void LoginGrid_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.Key == Key.Return)
+            {
+                LogIn_Click(sender, e);
+            }
+        }
+
+        private void AddNewRoleButton_Click(object sender, RoutedEventArgs e)
         {
 
         }
 
-        private void RemoveUser_Click(object sender, RoutedEventArgs e)
-        {
 
-        }
     }
 }

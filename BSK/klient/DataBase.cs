@@ -85,7 +85,7 @@ namespace klient
             List<Rola> data = (from item in dane.AsEnumerable()
                                     select new Rola(
                                            (int)item["c_id_roli"],
-                                           (string)item["c_nazwa"],
+                                           (string)item["c_rola"],
                                            (bool)item["c_aktywna"],
                                            (int)item["c_grupy_ktorych_dotyczy"]  
                                        )
@@ -211,7 +211,7 @@ namespace klient
                                                     (int)item["c_id_uzytkownika"],
                                                     (int)(item["c_Fk_nr_indeksu"] == System.DBNull.Value ? 0 : item["c_Fk_nr_indeksu"]),
                                                     (int)(item["c_Fk_id_pracownika"] == System.DBNull.Value ? 0 : item["c_Fk_id_pracownika"]),
-                                                    (string)item["c_nazwa"],
+                                                    (string)item["c_login"],
                                                     (int)item["c_grupa"],
                                                     (string)item["c_haslo"]
                                                 )

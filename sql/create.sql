@@ -84,7 +84,7 @@ CREATE TABLE t_Uzytkownicy
 	c_id_uzytkownika integer IDENTITY(1,1) PRIMARY KEY, 
 	c_Fk_nr_indeksu integer REFERENCES t_Studenci(c_Nr_indeksu),
 	c_Fk_id_pracownika integer REFERENCES t_Prowadzacy(c_Id_pracownika),
-	c_nazwa varchar(30) not null,
+	c_login varchar(30) not null,
 	c_grupa integer not null default 1,  -- do jakiej grupy nalezy uzytkownik
 	--c_status integer not null default 1, -- czy user jest aktywny/usuniety/wylaczony itd
 	c_haslo varchar(50) not null, -- sha1			
@@ -100,7 +100,7 @@ CREATE TABLE t_Operacje
 CREATE TABLE t_Role
 (
 	c_id_roli integer IDENTITY(1,1) PRIMARY KEY,
-	c_nazwa varchar(50) not null,
+	c_rola varchar(50) not null,
 	c_aktywna bit not null default 1,
 	c_grupy_ktorych_dotyczy integer not null default 1, -- wielokrotnosci dwójki
 )

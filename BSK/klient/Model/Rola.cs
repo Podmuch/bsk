@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace klient.Model
 {
-    class Rola
+    public class Rola
     {
         public int Id;
         public string Nazwa;

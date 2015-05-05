@@ -24,6 +24,7 @@ namespace klient
     /// </summary>
     public partial class MainWindow : Window
     {
+        private Grid AktualnaOperacja;
         private Rola zalogowanaRola;
         private List<Wynik> Wyniki;
         private List<Prowadzacy> Prowadzacy;
@@ -46,9 +47,10 @@ namespace klient
         public ObservableCollection<Rola> WybraneRole;
         public ObservableCollection<Rola> PozostaleRole;
 
-        private Student ZalogowanyStudent;
-        private Prowadzacy ZalogowanyProwadzacy;
+        //private Student ZalogowanyStudent;
+       // private Prowadzacy ZalogowanyProwadzacy;
         private Rola aktualnaRola;
+        private Uzytkownik zalogowanyUzytkownik;
 
         public MainWindow()
         {
@@ -125,6 +127,8 @@ namespace klient
                                                      "where c_Id_uzytkownika = " + uzytkownik.IdUzytkownika + " and c_rola = '" + Rola + "'");
                 if (table2.Rows.Count > 0)
                 {
+                    zalogowanyUzytkownik = uzytkownik;
+                    aktualnaRola = Baza.pobierzRole(" WHERE C_ROLA = '" + Rola + "'").First();
                     LoginGrid.Visibility = System.Windows.Visibility.Hidden;
                     UserZalogowanyGrid.Visibility = System.Windows.Visibility.Visible;
                     UstawStatus(Login, Rola);
@@ -136,6 +140,8 @@ namespace klient
                     }
                     else
                     {
+                        var dostepneOperacje = Baza.pobierzOperacje(" join t_przywileje on c_Fk_id_operacji = c_id_operacji where c_Fk_id_roli = " + aktualnaRola.Id);
+                        StudiaListView.ItemsSource = dostepneOperacje;
                         UserGrid.Visibility = System.Windows.Visibility.Visible;
                         AdministratorGrid.Visibility = System.Windows.Visibility.Hidden;
                     }
@@ -419,5 +425,41 @@ namespace klient
             }
             RoleBox.SelectedIndex = 0;
         }
+
+        private void StudiaListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if(StudiaListView.SelectedIndex != -1)
+            {
+                if (AktualnaOperacja != null)
+                    AktualnaOperacja.Visibility = System.Windows.Visibility.Hidden;
+                switch(((Operacja)StudiaListView.SelectedItem).IdOperacji)
+                {
+                    case 1://zmiana hasla
+                        AktualnaOperacja = OperacjaZmianyHaslaGrid;
+                        break;
+                    case 2://edycja imienia
+                        AktualnaOperacja = OperacjaEdycjiImieniaGrid;
+                        break;
+                    case 3://edycja nazwiska
+                        AktualnaOperacja = OperacjaEdycjiNazwiskaGrid;
+                        break;
+                    case 4://wyswietlenie listy studentów
+                        AktualnaOperacja = OperacjaWyswietleniaListyStudentowGrid;
+                        WyswietlListeStudentow();
+                        break;
+                    case 5://zmiana grupy studenta
+                        AktualnaOperacja = OperacjaZmianyGrupyStudentaGrid;
+                        break;
+                }
+                AktualnaOperacja.Visibility = System.Windows.Visibility.Visible;
+            }
+        }
+        private void WyswietlListeStudentow()
+        {
+            listaStudentowListView.ItemsSource = new ObservableCollection<Student>(Baza.pobierzStudentow());
+            int a = 2;
+        }
+
+
     }
 }

@@ -6,17 +6,17 @@ using System.Threading.Tasks;
 
 namespace klient.Model
 {
-    class Student
+    public class Student
     {
-        public int NrIndeksu;
-        public string Imie;
-        public string Nazwisko;
-        public string Pesel;
+        public int NrIndeksu { get; set; }
+        public string Imie { get; set; }
+        public string Nazwisko { get; set; }
+        public string Pesel { get; set; }
         //public string Login;
         //public string Haslo;
-        public int DlugEcts;
-        public int Rok;
-        public int Semestr;
+        public int DlugEcts { get; set; }
+        public int Rok { get; set; }
+        public int Semestr { get; set; }
         //public List<Rola> Role;
         //public List<Wynik> Wyniki;
         public Student(int indeks, string imie, string nazwisko, string pesel,/*string login, string haslo,*/ int ects, int rok, int semestr)
@@ -34,14 +34,5 @@ namespace klient.Model
             //Wyniki = new List<Wynik>();
         }
 
-        public void DodajRole(List<Rola> role)
-        {
-            //Role.AddRange(role);
-        }
-
-        public void DodajWyniki(List<Wynik> wyniki)
-        {
-            //Wyniki = wyniki;
-        }
     }
 }

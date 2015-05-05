@@ -61,20 +61,70 @@
                 </Border>
             </Grid>
             <Grid Grid.Row="1">
-                <Grid Name="UserGrid" Visibility="Hidden">
-                    <TabControl>
-                        <TabItem Name="ZarzadzanieKontemTaBItem" Header="Account">
-
+                <Grid Name="UserGrid" Visibility="Visible">
+                    <TabControl>                        
+                        <TabItem Name="StudiaTaBItem" Header="Role">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="2*" />                                    
+                                </Grid.ColumnDefinitions>
+                                <Grid Name="StudiaGridColumn1" Grid.Column="0">
+                                    <ListView Name="StudiaListView" Grid.Row="2" Margin="7" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="4" SelectionChanged="StudiaListView_SelectionChanged" >
+                                        <ListView.View>
+                                            <GridView>
+                                                <GridView.Columns>
+                                                    <GridViewColumn Width="180" DisplayMemberBinding="{Binding NazwaOperacji}"/>
+                                                </GridView.Columns>
+                                            </GridView>
+                                        </ListView.View>
+                                    </ListView>
+                                </Grid>
+                                <Grid Name="StudiaGridColumn2" Grid.Column="1">
+                                    <Grid Name="OperacjaZmianyHaslaGrid" Visibility="Hidden">
+                                        <Label Content="to do" />
+                                    </Grid>
+                                    <Grid Name="OperacjaEdycjiImieniaGrid" Visibility="Hidden">
+                                        <Label Content="to do" />
+                                    </Grid>
+                                    <Grid Name="OperacjaEdycjiNazwiskaGrid" Visibility="Hidden">
+                                        <Label Content="to do" />
+                                    </Grid>
+                                    <Grid Name="OperacjaWyswietleniaListyStudentowGrid" Visibility="Hidden">
+                                        <ListView Name="listaStudentowListView">
+                                            <ListView.View>
+                                                <GridView>
+                                                    <GridView.Columns>
+                                                        <GridViewColumn Width="70" DisplayMemberBinding="{Binding NrIndeksu}"/>
+                                                        <GridViewColumn Width="110" DisplayMemberBinding="{Binding Imie}"/>
+                                                        <GridViewColumn Width="130" DisplayMemberBinding="{Binding Nazwisko}"/>
+                                                        <GridViewColumn Width="40" DisplayMemberBinding="{Binding DlugEcts}"/>
+                                                        <GridViewColumn Width="40" DisplayMemberBinding="{Binding Rok}"/>
+                                                        <GridViewColumn Width="40" DisplayMemberBinding="{Binding Semestr}"/>
+                                                    </GridView.Columns>
+                                                </GridView>
+                                            </ListView.View>
+                                        </ListView>
+                                    </Grid>
+                                    <Grid Name="OperacjaZmianyGrupyStudentaGrid" Visibility="Hidden">
+                                        <Label Content="to do" />
+                                    </Grid>
+                                </Grid>
+                            </Grid>
                         </TabItem>
-                        <TabItem Name="ZarzadzanieOcenamiTaBItem" Header="Results">
-
-                        </TabItem>
-                        <TabItem Name="ZarzadzaniePlanamiTaBItem" Header="Schedule of classes(?)">
-
+                        <TabItem Name="KontoTaBItem" Header="Ustawienia Konta" Visibility="Hidden">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="1*" />
+                                    <RowDefinition Height="1*" />
+                                    <RowDefinition Height="1*" />
+                                    <RowDefinition Height="9*" />
+                                </Grid.RowDefinitions>
+                            </Grid>
                         </TabItem>
                     </TabControl>
                 </Grid>
-                <Grid Name="AdministratorGrid" Visibility="Visible">
+                <Grid Name="AdministratorGrid" Visibility="Hidden">
                     <TabControl Name="AdministratorTabControl" >
                         <TabItem Name="ZarzadzanieUzytkownikamiTabItem" Header="Użytkownicy">
                             <Grid Name="EdycjaUzytkownikowGrid">

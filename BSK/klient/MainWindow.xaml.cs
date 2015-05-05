@@ -83,8 +83,16 @@ namespace klient
                 RolesListView.ItemsSource = Role;
 
                 Operacje = Baza.pobierzOperacje();
-                PozostaleOperacje = new ObservableCollection<Operacja>(Operacje.ToList<Operacja>());
+
+                WybraneOperacje = new ObservableCollection<Operacja>();
+                SelectedOperationsListView.ItemsSource = WybraneOperacje;
+                PozostaleOperacje = new ObservableCollection<Operacja>(Baza.pobierzOperacje());
                 OperationsListView.ItemsSource = PozostaleOperacje;
+
+                WybraneGrupy = new ObservableCollection<Grupa>();
+                PozostaleGrupy = new ObservableCollection<Grupa>();
+                SelectedGroupsListView.ItemsSource = WybraneGrupy;
+                GroupsListView.ItemsSource = PozostaleGrupy;
 
                /* Prowadzacy = Baza.pobierzProwadzacych();
                 Przedmioty = Baza.pobierzPrzedmioty();
@@ -119,7 +127,7 @@ namespace klient
             if(CzyIstniejeUzytkownikODanymLoginie(Login)&&
                CzyHasloJestPrawidlowe(Login, Password))
             {
-                Uzytkownik uzytkownik = Baza.pobierzUzytkownikow("C_LOGIN = '" + Login + "'").First();
+                Uzytkownik uzytkownik = Baza.pobierzUzytkownikow(" WHERE C_LOGIN = '" + Login + "'").First();
                 DataTable table2 = Baza.pobierz_dane("select * from t_uzytkownicy join t_role on c_grupa & c_grupy_ktorych_dotyczy > 0 " +
                                                      "where c_Id_uzytkownika = " + uzytkownik.IdUzytkownika + " and c_rola = '" + Rola + "'");
                 if (table2.Rows.Count > 0)
@@ -131,6 +139,7 @@ namespace klient
                     {
                         UserGrid.Visibility = System.Windows.Visibility.Hidden;
                         AdministratorGrid.Visibility = System.Windows.Visibility.Visible;
+                        EdycjaRolColumn2Grid.Visibility = System.Windows.Visibility.Hidden;
                     }
                     else
                     {
@@ -217,15 +226,28 @@ namespace klient
 
         private void AddNewRoleButton_Click(object sender, RoutedEventArgs e)
         {
+            WybraneOperacje.Clear();
+            PozostaleOperacje.Clear();
 
+            WybraneGrupy.Clear();
+            PozostaleGrupy.Clear();
+            foreach (Grupa g in Grupy)
+            {
+                {
+                    PozostaleGrupy.Add(g);
+                }
+            }
+            SaveRoleButton.Content = "Dodaj rolę";
+            EdycjaRolColumn2Grid.Visibility = System.Windows.Visibility.Visible;
         }
 
         private void RolesListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
+        {         
             Rola wybranaRola = (Rola)RolesListView.SelectedItem;
+            WybraneOperacje.Clear();
             WybraneOperacje = new ObservableCollection<Operacja>(Baza.pobierzOperacjeDlaDanejRoli(wybranaRola.Id));
             SelectedOperationsListView.ItemsSource = WybraneOperacje;
-            PozostaleOperacje = new ObservableCollection<Operacja>();
+            PozostaleOperacje.Clear();
             foreach(Operacja o in Operacje)
             {
                 if (!WybraneOperacje.Contains(o))
@@ -233,10 +255,8 @@ namespace klient
                     PozostaleOperacje.Add(o);
                 }
             }
-                
-            OperationsListView.ItemsSource = PozostaleOperacje;
-            WybraneGrupy = new ObservableCollection<Grupa>();
-            PozostaleGrupy = new ObservableCollection<Grupa>();
+            WybraneGrupy.Clear();
+            PozostaleGrupy.Clear();
             foreach(Grupa g in Grupy)
             {
                 if((g.Id & wybranaRola.Grupy_ktorych_dotyczy) > 0)
@@ -248,9 +268,99 @@ namespace klient
                     PozostaleGrupy.Add(g);
                 }
             }
-            SelectedGroupsListView.ItemsSource = WybraneGrupy;
-            GroupsListView.ItemsSource = PozostaleGrupy;
             RoleNameTextBox.Text = wybranaRola.Nazwa;
+            SaveRoleButton.Content = "Zapisz zmiany";
+            EdycjaRolColumn2Grid.Visibility = System.Windows.Visibility.Visible;
+        }
+
+        private void SaveRoleButton_Click(object sender, RoutedEventArgs e)
+        {
+            if(SaveRoleButton.Content.ToString() == "Dodaj rolę")
+            {
+                if (Baza.pobierzRole(" WHERE c_rola = '" + RoleNameTextBox.Text + "'").Count > 0)
+                {
+                    MessageBox.Show("Rola o takiej podanej już istnieje.");
+                    return;
+                }
+            }
+            // dodawanie przywilejów
+
+        }
+
+        private void GroupsSelect_Click(object sender, RoutedEventArgs e)
+        {
+            if(GroupsListView.SelectedIndex != -1)
+            {
+                Grupa g = (Grupa)GroupsListView.SelectedItem;
+                PozostaleGrupy.Remove(g);
+                WybraneGrupy.Add(g);
+            }
+        }
+
+        private void GroupsSelectAll_Click(object sender, RoutedEventArgs e)
+        {
+            foreach(Grupa g in PozostaleGrupy.ToList<Grupa>())
+            {
+                PozostaleGrupy.Remove(g);
+                WybraneGrupy.Add(g);
+            }
+        }
+
+        private void GroupsDeselect_Click(object sender, RoutedEventArgs e)
+        {
+            if (SelectedGroupsListView.SelectedIndex != -1)
+            {
+                Grupa g = (Grupa)SelectedGroupsListView.SelectedItem;
+                WybraneGrupy.Remove(g);
+                PozostaleGrupy.Add(g);
+            }
+        }
+
+        private void GroupsDeselectAll_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (Grupa g in WybraneGrupy.ToList<Grupa>())
+            {
+                WybraneGrupy.Remove(g);
+                PozostaleGrupy.Add(g);
+            }
+        }
+
+        private void OperationsSelect_Click(object sender, RoutedEventArgs e)
+        {
+            if (OperationsListView.SelectedIndex != -1)
+            {
+                Operacja o = (Operacja)OperationsListView.SelectedItem;
+                PozostaleOperacje.Remove(o);
+                WybraneOperacje.Add(o);
+            }
+        }
+
+        private void OperationsSelectAll_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (Operacja o in PozostaleOperacje.ToList<Operacja>())
+            {
+                PozostaleOperacje.Remove(o);
+                WybraneOperacje.Add(o);
+            }
+        }
+
+        private void OperationsDeselect_Click(object sender, RoutedEventArgs e)
+        {
+            if (SelectedOperationsListView.SelectedIndex != -1)
+            {
+                Operacja o = (Operacja)SelectedOperationsListView.SelectedItem;
+                WybraneOperacje.Remove(o);
+                PozostaleOperacje.Add(o);
+            }
+        }
+
+        private void OperationsDeselectAll_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (Operacja o in WybraneOperacje.ToList<Operacja>())
+            {
+                WybraneOperacje.Remove(o);
+                PozostaleOperacje.Add(o);
+            }
         }
 
 

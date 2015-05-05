@@ -9,7 +9,7 @@ namespace klient.Model
     public class Rola
     {
         public int Id;
-        public string Nazwa;
+        public string Nazwa  { get; set; }
         public bool Aktywna;
         public int Grupy_ktorych_dotyczy;
         public Rola(int id, string nazwa, bool aktywna, int grupy_ktorych_dotyczy)

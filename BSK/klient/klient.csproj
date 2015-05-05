@@ -68,6 +68,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model\Grupa.cs" />
     <Compile Include="Model\Operacja.cs" />
     <Compile Include="Model\Prowadzacy.cs" />
     <Compile Include="Model\Przedmiot.cs" />

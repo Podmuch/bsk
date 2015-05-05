@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Data;
 using System.Linq;
 using System.Text;
@@ -35,7 +36,14 @@ namespace klient
         private List<Uzytkownik> Uzytkownicy;
         public ObservableCollection<Rola> Role;
         private List<Przywilej> Przywileje;
-        private List<Operacja> Operacje;
+        public List<Operacja> Operacje;
+        public ObservableCollection<Operacja> PozostaleOperacje;
+        public ObservableCollection<Operacja> WybraneOperacje;
+
+        public List<Grupa> Grupy;
+        public ObservableCollection<Grupa> PozostaleGrupy;
+        public ObservableCollection<Grupa> WybraneGrupy;
+
 
         private Student ZalogowanyStudent;
         private Prowadzacy ZalogowanyProwadzacy;
@@ -63,11 +71,20 @@ namespace klient
             // REMOVE IT            
             try
             {
+                Grupy = new List<Grupa>();
+                Grupy.Add(new Grupa(1, "Uzytkownik"));
+                Grupy.Add(new Grupa(2, "Student"));
+                Grupy.Add(new Grupa(4, "Prowadzacy"));
+                Grupy.Add(new Grupa(8, "Planista"));
+                Grupy.Add(new Grupa(16, "Administrator"));
+
 
                 Role = new ObservableCollection<Rola>(Baza.pobierzRole());
-                RolesListView.ItemsSource = Role;             
+                RolesListView.ItemsSource = Role;
 
-
+                Operacje = Baza.pobierzOperacje();
+                PozostaleOperacje = new ObservableCollection<Operacja>(Operacje.ToList<Operacja>());
+                OperationsListView.ItemsSource = PozostaleOperacje;
 
                /* Prowadzacy = Baza.pobierzProwadzacych();
                 Przedmioty = Baza.pobierzPrzedmioty();
@@ -201,6 +218,39 @@ namespace klient
         private void AddNewRoleButton_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void RolesListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Rola wybranaRola = (Rola)RolesListView.SelectedItem;
+            WybraneOperacje = new ObservableCollection<Operacja>(Baza.pobierzOperacjeDlaDanejRoli(wybranaRola.Id));
+            SelectedOperationsListView.ItemsSource = WybraneOperacje;
+            PozostaleOperacje = new ObservableCollection<Operacja>();
+            foreach(Operacja o in Operacje)
+            {
+                if (!WybraneOperacje.Contains(o))
+                {
+                    PozostaleOperacje.Add(o);
+                }
+            }
+                
+            OperationsListView.ItemsSource = PozostaleOperacje;
+            WybraneGrupy = new ObservableCollection<Grupa>();
+            PozostaleGrupy = new ObservableCollection<Grupa>();
+            foreach(Grupa g in Grupy)
+            {
+                if((g.Id & wybranaRola.Grupy_ktorych_dotyczy) > 0)
+                {
+                    WybraneGrupy.Add(g);
+                }
+                else
+                {
+                    PozostaleGrupy.Add(g);
+                }
+            }
+            SelectedGroupsListView.ItemsSource = WybraneGrupy;
+            GroupsListView.ItemsSource = PozostaleGrupy;
+            RoleNameTextBox.Text = wybranaRola.Nazwa;
         }
 
 

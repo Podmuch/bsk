@@ -108,7 +108,7 @@ CREATE TABLE t_Role
 CREATE TABLE t_Przywileje
 (
 	c_Fk_id_roli integer REFERENCES t_Role(c_id_roli),
-	c_id_operacji integer REFERENCES t_Operacje(c_id_operacji),
+	c_Fk_id_operacji integer REFERENCES t_Operacje(c_id_operacji),
 	c_aktywny bit not null default 1,
 )
 

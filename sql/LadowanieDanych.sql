@@ -87,17 +87,17 @@ INSERT INTO dbo.t_Role(c_rola, c_grupy_ktorych_dotyczy)
 INSERT INTO dbo.t_Role(c_rola, c_grupy_ktorych_dotyczy) 
 	values ('Planista', 8)
 
-INSERT INTO dbo.t_Przywileje(c_Fk_id_roli, c_id_operacji) 
+INSERT INTO dbo.t_Przywileje(c_Fk_id_roli, c_Fk_id_operacji) 
 	values (1,1) 
 	
-INSERT INTO dbo.t_Przywileje(c_Fk_id_roli, c_id_operacji) 
+INSERT INTO dbo.t_Przywileje(c_Fk_id_roli, c_Fk_id_operacji) 
 	values (1,2) 
 	
-INSERT INTO dbo.t_Przywileje(c_Fk_id_roli, c_id_operacji) 
+INSERT INTO dbo.t_Przywileje(c_Fk_id_roli, c_Fk_id_operacji) 
 	values (1,3) 
 
-INSERT INTO dbo.t_Przywileje(c_Fk_id_roli, c_id_operacji) 
+INSERT INTO dbo.t_Przywileje(c_Fk_id_roli, c_Fk_id_operacji) 
 	values (1,4) 
 
-INSERT INTO dbo.t_Przywileje(c_Fk_id_roli, c_id_operacji) 
+INSERT INTO dbo.t_Przywileje(c_Fk_id_roli, c_Fk_id_operacji) 
 	values (1,5) 

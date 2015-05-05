@@ -64,7 +64,7 @@ namespace klient
         {
             string query = "SELECT * FROM T_OPERACJE";
             if (!string.IsNullOrEmpty(where))
-                query += " WHERE " + where;
+                query += where;
             DataTable dane = pobierz_dane(query);
             List<Operacja> data = (from item in dane.AsEnumerable() 
                             select new Operacja(
@@ -80,7 +80,7 @@ namespace klient
         {
             string query = "SELECT * FROM T_ROLE";
             if (!string.IsNullOrEmpty(where))
-                query += " WHERE " + where;
+                query += where;
             DataTable dane = pobierz_dane(query);
             List<Rola> data = (from item in dane.AsEnumerable()
                                     select new Rola(
@@ -96,12 +96,12 @@ namespace klient
         {
             string query = "SELECT * FROM T_PRZYWILEJE";
             if (!string.IsNullOrEmpty(where))
-                query += " WHERE " + where;
+                query += where;
             DataTable dane = pobierz_dane(query);
             List<Przywilej> data = (from item in dane.AsEnumerable()
                                     select new Przywilej(
                                       (int)item["c_Fk_id_roli"],
-                                      (int)item["c_id_operacji"],
+                                      (int)item["c_Fk_id_operacji"],
                                       (bool)(item["c_aktywny"])
                                   )
                       ).ToList<Przywilej>();
@@ -112,7 +112,7 @@ namespace klient
         {
             string query = "SELECT * FROM T_PROWADZACY";
             if (!string.IsNullOrEmpty(where))
-                query += " WHERE " + where;
+                query += where;
             DataTable dane = pobierz_dane(query);
             List<Prowadzacy> data = (from item in dane.AsEnumerable()
                                          select new Prowadzacy(
@@ -134,7 +134,7 @@ namespace klient
         {
             string query = "SELECT * FROM T_STUDENCI";
             if (!string.IsNullOrEmpty(where))
-                query += " WHERE " + where;
+                query += where;
             DataTable dane = pobierz_dane(query);
             List<Student> data = (from item in dane.AsEnumerable()
                                   select new Student(
@@ -154,7 +154,7 @@ namespace klient
         {
             string query = "SELECT * FROM T_PRZEDMIOTY";
             if (!string.IsNullOrEmpty(where))
-                query += " WHERE " + where;
+                query +=  where;
             DataTable dane = pobierz_dane(query);
             List<Przedmiot> data = (from item in dane.AsEnumerable()
                                     select new Przedmiot(
@@ -172,7 +172,7 @@ namespace klient
         {
             string query = "SELECT * FROM T_WYNIKI";
             if (!string.IsNullOrEmpty(where))
-                query += " WHERE " + where;
+                query += where;
             DataTable dane = pobierz_dane(query);
             List<Wynik> data = (from item in dane.AsEnumerable()
                                 select new Wynik(2.5, "asd", 3
@@ -187,7 +187,7 @@ namespace klient
         {
             string query = "SELECT * FROM T_SKLADOWE_PRZEDMIOTOW";
             if (!string.IsNullOrEmpty(where))
-                query += " WHERE " + where;
+                query += where;
             DataTable dane = pobierz_dane(query);
             List<SkladowaPrzedmiotu> data = (from item in dane.AsEnumerable()
                                 select new SkladowaPrzedmiotu(
@@ -204,7 +204,7 @@ namespace klient
         {
             string query = "SELECT * FROM T_UZYTKOWNICY";
             if (!string.IsNullOrEmpty(where))
-                query += " WHERE " + where;
+                query += where;
             DataTable dane = pobierz_dane(query);
             List<Uzytkownik> data = (from item in dane.AsEnumerable()
                                             select new Uzytkownik(
@@ -216,6 +216,12 @@ namespace klient
                                                     (string)item["c_haslo"]
                                                 )
                       ).ToList<Uzytkownik>();
+            return data;
+        }
+
+        public List<Operacja> pobierzOperacjeDlaDanejRoli(int idRoli) 
+        {
+            List<Operacja> data = pobierzOperacje(" join t_przywileje on c_id_operacji = c_Fk_id_operacji where c_Fk_id_roli = " + idRoli);
             return data;
         }
 

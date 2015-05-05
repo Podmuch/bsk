@@ -225,5 +225,43 @@ namespace klient
             return data;
         }
 
+        public void dodajNowaRole(string nazwaRoli, List<Grupa> listaGrup, List<Operacja> listaOperacji)
+        {
+            var role = pobierzRole(" WHERE c_rola = '" + nazwaRoli + "'");
+            if (role.Count > 0 || string.IsNullOrEmpty(nazwaRoli))
+                return;
+            int grupyKtorychDotyczyRola = 0;
+            foreach (Grupa g in listaGrup) 
+            {
+                grupyKtorychDotyczyRola += g.Id; 
+            }
+            Rola rola = new Rola(-1, nazwaRoli, true, grupyKtorychDotyczyRola);
+            insertNewRole(rola);
+
+            var stworzonaRola = pobierzRole(" WHERE c_rola = '" + nazwaRoli + "'");
+            if(stworzonaRola.Count > 0)
+            {
+                foreach (Operacja o in listaOperacji)
+                {
+                    var przywilej = new Przywilej(stworzonaRola[0].Id, o.IdOperacji, true);
+                    insertNewPrivilege(przywilej);
+                }
+            }            
+        }
+
+        public void insertNewRole(Rola r)
+        {
+            string query = "INSERT INTO T_ROLE(c_rola, c_grupy_ktorych_dotyczy) VALUES ('" 
+                + r.Nazwa + "', " + r.Grupy_ktorych_dotyczy + ")";
+            pobierz_dane(query); // pobierz_dane :d
+        }
+
+        public void insertNewPrivilege(Przywilej p)
+        {
+            string query = "INSERT INTO t_Przywileje(c_Fk_id_roli, c_Fk_id_operacji) VALUES ("
+                + p.IdRoli + ", " + p.IdOperacji + ")";
+            pobierz_dane(query); // pobierz_dane :d
+        }
+
     }
 }

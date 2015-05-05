@@ -66,7 +66,6 @@ namespace klient
             Przedmioty = new List<Przedmiot>();
             SkladowePrzedmiotow = new List<SkladowaPrzedmiotu>();*/
             Baza = new DataBase("user123", "haslo123", "localhost", "szkola");
-            DataTable table = Baza.pobierz_dane("select c_rola from t_Role");
 
             // REMOVE IT            
             try
@@ -81,6 +80,7 @@ namespace klient
 
                 Role = new ObservableCollection<Rola>(Baza.pobierzRole());
                 RolesListView.ItemsSource = Role;
+                UpdateLoginRoleComboBox();
 
                 Operacje = Baza.pobierzOperacje();
 
@@ -111,12 +111,12 @@ namespace klient
             }
             // REMOVE IT
 
-            DataRowCollection rows = table.Rows;
-            foreach(DataRow row in rows)
-            {
-                RoleBox.Items.Add(row[0]);
-            }
-            RoleBox.SelectedIndex = 0;
+
+        }
+
+        private void Role_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            UpdateLoginRoleComboBox();
         }
 
         private void LogIn_Click(object sender, RoutedEventArgs e)
@@ -226,9 +226,16 @@ namespace klient
 
         private void AddNewRoleButton_Click(object sender, RoutedEventArgs e)
         {
+            RoleNameTextBox.Clear();
             WybraneOperacje.Clear();
             PozostaleOperacje.Clear();
-
+            foreach (Operacja o in Operacje)
+            {
+                if (!WybraneOperacje.Contains(o))
+                {
+                    PozostaleOperacje.Add(o);
+                }
+            }
             WybraneGrupy.Clear();
             PozostaleGrupy.Clear();
             foreach (Grupa g in Grupy)
@@ -277,13 +284,27 @@ namespace klient
         {
             if(SaveRoleButton.Content.ToString() == "Dodaj rolę")
             {
+                if(string.IsNullOrEmpty(RoleNameTextBox.Text))
+                {
+                    MessageBox.Show("Wprowadz nazwę dla nowej roli.");
+                    return;
+                }
                 if (Baza.pobierzRole(" WHERE c_rola = '" + RoleNameTextBox.Text + "'").Count > 0)
                 {
                     MessageBox.Show("Rola o takiej podanej już istnieje.");
                     return;
                 }
-            }
-            // dodawanie przywilejów
+                Baza.dodajNowaRole(RoleNameTextBox.Text, WybraneGrupy.ToList<Grupa>(), WybraneOperacje.ToList<Operacja>());
+                Role = new ObservableCollection<Rola>(Baza.pobierzRole());
+                RolesListView.ItemsSource = Role;
+                UpdateLoginRoleComboBox();
+                EdycjaRolColumn2Grid.Visibility = System.Windows.Visibility.Hidden;
+                MessageBox.Show("Rola została dodana.");
+            } 
+            else
+            {
+
+            }        
 
         }
 
@@ -363,6 +384,14 @@ namespace klient
             }
         }
 
-
+        private void UpdateLoginRoleComboBox()
+        {
+            RoleBox.Items.Clear();
+            foreach (Rola r in Role)
+            {
+                RoleBox.Items.Add(r.Nazwa);
+            }
+            RoleBox.SelectedIndex = 0;
+        }
     }
 }

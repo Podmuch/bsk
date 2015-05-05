@@ -43,7 +43,8 @@ namespace klient
         public List<Grupa> Grupy;
         public ObservableCollection<Grupa> PozostaleGrupy;
         public ObservableCollection<Grupa> WybraneGrupy;
-
+        public ObservableCollection<Rola> WybraneRole;
+        public ObservableCollection<Rola> PozostaleRole;
 
         private Student ZalogowanyStudent;
         private Prowadzacy ZalogowanyProwadzacy;
@@ -57,14 +58,6 @@ namespace klient
 
         private void Init()
         {
-            //LoginWindow.Visibility = Visibility.Visible;
-
-            /*zalogowanaRola = null;
-            Prowadzacy = null;
-            Student = null;
-            Wyniki = new List<Wynik>();
-            Przedmioty = new List<Przedmiot>();
-            SkladowePrzedmiotow = new List<SkladowaPrzedmiotu>();*/
             Baza = new DataBase("user123", "haslo123", "localhost", "szkola");
 
             // REMOVE IT            
@@ -146,17 +139,6 @@ namespace klient
                         UserGrid.Visibility = System.Windows.Visibility.Visible;
                         AdministratorGrid.Visibility = System.Windows.Visibility.Hidden;
                     }
-
-                    /*if (Rola.ToLower() == "student")
-                    {
-                        LoginGrid.Visibility = System.Windows.Visibility.Hidden;
-                        UserGrid.Visibility = System.Windows.Visibility.Visible;
-                        DataTable table3 = Baza.pobierz_dane(
-                            "select * from t_studenci join t_uzytkownicy on c_Nr_indeksu = c_Fk_nr_indeksu where c_Id_uzytkownika = '" + table2.Rows[0][1] + "'"
-                            );
-                        UserNameLabel.Content = "Imię: " + table3.Rows[0][2];
-                        UserFornameLabel.Content = "Nazwisko: " + table3.Rows[0][3];
-                    }*/
                 }
                 else
                 {
@@ -248,14 +230,12 @@ namespace klient
             EdycjaRolColumn2Grid.Visibility = System.Windows.Visibility.Visible;
         }
 
-        private void RolesListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {         
-            Rola wybranaRola = (Rola)RolesListView.SelectedItem;
-            WybraneOperacje.Clear();
-            WybraneOperacje = new ObservableCollection<Operacja>(Baza.pobierzOperacjeDlaDanejRoli(wybranaRola.Id));
-            SelectedOperationsListView.ItemsSource = WybraneOperacje;
-            PozostaleOperacje.Clear();
-            foreach(Operacja o in Operacje)
+        private void AddNewUserButton_Click(object sender, RoutedEventArgs e)
+        {
+            UserNameTextBox.Clear();
+            WybraneRole.Clear();
+            PozostaleRole.Clear();
+            foreach (Operacja o in Operacje)
             {
                 if (!WybraneOperacje.Contains(o))
                 {
@@ -264,22 +244,55 @@ namespace klient
             }
             WybraneGrupy.Clear();
             PozostaleGrupy.Clear();
-            foreach(Grupa g in Grupy)
+            foreach (Grupa g in Grupy)
             {
-                if((g.Id & wybranaRola.Grupy_ktorych_dotyczy) > 0)
-                {
-                    WybraneGrupy.Add(g);
-                }
-                else
                 {
                     PozostaleGrupy.Add(g);
                 }
             }
-            RoleNameTextBox.Text = wybranaRola.Nazwa;
-            SaveRoleButton.Content = "Zapisz zmiany";
+            SaveRoleButton.Content = "Dodaj rolę";
             EdycjaRolColumn2Grid.Visibility = System.Windows.Visibility.Visible;
         }
-
+        private void UsersListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+        }
+        private void RolesListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (RolesListView.SelectedItem != null)
+            {
+                Rola wybranaRola = (Rola)RolesListView.SelectedItem;
+                WybraneOperacje.Clear();
+                WybraneOperacje = new ObservableCollection<Operacja>(Baza.pobierzOperacjeDlaDanejRoli(wybranaRola.Id));
+                SelectedOperationsListView.ItemsSource = WybraneOperacje;
+                PozostaleOperacje.Clear();
+                foreach (Operacja o in Operacje)
+                {
+                    if (!WybraneOperacje.Contains(o))
+                    {
+                        PozostaleOperacje.Add(o);
+                    }
+                }
+                WybraneGrupy.Clear();
+                PozostaleGrupy.Clear();
+                foreach (Grupa g in Grupy)
+                {
+                    if ((g.Id & wybranaRola.Grupy_ktorych_dotyczy) > 0)
+                    {
+                        WybraneGrupy.Add(g);
+                    }
+                    else
+                    {
+                        PozostaleGrupy.Add(g);
+                    }
+                }
+                RoleNameTextBox.Text = wybranaRola.Nazwa;
+                SaveRoleButton.Content = "Zapisz zmiany";
+                EdycjaRolColumn2Grid.Visibility = System.Windows.Visibility.Visible;
+            }
+        }
+        private void SaveUserButton_Click(object sender, RoutedEventArgs e)
+        {
+        }
         private void SaveRoleButton_Click(object sender, RoutedEventArgs e)
         {
             if(SaveRoleButton.Content.ToString() == "Dodaj rolę")
@@ -308,6 +321,19 @@ namespace klient
 
         }
 
+        private void RolesSelect_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+        private void RolesSelectAll_Click(object sender, RoutedEventArgs e)
+        {
+        }
+        private void RolesDeselect_Click(object sender, RoutedEventArgs e)
+        {
+        }
+        private void RolesDeselectAll_Click(object sender, RoutedEventArgs e)
+        {
+        }
         private void GroupsSelect_Click(object sender, RoutedEventArgs e)
         {
             if(GroupsListView.SelectedIndex != -1)

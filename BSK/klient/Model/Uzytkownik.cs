@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace klient.Model
 {
-    class Uzytkownik
+    public class Uzytkownik
     {
         /*
          * 	c_id_uzytkownika integer IDENTITY(1,1) PRIMARY KEY, 
@@ -22,7 +22,7 @@ namespace klient.Model
         public int IdUzytkownika;
         public int NrIndeksu;
         public int IdProwadzacego;
-        public string NazwaUzytkownika;
+        public string NazwaUzytkownika { get; set; }
         public int Grupa;
         public string Haslo;
 

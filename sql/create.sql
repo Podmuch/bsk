@@ -1,11 +1,3 @@
-/*USE SZKOLA
-GO
-CREATE LOGIN user123 
-    WITH PASSWORD = 'haslo123';
-GO
-*/
-
-
 CREATE DATABASE szkola
 GO
 
@@ -102,7 +94,6 @@ CREATE TABLE t_Role
 	c_id_roli integer IDENTITY(1,1) PRIMARY KEY,
 	c_rola varchar(50) not null,
 	c_aktywna bit not null default 1,
-	c_grupy_ktorych_dotyczy integer not null default 1, -- wielokrotnosci dwójki
 )
 
 CREATE TABLE t_Przywileje
@@ -111,26 +102,3 @@ CREATE TABLE t_Przywileje
 	c_Fk_id_operacji integer REFERENCES t_Operacje(c_id_operacji),
 	c_aktywny bit not null default 1,
 )
-
-
-
-/*CREATE TABLE t_Uzytkownicy
-(
-	c_Id_uzytkownika integer IDENTITY(1,1) PRIMARY KEY, 
-	c_Fk_nr_indeksu integer REFERENCES t_Studenci(c_Nr_indeksu),
-	c_Fk_id_pracownika integer REFERENCES t_Prowadzacy(c_Id_pracownika),
-	c_nazwa varchar(30) not null,
-	c_haslo varchar(50) not null, -- sha1			
-);
-
-CREATE TABLE t_Role
-(
-	c_id_roli integer IDENTITY(1,1) PRIMARY KEY,
-	c_rola varchar(20) not null,
-);
-
-CREATE TABLE t_Przywileje
-(
-	c_Fk_id_roli integer NOT NULL REFERENCES t_Role(c_id_roli),
-	c_Fk_id_uzytkownika integer NOT NULL REFERENCES t_Uzytkownicy(c_Id_uzytkownika),
-)*/

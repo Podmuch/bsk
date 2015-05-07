@@ -225,17 +225,12 @@ namespace klient
             return data;
         }
 
-        public void dodajNowaRole(string nazwaRoli, List<Grupa> listaGrup, List<Operacja> listaOperacji)
+        public void dodajNowaRole(string nazwaRoli, List<Operacja> listaOperacji)
         {
             var role = pobierzRole(" WHERE c_rola = '" + nazwaRoli + "'");
             if (role.Count > 0 || string.IsNullOrEmpty(nazwaRoli))
                 return;
-            int grupyKtorychDotyczyRola = 0;
-            foreach (Grupa g in listaGrup) 
-            {
-                grupyKtorychDotyczyRola += g.Id; 
-            }
-            Rola rola = new Rola(-1, nazwaRoli, true, grupyKtorychDotyczyRola);
+            Rola rola = new Rola(-1, nazwaRoli, true, 0);
             insertNewRole(rola);
 
             var stworzonaRola = pobierzRole(" WHERE c_rola = '" + nazwaRoli + "'");
@@ -249,6 +244,19 @@ namespace klient
             }            
         }
 
+        public void dodajNowegoUzytkownika(string login, List<Rola> listaRol, List<Rola> Role)
+        {
+            var uzytkownicy = pobierzUzytkownikow(" WHERE c_login = '" + login + "'");
+            if (uzytkownicy.Count > 0 || string.IsNullOrEmpty(login))
+                return;
+            int posiadaneRole = 0;
+            foreach (Rola r in listaRol)
+            {
+                posiadaneRole += (int)Math.Pow(2, Role.IndexOf(r));
+            }
+            Uzytkownik uzytkownik = new Uzytkownik(-1, -1,-1, login, posiadaneRole, "domyslne");
+            insertNewUser(uzytkownik);         
+        }
         public void insertNewRole(Rola r)
         {
             string query = "INSERT INTO T_ROLE(c_rola, c_grupy_ktorych_dotyczy) VALUES ('" 
@@ -256,6 +264,12 @@ namespace klient
             pobierz_dane(query); // pobierz_dane :d
         }
 
+        public void insertNewUser(Uzytkownik u)
+        {
+            string query = "INSERT INTO t_Uzytkownicy(c_Fk_nr_indeksu, c_Fk_id_pracownika, c_login, c_haslo, c_grupa) values (NULL, NULL, '" +
+                u.NazwaUzytkownika + "', '04c72343945e2a6ef09221862164ac3a9e914373'," + u.Grupa + ")";
+            pobierz_dane(query); // pobierz_dane :d
+        }
         public void insertNewPrivilege(Przywilej p)
         {
             string query = "INSERT INTO t_Przywileje(c_Fk_id_roli, c_Fk_id_operacji) VALUES ("
@@ -263,5 +277,33 @@ namespace klient
             pobierz_dane(query); // pobierz_dane :d
         }
 
+        private void DeleteAllPrivilegesWithThisRole(Rola rola)
+        {
+            string query = "DELETE FROM t_Przywileje WHERE c_Fk_id_roli='" + rola.Id + "';";
+            pobierz_dane(query); // pobierz_dane :d
+        }
+        public void ModyfikujUyztkownika(Uzytkownik wybrany, string Login, List<Rola> wybraneRole, List<Rola> Role)
+        {
+            int posiadaneRole = 0;
+            foreach (Rola r in wybraneRole)
+            {
+                posiadaneRole += (int)Math.Pow(2, Role.IndexOf(r));
+            }
+            string query = "UPDATE t_Uzytkownicy Set c_login='" + Login + "', c_grupa='"+posiadaneRole+"' Where c_login='" + wybrany.NazwaUzytkownika + "';";
+            pobierz_dane(query);
+        }
+
+        public void ModyfikujRole(string nazwaRoli, Rola rola, List<Operacja> listaOperacji)
+        {
+            string query = "UPDATE T_ROLE Set c_rola='" + nazwaRoli + "' Where c_rola='" + rola.Nazwa + "';";
+            pobierz_dane(query);
+
+            DeleteAllPrivilegesWithThisRole(rola);
+            foreach (Operacja o in listaOperacji)
+            {
+                var przywilej = new Przywilej(rola.Id, o.IdOperacji, true);
+                insertNewPrivilege(przywilej);
+            }    
+        }
     }
 }

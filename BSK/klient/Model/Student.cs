@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace klient.Model
 {
-    public class Student
+    class Student
     {
         public int NrIndeksu { get; set; }
         public string Imie { get; set; }
@@ -34,5 +34,14 @@ namespace klient.Model
             //Wyniki = new List<Wynik>();
         }
 
+        public void DodajRole(List<Rola> role)
+        {
+            //Role.AddRange(role);
+        }
+
+        public void DodajWyniki(List<Wynik> wyniki)
+        {
+            //Wyniki = wyniki;
+        }
     }
 }

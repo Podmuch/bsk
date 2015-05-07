@@ -37,7 +37,7 @@
         </Style>
     </Window.Resources>
     <Grid>
-        <Grid Name="LoginGrid" Visibility="Hidden" KeyDown="LoginGrid_KeyDown">
+        <Grid Name="LoginGrid" Visibility="Visible" KeyDown="LoginGrid_KeyDown">
             <TextBox Name="LoginBox" HorizontalAlignment="Left" Height="26" Margin="169,97,0,0" TextWrapping="Wrap" Text="Name" VerticalContentAlignment="Center" VerticalAlignment="Top" Width="120"/>
             <Label Content="Login" HorizontalAlignment="Left" Margin="88,97,0,0" VerticalAlignment="Top"/>
             <Label Content="Password:" HorizontalAlignment="Left" Margin="88,149,0,0" VerticalAlignment="Top"/>
@@ -46,7 +46,7 @@
             <ComboBox Name="RoleBox" HorizontalAlignment="Left" Margin="169,203,0,0" VerticalAlignment="Top" Width="120" />
             <Label Content="Role:" HorizontalAlignment="Left" Height="26" Margin="88,203,0,0" VerticalAlignment="Top" Width="62"/>
         </Grid>
-        <Grid Name="UserZalogowanyGrid" Visibility="Visible">
+        <Grid Name="UserZalogowanyGrid" Visibility="Hidden">
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*" />
                 <RowDefinition Height="8*" />
@@ -61,13 +61,13 @@
                 </Border>
             </Grid>
             <Grid Grid.Row="1">
-                <Grid Name="UserGrid" Visibility="Visible">
-                    <TabControl>                        
+                <Grid Name="UserGrid" Visibility="Hidden">
+                    <TabControl>
                         <TabItem Name="StudiaTaBItem" Header="Role">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="1*" />
-                                    <ColumnDefinition Width="2*" />                                    
+                                    <ColumnDefinition Width="2*" />
                                 </Grid.ColumnDefinitions>
                                 <Grid Name="StudiaGridColumn1" Grid.Column="0">
                                     <ListView Name="StudiaListView" Grid.Row="2" Margin="7" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="4" SelectionChanged="StudiaListView_SelectionChanged" >
@@ -144,7 +144,7 @@
                                                 <ListView.View>
                                                     <GridView>
                                                         <GridView.Columns>
-                                                            <GridViewColumn Width="150" DisplayMemberBinding="{Binding Nazwa}" />
+                                                            <GridViewColumn Width="150" DisplayMemberBinding="{Binding NazwaUzytkownika}" />
                                                         </GridView.Columns>
                                                     </GridView>
                                                 </ListView.View>
@@ -184,7 +184,7 @@
                                         <ListView.View>
                                             <GridView>
                                                 <GridView.Columns>
-                                                    <GridViewColumn Width="180" DisplayMemberBinding="{Binding NazwaRoli}" />
+                                                    <GridViewColumn Width="180" DisplayMemberBinding="{Binding Nazwa}" />
                                                 </GridView.Columns>
                                             </GridView>
                                         </ListView.View>
@@ -197,7 +197,7 @@
                                         <ListView.View>
                                             <GridView>
                                                 <GridView.Columns>
-                                                    <GridViewColumn Width="180" DisplayMemberBinding="{Binding NazwaGrupy}" />
+                                                    <GridViewColumn Width="180" DisplayMemberBinding="{Binding Nazwa}" />
                                                 </GridView.Columns>
                                             </GridView>
                                         </ListView.View>
@@ -258,32 +258,8 @@
 
                                     <Button Name="SaveRoleButton" Click="SaveRoleButton_Click" Margin="8" Grid.Column="3" Grid.Row="0" Grid.ColumnSpan="2" Grid.RowSpan="2" Style="{StaticResource TabButton}"></Button>
 
-                                    <Label Content="Grupy: " Margin="3" Grid.Column="0" Grid.Row="1"></Label>
-                                    <ListView Name="GroupsListView" Grid.Row="2" Margin="7" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="4" >
-                                        <ListView.View>
-                                            <GridView>
-                                                <GridView.Columns>
-                                                    <GridViewColumn Width="180" DisplayMemberBinding="{Binding NazwaGrupy}" />
-                                                </GridView.Columns>
-                                            </GridView>
-                                        </ListView.View>
-                                    </ListView>
-                                    <Button Name="GroupsSelect" Grid.Column="2" Grid.Row="2" Margin="15,6" Content=">" Style="{StaticResource ArrowButton}" Click="GroupsSelect_Click" ></Button>
-                                    <Button Name="GroupsSelectAll" Grid.Column="2" Grid.Row="3" Margin="15,6" Content=">>" Style="{StaticResource ArrowButton}" Click="GroupsSelectAll_Click" ></Button>
-                                    <Button Name="GroupsDeselect" Grid.Column="2" Grid.Row="4" Margin="15,6" Content="&lt;" Style="{StaticResource ArrowButton}" Click="GroupsDeselect_Click" ></Button>
-                                    <Button Name="GroupsDeselectAll" Grid.Column="2" Grid.Row="5" Margin="15,6" Content="&lt;&lt;" Style="{StaticResource ArrowButton}" Click="GroupsDeselectAll_Click" ></Button>
-                                    <ListView Name="SelectedGroupsListView" Grid.Row="2" Grid.Column="3" Margin="7" Grid.ColumnSpan="2" Grid.RowSpan="4" >
-                                        <ListView.View>
-                                            <GridView>
-                                                <GridView.Columns>
-                                                    <GridViewColumn Width="180" DisplayMemberBinding="{Binding NazwaGrupy}" />
-                                                </GridView.Columns>
-                                            </GridView>
-                                        </ListView.View>
-                                    </ListView>
-                                    
-                                    <Label Content="Operacje: " Margin="3" Grid.Column="0" Grid.Row="6"></Label>
-                                    <ListView Name="OperationsListView" Grid.Row="7" Margin="7" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="5" >
+                                    <Label Content="Operacje: " Margin="3" Grid.Column="0" Grid.Row="1"></Label>
+                                    <ListView Name="OperationsListView" Grid.Row="2" Margin="7" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="5" >
                                         <ListView.View>
                                             <GridView>
                                                 <GridView.Columns>
@@ -292,11 +268,11 @@
                                             </GridView>
                                         </ListView.View>
                                     </ListView>
-                                    <Button Name="OperationsSelect" Grid.Column="2" Grid.Row="7" Margin="15,6" Content=">" Style="{StaticResource ArrowButton}" Click="OperationsSelect_Click" ></Button>
-                                    <Button Name="OperationsSelectAll" Grid.Column="2" Grid.Row="8" Margin="15,6" Content=">>" Style="{StaticResource ArrowButton}" Click="OperationsSelectAll_Click" ></Button>
-                                    <Button Name="OperationsDeselect" Grid.Column="2" Grid.Row="9" Margin="15,6" Content="&lt;" Style="{StaticResource ArrowButton}" Click="OperationsDeselect_Click" ></Button>
-                                    <Button Name="OperationsDeselectAll" Grid.Column="2" Grid.Row="10" Margin="15,6" Content="&lt;&lt;" Style="{StaticResource ArrowButton}" Click="OperationsDeselectAll_Click" ></Button>
-                                    <ListView Name="SelectedOperationsListView" Grid.Row="7" Grid.Column="3" Margin="7" Grid.ColumnSpan="2" Grid.RowSpan="5" >
+                                    <Button Name="OperationsSelect" Grid.Column="2" Grid.Row="2" Margin="15,6" Content=">" Style="{StaticResource ArrowButton}" Click="OperationsSelect_Click" ></Button>
+                                    <Button Name="OperationsSelectAll" Grid.Column="2" Grid.Row="3" Margin="15,6" Content=">>" Style="{StaticResource ArrowButton}" Click="OperationsSelectAll_Click" ></Button>
+                                    <Button Name="OperationsDeselect" Grid.Column="2" Grid.Row="4" Margin="15,6" Content="&lt;" Style="{StaticResource ArrowButton}" Click="OperationsDeselect_Click" ></Button>
+                                    <Button Name="OperationsDeselectAll" Grid.Column="2" Grid.Row="5" Margin="15,6" Content="&lt;&lt;" Style="{StaticResource ArrowButton}" Click="OperationsDeselectAll_Click" ></Button>
+                                    <ListView Name="SelectedOperationsListView" Grid.Row="2" Grid.Column="3" Margin="7" Grid.ColumnSpan="2" Grid.RowSpan="5" >
                                         <ListView.View>
                                             <GridView>
                                                 <GridView.Columns>

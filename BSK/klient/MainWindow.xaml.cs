@@ -25,33 +25,16 @@ namespace klient
     public partial class MainWindow : Window
     {
         private Grid AktualnaOperacja;
-        private Rola zalogowanaRola;
-        private List<Wynik> Wyniki;
-        private List<Prowadzacy> Prowadzacy;
-        private List<Przedmiot> Przedmioty;
-        private List<Student> Studenci;
-        private List<SkladowaPrzedmiotu> SkladowePrzedmiotow;
-
         private DataBase Baza;
-
-        private List<Uzytkownik> Uzytkownicy;
         public ObservableCollection<Rola> Role;
-        private List<Przywilej> Przywileje;
+        public ObservableCollection<Uzytkownik> Uzytkownicy;
         public List<Operacja> Operacje;
         public ObservableCollection<Operacja> PozostaleOperacje;
         public ObservableCollection<Operacja> WybraneOperacje;
-
-        public List<Grupa> Grupy;
-        public ObservableCollection<Grupa> PozostaleGrupy;
-        public ObservableCollection<Grupa> WybraneGrupy;
         public ObservableCollection<Rola> WybraneRole;
         public ObservableCollection<Rola> PozostaleRole;
-
-        //private Student ZalogowanyStudent;
-       // private Prowadzacy ZalogowanyProwadzacy;
         private Rola aktualnaRola;
         private Uzytkownik zalogowanyUzytkownik;
-
         public MainWindow()
         {
             InitializeComponent();
@@ -60,19 +43,9 @@ namespace klient
 
         private void Init()
         {
-            Baza = new DataBase("user123", "haslo123", "localhost", "szkola");
-
-            // REMOVE IT            
+            Baza = new DataBase("user123", "haslo123", "localhost", "szkola");           
             try
             {
-                Grupy = new List<Grupa>();
-                Grupy.Add(new Grupa(1, "Uzytkownik"));
-                Grupy.Add(new Grupa(2, "Student"));
-                Grupy.Add(new Grupa(4, "Prowadzacy"));
-                Grupy.Add(new Grupa(8, "Planista"));
-                Grupy.Add(new Grupa(16, "Administrator"));
-
-
                 Role = new ObservableCollection<Rola>(Baza.pobierzRole());
                 RolesListView.ItemsSource = Role;
                 UpdateLoginRoleComboBox();
@@ -84,31 +57,17 @@ namespace klient
                 PozostaleOperacje = new ObservableCollection<Operacja>(Baza.pobierzOperacje());
                 OperationsListView.ItemsSource = PozostaleOperacje;
 
-                WybraneGrupy = new ObservableCollection<Grupa>();
-                PozostaleGrupy = new ObservableCollection<Grupa>();
-                SelectedGroupsListView.ItemsSource = WybraneGrupy;
-                GroupsListView.ItemsSource = PozostaleGrupy;
-
-               /* Prowadzacy = Baza.pobierzProwadzacych();
-                Przedmioty = Baza.pobierzPrzedmioty();
-                Studenci = Baza.pobierzStudentow();
-                SkladowePrzedmiotow = Baza.pobierzSkladowePrzedmiotow();
-                Wyniki = Baza.pobierzWyniki();
-
-                Uzytkownicy = Baza.pobierzUzytkownikow();
-                Role = Baza.pobierzRole();
-                Przywileje = Baza.pobierzPrzywileje();
-                Operacje = Baza.pobierzOperacje();*/
+                WybraneRole = new ObservableCollection<Rola>();
+                PozostaleRole = new ObservableCollection<Rola>();
+                SelectedRolesListView.ItemsSource = WybraneRole;
+                UserRolesListView.ItemsSource = PozostaleRole;
             }
             catch (Exception e )
             {
                 MessageBox.Show("Błąd: " + e.Message);
             }
-            // REMOVE IT
-
-
         }
-
+        #region Logowanie
         private void Role_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             UpdateLoginRoleComboBox();
@@ -118,22 +77,23 @@ namespace klient
         {
             string Login = LoginBox.Text.Trim();
             string Password = PobierzHaslo();
-            string Rola = RoleBox.SelectedItem.ToString();
+            string Rola = RoleBox.SelectedItem.ToString().ToLower();
             if(CzyIstniejeUzytkownikODanymLoginie(Login)&&
                CzyHasloJestPrawidlowe(Login, Password))
             {
                 Uzytkownik uzytkownik = Baza.pobierzUzytkownikow(" WHERE C_LOGIN = '" + Login + "'").First();
-                DataTable table2 = Baza.pobierz_dane("select * from t_uzytkownicy join t_role on c_grupa & c_grupy_ktorych_dotyczy > 0 " +
-                                                     "where c_Id_uzytkownika = " + uzytkownik.IdUzytkownika + " and c_rola = '" + Rola + "'");
-                if (table2.Rows.Count > 0)
+                if ((uzytkownik.Grupa >> (RoleBox.SelectedIndex)) % 2 == 1)
                 {
                     zalogowanyUzytkownik = uzytkownik;
                     aktualnaRola = Baza.pobierzRole(" WHERE C_ROLA = '" + Rola + "'").First();
                     LoginGrid.Visibility = System.Windows.Visibility.Hidden;
                     UserZalogowanyGrid.Visibility = System.Windows.Visibility.Visible;
+                    EdycjaRolColumn2Grid.Visibility = System.Windows.Visibility.Hidden;
                     UstawStatus(Login, Rola);
-                    if (Rola.ToLower() == "administrator")
+                    if (Rola== "administrator")
                     {
+                        Uzytkownicy = new ObservableCollection<Uzytkownik>(Baza.pobierzUzytkownikow());
+                        UsersListView.ItemsSource = Uzytkownicy;
                         UserGrid.Visibility = System.Windows.Visibility.Hidden;
                         AdministratorGrid.Visibility = System.Windows.Visibility.Visible;
                         EdycjaRolColumn2Grid.Visibility = System.Windows.Visibility.Hidden;
@@ -160,6 +120,10 @@ namespace klient
         private void StudentLogOutButton_Click(object sender, RoutedEventArgs e)
         {
             PasswordBox.Clear();
+            if (Uzytkownicy != null)
+            {
+                Uzytkownicy.Clear();
+            }
             LoginGrid.Visibility = System.Windows.Visibility.Visible;
             UserGrid.Visibility = System.Windows.Visibility.Hidden;
             AdministratorGrid.Visibility = System.Windows.Visibility.Hidden;
@@ -211,7 +175,7 @@ namespace klient
                 LogIn_Click(sender, e);
             }
         }
-
+        #endregion
         private void AddNewRoleButton_Click(object sender, RoutedEventArgs e)
         {
             RoleNameTextBox.Clear();
@@ -222,14 +186,6 @@ namespace klient
                 if (!WybraneOperacje.Contains(o))
                 {
                     PozostaleOperacje.Add(o);
-                }
-            }
-            WybraneGrupy.Clear();
-            PozostaleGrupy.Clear();
-            foreach (Grupa g in Grupy)
-            {
-                {
-                    PozostaleGrupy.Add(g);
                 }
             }
             SaveRoleButton.Content = "Dodaj rolę";
@@ -248,19 +204,50 @@ namespace klient
                     PozostaleOperacje.Add(o);
                 }
             }
-            WybraneGrupy.Clear();
-            PozostaleGrupy.Clear();
-            foreach (Grupa g in Grupy)
+            WybraneRole.Clear();
+            PozostaleRole.Clear();
+            foreach (Rola r in Role)
             {
                 {
-                    PozostaleGrupy.Add(g);
+                    PozostaleRole.Add(r);
                 }
             }
-            SaveRoleButton.Content = "Dodaj rolę";
+            SaveUserButton.Content = "Dodaj uzytkownika";
             EdycjaRolColumn2Grid.Visibility = System.Windows.Visibility.Visible;
         }
         private void UsersListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (UsersListView.SelectedItem != null)
+            {
+                Uzytkownik wybranyUzytkownik = (Uzytkownik)UsersListView.SelectedItem;
+                WybraneRole.Clear();
+                WybraneRole = new ObservableCollection<Rola>(PobierzRoleUzytkownika(wybranyUzytkownik));
+                SelectedRolesListView.ItemsSource = WybraneRole;
+                PozostaleRole.Clear();
+                foreach (Rola r in Role)
+                {
+                    if (!WybraneRole.Contains(r))
+                    {
+                        PozostaleRole.Add(r);
+                    }
+                }
+                UserNameTextBox.Text = wybranyUzytkownik.NazwaUzytkownika;
+                SaveUserButton.Content = "Zapisz zmiany";
+                EdycjaUzytkownikowColumn2Grid.Visibility = System.Windows.Visibility.Visible;
+            }
+        }
+
+        public List<Rola> PobierzRoleUzytkownika(Uzytkownik wybranyUzytkownik)
+        {
+            List<Rola> role = new List<Rola>();
+            for (int i = 0; i < Role.Count;i++ )
+            {
+                if ((wybranyUzytkownik.Grupa >> i) % 2 == 1)
+                {
+                    role.Add(Role[i]);
+                }
+            }
+            return role;
         }
         private void RolesListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -278,19 +265,6 @@ namespace klient
                         PozostaleOperacje.Add(o);
                     }
                 }
-                WybraneGrupy.Clear();
-                PozostaleGrupy.Clear();
-                foreach (Grupa g in Grupy)
-                {
-                    if ((g.Id & wybranaRola.Grupy_ktorych_dotyczy) > 0)
-                    {
-                        WybraneGrupy.Add(g);
-                    }
-                    else
-                    {
-                        PozostaleGrupy.Add(g);
-                    }
-                }
                 RoleNameTextBox.Text = wybranaRola.Nazwa;
                 SaveRoleButton.Content = "Zapisz zmiany";
                 EdycjaRolColumn2Grid.Visibility = System.Windows.Visibility.Visible;
@@ -298,6 +272,32 @@ namespace klient
         }
         private void SaveUserButton_Click(object sender, RoutedEventArgs e)
         {
+            if (SaveUserButton.Content.ToString() == "Dodaj uzytkownika")
+            {
+                if (string.IsNullOrEmpty(UserNameTextBox.Text))
+                {
+                    MessageBox.Show("Wprowadz nazwę dla nowego uzytkownika.");
+                    return;
+                }
+                if (Baza.pobierzUzytkownikow(" WHERE c_login = '" + UserNameTextBox.Text + "'").Count > 0)
+                {
+                    MessageBox.Show("Uzytkownik o podanej nazwie już istnieje.");
+                    return;
+                }
+                Baza.dodajNowegoUzytkownika(UserNameTextBox.Text, WybraneRole.ToList(), Role.ToList());
+                Uzytkownicy = new ObservableCollection<Uzytkownik>(Baza.pobierzUzytkownikow());
+                UsersListView.ItemsSource = Uzytkownicy;
+                UpdateLoginRoleComboBox();
+                EdycjaUzytkownikowColumn2Grid.Visibility = System.Windows.Visibility.Hidden;
+                MessageBox.Show("Uzytkownik został dodany.");
+            }
+            else if(SaveUserButton.Content.ToString() =="Zapisz zmiany")
+            {
+                Baza.ModyfikujUyztkownika((Uzytkownik)UsersListView.SelectedItem, UserNameTextBox.Text, WybraneRole.ToList(), Role.ToList());
+                Uzytkownicy = new ObservableCollection<Uzytkownik>(Baza.pobierzUzytkownikow());
+                UsersListView.ItemsSource = Uzytkownicy;
+                MessageBox.Show("Zmiany zostaly zapisane.");
+            }        
         }
         private void SaveRoleButton_Click(object sender, RoutedEventArgs e)
         {
@@ -313,68 +313,56 @@ namespace klient
                     MessageBox.Show("Rola o takiej podanej już istnieje.");
                     return;
                 }
-                Baza.dodajNowaRole(RoleNameTextBox.Text, WybraneGrupy.ToList<Grupa>(), WybraneOperacje.ToList<Operacja>());
+                Baza.dodajNowaRole(RoleNameTextBox.Text, WybraneOperacje.ToList<Operacja>());
                 Role = new ObservableCollection<Rola>(Baza.pobierzRole());
                 RolesListView.ItemsSource = Role;
+                UserRolesListView.ItemsSource = Role;
                 UpdateLoginRoleComboBox();
                 EdycjaRolColumn2Grid.Visibility = System.Windows.Visibility.Hidden;
                 MessageBox.Show("Rola została dodana.");
-            } 
-            else
+            }
+            else if (SaveRoleButton.Content.ToString() == "Zapisz zmiany")
             {
-
-            }        
+                Baza.ModyfikujRole(RoleNameTextBox.Text, (Rola)RolesListView.SelectedItem, WybraneOperacje.ToList());
+                Role = new ObservableCollection<Rola>(Baza.pobierzRole());
+                RolesListView.ItemsSource = Role;
+                MessageBox.Show("Zmiany zostaly zapisane.");
+            }          
 
         }
 
         private void RolesSelect_Click(object sender, RoutedEventArgs e)
         {
-
+            if (UserRolesListView.SelectedIndex != -1)
+            {
+                Rola o = (Rola)UserRolesListView.SelectedItem;
+                PozostaleRole.Remove(o);
+                WybraneRole.Add(o);
+            }
         }
         private void RolesSelectAll_Click(object sender, RoutedEventArgs e)
         {
+            foreach (Rola o in PozostaleRole.ToList<Rola>())
+            {
+                PozostaleRole.Remove(o);
+                WybraneRole.Add(o);
+            }
         }
         private void RolesDeselect_Click(object sender, RoutedEventArgs e)
         {
+            if (SelectedRolesListView.SelectedIndex != -1)
+            {
+                Rola o = (Rola)SelectedRolesListView.SelectedItem;
+                WybraneRole.Remove(o);
+                PozostaleRole.Add(o);
+            }
         }
         private void RolesDeselectAll_Click(object sender, RoutedEventArgs e)
         {
-        }
-        private void GroupsSelect_Click(object sender, RoutedEventArgs e)
-        {
-            if(GroupsListView.SelectedIndex != -1)
+            foreach (Rola o in WybraneRole.ToList<Rola>())
             {
-                Grupa g = (Grupa)GroupsListView.SelectedItem;
-                PozostaleGrupy.Remove(g);
-                WybraneGrupy.Add(g);
-            }
-        }
-
-        private void GroupsSelectAll_Click(object sender, RoutedEventArgs e)
-        {
-            foreach(Grupa g in PozostaleGrupy.ToList<Grupa>())
-            {
-                PozostaleGrupy.Remove(g);
-                WybraneGrupy.Add(g);
-            }
-        }
-
-        private void GroupsDeselect_Click(object sender, RoutedEventArgs e)
-        {
-            if (SelectedGroupsListView.SelectedIndex != -1)
-            {
-                Grupa g = (Grupa)SelectedGroupsListView.SelectedItem;
-                WybraneGrupy.Remove(g);
-                PozostaleGrupy.Add(g);
-            }
-        }
-
-        private void GroupsDeselectAll_Click(object sender, RoutedEventArgs e)
-        {
-            foreach (Grupa g in WybraneGrupy.ToList<Grupa>())
-            {
-                WybraneGrupy.Remove(g);
-                PozostaleGrupy.Add(g);
+                WybraneRole.Remove(o);
+                PozostaleRole.Add(o);
             }
         }
 
@@ -428,11 +416,11 @@ namespace klient
 
         private void StudiaListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if(StudiaListView.SelectedIndex != -1)
+            if (StudiaListView.SelectedIndex != -1)
             {
                 if (AktualnaOperacja != null)
                     AktualnaOperacja.Visibility = System.Windows.Visibility.Hidden;
-                switch(((Operacja)StudiaListView.SelectedItem).IdOperacji)
+                switch (((Operacja)StudiaListView.SelectedItem).IdOperacji)
                 {
                     case 1://zmiana hasla
                         AktualnaOperacja = OperacjaZmianyHaslaGrid;
@@ -457,9 +445,6 @@ namespace klient
         private void WyswietlListeStudentow()
         {
             listaStudentowListView.ItemsSource = new ObservableCollection<Student>(Baza.pobierzStudentow());
-            int a = 2;
         }
-
-
     }
 }

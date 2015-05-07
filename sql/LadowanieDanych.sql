@@ -21,27 +21,6 @@ BULK INSERT dbo.t_Prowadzacy_skladowych_czesci FROM 'C:/bulki/prowadzacy_skladow
 */
 
 /*
-------------------------------------------------------------------------------------------------------------
-INSERT INTO dbo.t_Uzytkownicy(c_Fk_nr_indeksu, c_Fk_id_pracownika, c_nazwa, c_grupa, c_status, c_haslo) 
-	values (NULL, 0, 'student1', 6, 2, '04c72343945e2a6ef09221862164ac3a9e914373') -- haslo123
-	
-INSERT INTO dbo.t_Uzytkownicy(c_Fk_nr_indeksu, c_Fk_id_pracownika, c_nazwa, c_grupa, c_status, c_haslo) 
-	values (550, NULL, 'prowadzacy1', 10, 2, '04c72343945e2a6ef09221862164ac3a9e914373') -- haslo123
-	
-INSERT INTO dbo.t_Uzytkownicy(c_Fk_nr_indeksu, c_Fk_id_pracownika, c_nazwa, c_grupa, c_status, c_haslo) 
-	values (NULL, NULL, 'admin1', 62, 2, '04c72343945e2a6ef09221862164ac3a9e914373') -- haslo123
-------------------------------------------------------------------------------------------------------------
-INSERT INTO dbo.t_Akcje(c_akcja, c_tabela, c_status) values ('read', 't_Studenci', 2)
-INSERT INTO dbo.t_Akcje(c_akcja, c_tabela, c_status) values ('write', 't_Studenci', 2)
-INSERT INTO dbo.t_Akcje(c_akcja, c_tabela, c_status) values ('read', 't_Prowadzacy', 2)
-INSERT INTO dbo.t_Akcje(c_akcja, c_tabela, c_status) values ('write', 't_Prowadzacy', 2)
-INSERT INTO dbo.t_Akcje(c_akcja, c_tabela, c_status) values ('read', 't_Akcje', 2)
-INSERT INTO dbo.t_Akcje(c_akcja, c_tabela, c_status) values ('write', 't_Akcje', 2)
-INSERT INTO dbo.t_Akcje(c_akcja, c_tabela, c_status) values ('activate', 't_Akcje', 2)
-
-*/
-
-/*
 	1 - user
 	2 - student
 	4 - prowadzacy
@@ -63,19 +42,88 @@ INSERT INTO dbo.t_Uzytkownicy(c_Fk_nr_indeksu, c_Fk_id_pracownika, c_login, c_ha
 
 
 INSERT INTO dbo.t_Operacje(c_active, c_operacja) 
-	values (1, 'zmiana hasla')
+	values (1, 't_Prowadzacy_select')
 
 INSERT INTO dbo.t_Operacje(c_active, c_operacja) 
-	values (1, 'edycja imienia')
+	values (1, 't_Prowadzacy_update')
 
 INSERT INTO dbo.t_Operacje(c_active, c_operacja) 
-	values (1, 'edycja nazwiska')
+	values (1, 't_Prowadzacy_insert')
 
 INSERT INTO dbo.t_Operacje(c_active, c_operacja) 
-	values (1, 'wyswietlenie listy studentów')
+	values (1, 't_Prowadzacy_delete')
 
 INSERT INTO dbo.t_Operacje(c_active, c_operacja) 
-	values (1, 'zmiana grupy studenta')
+	values (1, 't_Prowadzacy_Skladowych_select')
+
+INSERT INTO dbo.t_Operacje(c_active, c_operacja) 
+	values (1, 't_Prowadzacy_Skladowych_update')
+
+INSERT INTO dbo.t_Operacje(c_active, c_operacja) 
+	values (1, 't_Prowadzacy_Skladowych_insert')
+
+INSERT INTO dbo.t_Operacje(c_active, c_operacja) 
+	values (1, 't_Prowadzacy_Skladowych_delete')
+
+INSERT INTO dbo.t_Operacje(c_active, c_operacja) 
+	values (1, 't_Przedmioty_select')
+
+INSERT INTO dbo.t_Operacje(c_active, c_operacja) 
+	values (1, 't_Przedmioty_update')
+
+INSERT INTO dbo.t_Operacje(c_active, c_operacja) 
+	values (1, 't_Przedmioty_insert')
+
+INSERT INTO dbo.t_Operacje(c_active, c_operacja) 
+	values (1, 't_Przedmioty_delete')
+
+INSERT INTO dbo.t_Operacje(c_active, c_operacja) 
+	values (1, 't_Rodzaje_Skladowych_select')
+
+INSERT INTO dbo.t_Operacje(c_active, c_operacja) 
+	values (1, 't_Rodzaje_Skladowych_update')
+
+INSERT INTO dbo.t_Operacje(c_active, c_operacja) 
+	values (1, 't_Rodzaje_Skladowych_insert')
+
+INSERT INTO dbo.t_Operacje(c_active, c_operacja) 
+	values (1, 't_Rodzaje_Skladowych_delete')
+
+INSERT INTO dbo.t_Operacje(c_active, c_operacja) 
+	values (1, 't_Skladowe_Przedmiotow_select')
+
+INSERT INTO dbo.t_Operacje(c_active, c_operacja) 
+	values (1, 't_Skladowe_Przedmiotow_update')
+
+INSERT INTO dbo.t_Operacje(c_active, c_operacja) 
+	values (1, 't_Skladowe_Przedmiotow_insert')
+
+INSERT INTO dbo.t_Operacje(c_active, c_operacja) 
+	values (1, 't_Skladowe_Przedmiotow_delete')
+
+INSERT INTO dbo.t_Operacje(c_active, c_operacja) 
+	values (1, 't_Studenci_select')
+
+INSERT INTO dbo.t_Operacje(c_active, c_operacja) 
+	values (1, 't_Studenci_update')
+
+INSERT INTO dbo.t_Operacje(c_active, c_operacja) 
+	values (1, 't_Studenci_insert')
+
+INSERT INTO dbo.t_Operacje(c_active, c_operacja) 
+	values (1, 't_Studenci_delete')
+
+INSERT INTO dbo.t_Operacje(c_active, c_operacja) 
+	values (1, 't_Wyniki_select')
+
+INSERT INTO dbo.t_Operacje(c_active, c_operacja) 
+	values (1, 't_Wyniki_update')
+
+INSERT INTO dbo.t_Operacje(c_active, c_operacja) 
+	values (1, 't_Wyniki_insert')
+
+INSERT INTO dbo.t_Operacje(c_active, c_operacja) 
+	values (1, 't_Wyniki_delete')
 
 	
 INSERT INTO dbo.t_Role(c_rola, c_grupy_ktorych_dotyczy) 

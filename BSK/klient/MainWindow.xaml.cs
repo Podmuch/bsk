@@ -24,7 +24,7 @@ namespace klient
     /// </summary>
     public partial class MainWindow : Window
     {
-        private Grid AktualnaOperacja;
+        private Grid AktualnaTabela;
         private DataBase Baza;
         public ObservableCollection<Rola> Role;
         public ObservableCollection<Uzytkownik> Uzytkownicy;
@@ -100,8 +100,8 @@ namespace klient
                     }
                     else
                     {
-                        var dostepneOperacje = Baza.pobierzOperacje(" join t_przywileje on c_Fk_id_operacji = c_id_operacji where c_Fk_id_roli = " + aktualnaRola.Id);
-                        StudiaListView.ItemsSource = dostepneOperacje;
+                        Operacje = Baza.pobierzOperacje(" join t_przywileje on c_Fk_id_operacji = c_id_operacji where c_Fk_id_roli = " + aktualnaRola.Id);
+                        StudiaListView.ItemsSource = WybierzDostepneTabele();
                         UserGrid.Visibility = System.Windows.Visibility.Visible;
                         AdministratorGrid.Visibility = System.Windows.Visibility.Hidden;
                     }
@@ -418,33 +418,81 @@ namespace klient
         {
             if (StudiaListView.SelectedIndex != -1)
             {
-                if (AktualnaOperacja != null)
-                    AktualnaOperacja.Visibility = System.Windows.Visibility.Hidden;
-                switch (((Operacja)StudiaListView.SelectedItem).IdOperacji)
+                if (AktualnaTabela != null)
+                    AktualnaTabela.Visibility = System.Windows.Visibility.Hidden;
+                switch (((Tabela)StudiaListView.SelectedItem).NazwaTabeli)
                 {
-                    case 1://zmiana hasla
-                        AktualnaOperacja = OperacjaZmianyHaslaGrid;
-                        break;
-                    case 2://edycja imienia
-                        AktualnaOperacja = OperacjaEdycjiImieniaGrid;
-                        break;
-                    case 3://edycja nazwiska
-                        AktualnaOperacja = OperacjaEdycjiNazwiskaGrid;
-                        break;
-                    case 4://wyswietlenie listy studentów
-                        AktualnaOperacja = OperacjaWyswietleniaListyStudentowGrid;
+                    case "Studenci":
+                        AktualnaTabela = StudentGrid;
                         WyswietlListeStudentow();
                         break;
-                    case 5://zmiana grupy studenta
-                        AktualnaOperacja = OperacjaZmianyGrupyStudentaGrid;
+                    case "Prowadzacy":
+                        AktualnaTabela = ProwadzacyGrid;
+                        WyswietlListeProwadzacych();
+                        break;
+                    case "Wyniki":
+                        AktualnaTabela = WynikiGrid;
+                        WyswietlListeWynikow();
+                        break;
+                    case "Przedmioty":
+                        AktualnaTabela = PrzedmiotyGrid;
+                        WyswietlListePrzedmiotow();
+                        break;
+                    case "ProwadzacySkladowych":
+                        AktualnaTabela = ProwadzacySkladowychGrid;
+                        WyswietlListeProwadzacychSkladowych();
+                        break;
+                    case "SkladowePrzedmiotow":
+                        AktualnaTabela = SkladowePrzedmiotowGrid;
+                        WyswietlListeSkladowychPrzedmiotow();
                         break;
                 }
-                AktualnaOperacja.Visibility = System.Windows.Visibility.Visible;
+                AktualnaTabela.Visibility = System.Windows.Visibility.Visible;
             }
         }
         private void WyswietlListeStudentow()
         {
             listaStudentowListView.ItemsSource = new ObservableCollection<Student>(Baza.pobierzStudentow());
+        }
+
+        private void WyswietlListeProwadzacych()
+        {
+            listaProwadzacychListView.ItemsSource = new ObservableCollection<Prowadzacy>(Baza.pobierzProwadzacych());
+        }
+
+        private void WyswietlListeWynikow()
+        {
+            listaWynikowListView.ItemsSource = new ObservableCollection<Wynik>(Baza.pobierzWyniki());
+        }
+
+        private void WyswietlListePrzedmiotow()
+        {
+            listaPrzedmiotowListView.ItemsSource = new ObservableCollection<Przedmiot>(Baza.pobierzPrzedmioty());
+        }
+        
+        private void WyswietlListeProwadzacychSkladowych()
+        {
+            listaProwadzacychSkladowychListView.ItemsSource = new ObservableCollection<ProwadzacySkladowych>(Baza.pobierzProwadzacychSkladowych());
+        }
+
+        private void WyswietlListeSkladowychPrzedmiotow()
+        {
+            listaSkladowePrzedmiotowListView.ItemsSource = new ObservableCollection<SkladowaPrzedmiotu>(Baza.pobierzSkladowePrzedmiotow());
+        }
+
+        private List<Tabela> WybierzDostepneTabele()
+        {
+            List<Tabela> listaTabel = new List<Tabela>();
+            var operacjeSelect = Operacje.FindAll((o)=>o.NazwaOperacji.Contains("select"));
+            for (int i = 0; i < operacjeSelect.Count;i++ )
+            {
+                listaTabel.Add(new Tabela(operacjeSelect[i].NazwaOperacji.Contains("Prowadzacy_Skladowych") ? "ProwadzacySkladowych" :
+                                          operacjeSelect[i].NazwaOperacji.Contains("Przedmioty") ? "Przedmioty" :
+                                          operacjeSelect[i].NazwaOperacji.Contains("Studenci") ? "Studenci" :
+                                          operacjeSelect[i].NazwaOperacji.Contains("Wyniki") ? "Wyniki" :
+                                          operacjeSelect[i].NazwaOperacji.Contains("Prowadzacy") ? "Prowadzacy" : "SkladowePrzedmiotow"));
+            }
+            return listaTabel;
         }
     }
 }

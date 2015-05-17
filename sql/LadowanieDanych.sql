@@ -78,18 +78,6 @@ INSERT INTO dbo.t_Operacje(c_active, c_operacja)
 	values (1, 't_Przedmioty_delete')
 
 INSERT INTO dbo.t_Operacje(c_active, c_operacja) 
-	values (1, 't_Rodzaje_Skladowych_select')
-
-INSERT INTO dbo.t_Operacje(c_active, c_operacja) 
-	values (1, 't_Rodzaje_Skladowych_update')
-
-INSERT INTO dbo.t_Operacje(c_active, c_operacja) 
-	values (1, 't_Rodzaje_Skladowych_insert')
-
-INSERT INTO dbo.t_Operacje(c_active, c_operacja) 
-	values (1, 't_Rodzaje_Skladowych_delete')
-
-INSERT INTO dbo.t_Operacje(c_active, c_operacja) 
 	values (1, 't_Skladowe_Przedmiotow_select')
 
 INSERT INTO dbo.t_Operacje(c_active, c_operacja) 

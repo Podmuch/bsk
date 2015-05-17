@@ -92,6 +92,21 @@ namespace klient
                       ).ToList<Rola>();
             return data;
         }
+
+        public List<ProwadzacySkladowych> pobierzProwadzacychSkladowych(string where ="")
+        {
+            string query = "SELECT * FROM t_Prowadzacy_skladowych_czesci";
+            if (!string.IsNullOrEmpty(where))
+                query += where;
+            DataTable dane = pobierz_dane(query);
+            List<ProwadzacySkladowych> data = (from item in dane.AsEnumerable()
+                                    select new ProwadzacySkladowych(
+                                      (int)item["c_Fk_id_skladowej"],
+                                      (int)item["c_Fk_id_pracownika"]
+                                  )
+                      ).ToList<ProwadzacySkladowych>();
+            return data;
+        }
         public List<Przywilej> pobierzPrzywileje(string where = "")
         {
             string query = "SELECT * FROM T_PRZYWILEJE";
@@ -175,10 +190,9 @@ namespace klient
                 query += where;
             DataTable dane = pobierz_dane(query);
             List<Wynik> data = (from item in dane.AsEnumerable()
-                                select new Wynik(2.5, "asd", 3
-                                      // (float)item["c_Wynik"],
-                                      // (string)item["c_Fk_Przedmiot"],
-                                       //(int)item["c_Fk_Student"]
+                                select new Wynik((double)item["c_Wynik"],
+                                       (string)item["c_Fk_Przedmiot"],
+                                       (int)item["c_Fk_Student"]
                                    )
                       ).ToList<Wynik>();
             return data;

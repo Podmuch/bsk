@@ -61,9 +61,9 @@
                 </Border>
             </Grid>
             <Grid Grid.Row="1">
-                <Grid Name="UserGrid" Visibility="Hidden">
+                <Grid Name="UserGrid" Visibility="Visible">
                     <TabControl>
-                        <TabItem Name="StudiaTaBItem" Header="Role">
+                        <TabItem Name="StudiaTaBItem" Header="Tabele">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="1*" />
@@ -74,40 +74,99 @@
                                         <ListView.View>
                                             <GridView>
                                                 <GridView.Columns>
-                                                    <GridViewColumn Width="180" DisplayMemberBinding="{Binding NazwaOperacji}"/>
+                                                    <GridViewColumn Width="180" DisplayMemberBinding="{Binding NazwaTabeli}"/>
                                                 </GridView.Columns>
                                             </GridView>
                                         </ListView.View>
                                     </ListView>
                                 </Grid>
                                 <Grid Name="StudiaGridColumn2" Grid.Column="1">
-                                    <Grid Name="OperacjaZmianyHaslaGrid" Visibility="Hidden">
-                                        <Label Content="to do" />
-                                    </Grid>
-                                    <Grid Name="OperacjaEdycjiImieniaGrid" Visibility="Hidden">
-                                        <Label Content="to do" />
-                                    </Grid>
-                                    <Grid Name="OperacjaEdycjiNazwiskaGrid" Visibility="Hidden">
-                                        <Label Content="to do" />
-                                    </Grid>
-                                    <Grid Name="OperacjaWyswietleniaListyStudentowGrid" Visibility="Hidden">
+                                    <Grid Name="StudentGrid" Visibility="Hidden">
                                         <ListView Name="listaStudentowListView">
                                             <ListView.View>
                                                 <GridView>
                                                     <GridView.Columns>
-                                                        <GridViewColumn Width="70" DisplayMemberBinding="{Binding NrIndeksu}"/>
-                                                        <GridViewColumn Width="110" DisplayMemberBinding="{Binding Imie}"/>
-                                                        <GridViewColumn Width="130" DisplayMemberBinding="{Binding Nazwisko}"/>
-                                                        <GridViewColumn Width="40" DisplayMemberBinding="{Binding DlugEcts}"/>
-                                                        <GridViewColumn Width="40" DisplayMemberBinding="{Binding Rok}"/>
-                                                        <GridViewColumn Width="40" DisplayMemberBinding="{Binding Semestr}"/>
+                                                        <GridViewColumn Width="70" DisplayMemberBinding="{Binding NrIndeksu}" Header="Nr Indeksu"/>
+                                                        <GridViewColumn Width="110" DisplayMemberBinding="{Binding Imie}" Header="Imie"/>
+                                                        <GridViewColumn Width="130" DisplayMemberBinding="{Binding Nazwisko}" Header="Nazwisko"/>
+                                                        <GridViewColumn Width="40" DisplayMemberBinding="{Binding DlugEcts}" Header="Dlug Ects"/>
+                                                        <GridViewColumn Width="40" DisplayMemberBinding="{Binding Rok}" Header="Rok"/>
+                                                        <GridViewColumn Width="40" DisplayMemberBinding="{Binding Semestr}" Header="Semestr"/>
                                                     </GridView.Columns>
                                                 </GridView>
                                             </ListView.View>
                                         </ListView>
                                     </Grid>
-                                    <Grid Name="OperacjaZmianyGrupyStudentaGrid" Visibility="Hidden">
-                                        <Label Content="to do" />
+                                    <Grid Name="ProwadzacyGrid" Visibility="Hidden">
+                                        <ListView Name="listaProwadzacychListView">
+                                            <ListView.View>
+                                                <GridView>
+                                                    <GridView.Columns> <!--430 szerokosci-->
+                                                        <GridViewColumn Width="40" DisplayMemberBinding="{Binding Tytul}" Header="Tytul Naukowy"/>
+                                                        <GridViewColumn Width="70" DisplayMemberBinding="{Binding Imie}" Header="Imie"/>
+                                                        <GridViewColumn Width="80" DisplayMemberBinding="{Binding Nazwisko}" Header="Nazwisko"/>
+                                                        <GridViewColumn Width="40" DisplayMemberBinding="{Binding Wiek}" Header="Wiek"/>
+                                                        <GridViewColumn Width="40" DisplayMemberBinding="{Binding Staz}" Header="Staz pracy"/>
+                                                        <GridViewColumn Width="80" DisplayMemberBinding="{Binding Wydzial}" Header="Nazwa Wydzialu"/>
+                                                        <GridViewColumn Width="80" DisplayMemberBinding="{Binding Katedra}" Header="Nazwa Katedry"/>
+                                                    </GridView.Columns>
+                                                </GridView>
+                                            </ListView.View>
+                                        </ListView>
+                                    </Grid>
+                                    <Grid Name="PrzedmiotyGrid" Visibility="Hidden">
+                                        <ListView Name="listaPrzedmiotowListView">
+                                            <ListView.View>
+                                                <GridView>
+                                                    <GridView.Columns>
+                                                        <GridViewColumn Width="150" DisplayMemberBinding="{Binding Nazwa}" Header="Nazwa"/>
+                                                        <GridViewColumn Width="40" DisplayMemberBinding="{Binding Semestr}" Header="Semestr"/>
+                                                        <GridViewColumn Width="40" DisplayMemberBinding="{Binding IloscEcts}" Header="Ilosc Ects"/>
+                                                        <GridViewColumn Width="40" DisplayMemberBinding="{Binding IloscGodzin}" Header="Ilosc Godzin"/>
+                                                        <GridViewColumn Width="40" DisplayMemberBinding="{Binding IdProwadzacego}" Header="ID Prowadzacego"/>
+                                                    </GridView.Columns>
+                                                </GridView>
+                                            </ListView.View>
+                                        </ListView>
+                                    </Grid>
+                                    <Grid Name="WynikiGrid" Visibility="Hidden">
+                                        <ListView Name="listaWynikowListView">
+                                            <ListView.View>
+                                                <GridView>
+                                                    <GridView.Columns>
+                                                        <GridViewColumn Width="50" DisplayMemberBinding="{Binding NrIndeksu}" Header="Nr Indeksu"/>
+                                                        <GridViewColumn Width="110" DisplayMemberBinding="{Binding Przedmiot}" Header="Nazwa Przedmiotu"/>
+                                                        <GridViewColumn Width="50" DisplayMemberBinding="{Binding Ocena}" Header="Ocena"/>
+                                                    </GridView.Columns>
+                                                </GridView>
+                                            </ListView.View>
+                                        </ListView>
+                                    </Grid>
+                                    <Grid Name="SkladowePrzedmiotowGrid" Visibility="Hidden">
+                                        <ListView Name="listaSkladowePrzedmiotowListView">
+                                            <ListView.View>
+                                                <GridView>
+                                                    <GridView.Columns>
+                                                        <GridViewColumn Width="50" DisplayMemberBinding="{Binding Nazwa}"  Header="Skladowa"/>
+                                                        <GridViewColumn Width="110" DisplayMemberBinding="{Binding Przedmiot}" Header="Nazwa Przedmiotu"/>
+                                                        <GridViewColumn Width="50" DisplayMemberBinding="{Binding IloscGodzin}" Header="Ilosc Godzin"/>
+                                                        <GridViewColumn Width="50" DisplayMemberBinding="{Binding IdOdpowiedzialnego}" Header="Id Osoby Odpowiedzialnej"/>
+                                                    </GridView.Columns>
+                                                </GridView>
+                                            </ListView.View>
+                                        </ListView>
+                                    </Grid>
+                                    <Grid Name="ProwadzacySkladowychGrid" Visibility="Hidden">
+                                        <ListView Name="listaProwadzacychSkladowychListView">
+                                            <ListView.View>
+                                                <GridView>
+                                                    <GridView.Columns>
+                                                        <GridViewColumn Width="50" DisplayMemberBinding="{Binding ID_Skladowej}" Header="ID Skladowej"/>
+                                                        <GridViewColumn Width="50" DisplayMemberBinding="{Binding ID_Pracownika}" Header="ID Prowadzacego"/>
+                                                    </GridView.Columns>
+                                                </GridView>
+                                            </ListView.View>
+                                        </ListView>
                                     </Grid>
                                 </Grid>
                             </Grid>

@@ -11,16 +11,16 @@ namespace klient.Model
         //public Prowadzacy ProwadzacyKtoryWstawilOcene;
         //public Student StudentKtoryOtrzymalOcene;
         //public SkladowaPrzedmiotu SkladowaPrzedmiotuZKtoregoOcenaZostalaWstawiona;
-        public int IdStudenta;
-        public string Przedmiot;
-        public double Ocena;
+        public int NrIndeksu { get; set; }
+        public string Przedmiot { get; set; }
+        public double Ocena { get; set; }
         public Wynik(double ocena, string przedmiot, int idStudenta)
         {
             //ProwadzacyKtoryWstawilOcene = prowadzacy;
             //StudentKtoryOtrzymalOcene = student;
             //SkladowaPrzedmiotuZKtoregoOcenaZostalaWstawiona = skladowaPrzedmiotu;
             Przedmiot = przedmiot;
-            IdStudenta = idStudenta;
+            NrIndeksu = idStudenta;
             Ocena = ocena;
         }
     }

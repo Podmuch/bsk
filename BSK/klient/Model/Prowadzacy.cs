@@ -8,18 +8,15 @@ namespace klient.Model
 {
     class Prowadzacy
     {
-        public int Id;
-        public int Wiek;
-        public int Staz;
-        //public string Login;
-        //public string Haslo;
-        public string Pesel;
-        public string Imie;
-        public string Nazwisko;
-        public string Katedra;
-        public string Tytul;
-        public string Wydzial;
-        //public List<Rola> Role;
+        public int Id { get; set; }
+        public int Wiek { get; set; }
+        public int Staz { get; set; }
+        public string Pesel { get; set; }
+        public string Imie { get; set; }
+        public string Nazwisko { get; set; }
+        public string Katedra { get; set; }
+        public string Tytul { get; set; }
+        public string Wydzial { get; set; }
         public Prowadzacy(int id, int wiek, int staz, string pesel, string imie, string nazwisko, string katedra, string tytul, string wydzial)
         {
             Id = id;

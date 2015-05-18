@@ -92,6 +92,7 @@ namespace klient
                     UstawStatus(Login, Rola);
                     if (Rola== "administrator")
                     {
+                        Operacje = Baza.pobierzOperacje();
                         Uzytkownicy = new ObservableCollection<Uzytkownik>(Baza.pobierzUzytkownikow());
                         UsersListView.ItemsSource = Uzytkownicy;
                         UserGrid.Visibility = System.Windows.Visibility.Hidden;

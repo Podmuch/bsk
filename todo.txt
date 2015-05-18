@@ -1,0 +1,1 @@
+poprawiæ b³¹d Dominika - ³adowanie uprawnieñ przy starcie programu (out) ³adowanie przy otwarciu zak³adki (in)

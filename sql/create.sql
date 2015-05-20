@@ -112,6 +112,13 @@ CREATE TABLE t_Przywileje
 	c_aktywny bit not null default 1,
 )
 
+CREATE TABLE t_Sesje
+(
+	c_Fk_id_uzytkownika integer not null,	
+	c_Fk_id_roli integer not null,
+	c_dataWygasniecia datetime not null,
+	PRIMARY KEY(c_Fk_id_uzytkownika, c_Fk_id_roli)
+)
 
 
 /*CREATE TABLE t_Uzytkownicy

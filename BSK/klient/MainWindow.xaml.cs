@@ -43,7 +43,7 @@ namespace klient
 
         private void Init()
         {
-            Baza = new DataBase("user123", "haslo123", "localhost", "szkola");           
+            Baza = new DataBase("user123", "haslo123", "localhost", "szkola");
             try
             {
                 Role = new ObservableCollection<Rola>(Baza.pobierzRole());
@@ -83,28 +83,35 @@ namespace klient
             {
                 Uzytkownik uzytkownik = Baza.pobierzUzytkownikow(" WHERE C_LOGIN = '" + Login + "'").First();
                 if ((uzytkownik.Grupa >> (RoleBox.SelectedIndex)) % 2 == 1)
-                {
+                {                    
                     zalogowanyUzytkownik = uzytkownik;
                     aktualnaRola = Baza.pobierzRole(" WHERE C_ROLA = '" + Rola + "'").First();
-                    LoginGrid.Visibility = System.Windows.Visibility.Hidden;
-                    UserZalogowanyGrid.Visibility = System.Windows.Visibility.Visible;
-                    EdycjaRolColumn2Grid.Visibility = System.Windows.Visibility.Hidden;
-                    UstawStatus(Login, Rola);
-                    if (Rola== "administrator")
+                    if (Baza.createSession(zalogowanyUzytkownik.IdUzytkownika, aktualnaRola.Id))
                     {
-                        Operacje = Baza.pobierzOperacje();
-                        Uzytkownicy = new ObservableCollection<Uzytkownik>(Baza.pobierzUzytkownikow());
-                        UsersListView.ItemsSource = Uzytkownicy;
-                        UserGrid.Visibility = System.Windows.Visibility.Hidden;
-                        AdministratorGrid.Visibility = System.Windows.Visibility.Visible;
+                        LoginGrid.Visibility = System.Windows.Visibility.Hidden;
+                        UserZalogowanyGrid.Visibility = System.Windows.Visibility.Visible;
                         EdycjaRolColumn2Grid.Visibility = System.Windows.Visibility.Hidden;
+                        UstawStatus(Login, Rola);
+                        if (Rola == "administrator")
+                        {
+                            Operacje = Baza.pobierzOperacje();
+                            Uzytkownicy = new ObservableCollection<Uzytkownik>(Baza.pobierzUzytkownikow());
+                            UsersListView.ItemsSource = Uzytkownicy;
+                            UserGrid.Visibility = System.Windows.Visibility.Hidden;
+                            AdministratorGrid.Visibility = System.Windows.Visibility.Visible;
+                            EdycjaRolColumn2Grid.Visibility = System.Windows.Visibility.Hidden;
+                        }
+                        else
+                        {
+                            Operacje = Baza.pobierzOperacje(" join t_przywileje on c_Fk_id_operacji = c_id_operacji where c_Fk_id_roli = " + aktualnaRola.Id);
+                            StudiaListView.ItemsSource = WybierzDostepneTabele();
+                            UserGrid.Visibility = System.Windows.Visibility.Visible;
+                            AdministratorGrid.Visibility = System.Windows.Visibility.Hidden;
+                        }
                     }
                     else
                     {
-                        Operacje = Baza.pobierzOperacje(" join t_przywileje on c_Fk_id_operacji = c_id_operacji where c_Fk_id_roli = " + aktualnaRola.Id);
-                        StudiaListView.ItemsSource = WybierzDostepneTabele();
-                        UserGrid.Visibility = System.Windows.Visibility.Visible;
-                        AdministratorGrid.Visibility = System.Windows.Visibility.Hidden;
+                        MessageBox.Show("Istnieje aktywna sesja dla tego użytkownika.");
                     }
                 }
                 else
@@ -120,6 +127,7 @@ namespace klient
 
         private void StudentLogOutButton_Click(object sender, RoutedEventArgs e)
         {
+            Baza.destroySession(zalogowanyUzytkownik.IdUzytkownika, aktualnaRola.Id);
             PasswordBox.Clear();
             if (Uzytkownicy != null)
             {
@@ -129,6 +137,7 @@ namespace klient
             UserGrid.Visibility = System.Windows.Visibility.Hidden;
             AdministratorGrid.Visibility = System.Windows.Visibility.Hidden;
             UserZalogowanyGrid.Visibility = System.Windows.Visibility.Hidden;
+            EdycjaTabeliGrid.Visibility = System.Windows.Visibility.Hidden;
         }
 
         private string PobierzHaslo()
@@ -419,31 +428,62 @@ namespace klient
         {
             if (StudiaListView.SelectedIndex != -1)
             {
+                WstawNowyWierszButton.Visibility = System.Windows.Visibility.Hidden;
+                EdytujWierszButton.Visibility = System.Windows.Visibility.Hidden;
+                UsunWierszButton.Visibility = System.Windows.Visibility.Hidden;
+
+                ZapiszWierszGrid.Visibility = System.Windows.Visibility.Hidden;
+                EdycjaTabeliGrid.Visibility = System.Windows.Visibility.Visible;
                 if (AktualnaTabela != null)
                     AktualnaTabela.Visibility = System.Windows.Visibility.Hidden;
                 switch (((Tabela)StudiaListView.SelectedItem).NazwaTabeli)
                 {
                     case "Studenci":
+                        var studenciDelete = Operacje.FindAll((o) => o.NazwaOperacji.Contains("t_Studenci_delete"));
+                        if (studenciDelete.Count > 0)
+                            UsunWierszButton.Visibility = System.Windows.Visibility.Visible;
+                        var studenciInsert = Operacje.FindAll((o) => o.NazwaOperacji.Contains("t_Studenci_insert"));
+                        if (studenciInsert.Count > 0)
+                            WstawNowyWierszButton.Visibility = System.Windows.Visibility.Visible;
+                        var studenciUpdate = Operacje.FindAll((o) => o.NazwaOperacji.Contains("t_Studenci_update"));
+                        if (studenciUpdate.Count > 0)
+                            EdytujWierszButton.Visibility = System.Windows.Visibility.Visible;
                         AktualnaTabela = StudentGrid;
                         WyswietlListeStudentow();
+
                         break;
                     case "Prowadzacy":
+                        var prowadzacyDelete = Operacje.FindAll((o) => o.NazwaOperacji.Contains("t_Prowadzacy_delete"));
+                        if (prowadzacyDelete.Count > 0)
+                            UsunWierszButton.Visibility = System.Windows.Visibility.Visible;
                         AktualnaTabela = ProwadzacyGrid;
                         WyswietlListeProwadzacych();
                         break;
                     case "Wyniki":
+                        var wynikiDelete = Operacje.FindAll((o) => o.NazwaOperacji.Contains("t_Wyniki_delete"));
+                        if (wynikiDelete.Count > 0)
+                            UsunWierszButton.Visibility = System.Windows.Visibility.Visible;
                         AktualnaTabela = WynikiGrid;
                         WyswietlListeWynikow();
                         break;
                     case "Przedmioty":
+                        var przedmiotyDelete = Operacje.FindAll((o) => o.NazwaOperacji.Contains("t_Przedmioty_delete"));
+                        if (przedmiotyDelete.Count > 0)
+                            UsunWierszButton.Visibility = System.Windows.Visibility.Visible;
                         AktualnaTabela = PrzedmiotyGrid;
                         WyswietlListePrzedmiotow();
                         break;
                     case "ProwadzacySkladowych":
+                        var prowadzacySkladowychDelete = Operacje.FindAll((o) => o.NazwaOperacji.Contains("t_Prowadzacy_Skladowych_delete"));
+                        if (prowadzacySkladowychDelete.Count > 0)
+                            UsunWierszButton.Visibility = System.Windows.Visibility.Visible;
                         AktualnaTabela = ProwadzacySkladowychGrid;
                         WyswietlListeProwadzacychSkladowych();
                         break;
                     case "SkladowePrzedmiotow":
+                        var skladowePrzedmiotowDelete = Operacje.FindAll((o) => o.NazwaOperacji.Contains("t_Skladowe_Przedmiotow_delete"));
+                        if (skladowePrzedmiotowDelete.Count > 0)
+                            UsunWierszButton.Visibility = System.Windows.Visibility.Visible;
                         AktualnaTabela = SkladowePrzedmiotowGrid;
                         WyswietlListeSkladowychPrzedmiotow();
                         break;
@@ -495,5 +535,238 @@ namespace klient
             }
             return listaTabel;
         }
+
+        private void EdytujWierszButton_Click(object sender, RoutedEventArgs e)
+        {
+            switch (((Tabela)StudiaListView.SelectedItem).NazwaTabeli)
+            {
+                case "Studenci":
+                    if (listaStudentowListView.SelectedIndex != -1)
+                    {
+                        pokazEdycjeWiersza();
+                    }
+                    break;
+                case "Prowadzacy":
+                    if (listaProwadzacychListView.SelectedIndex != -1)
+                    {
+                        pokazEdycjeWiersza();
+                    }
+                    break;
+                case "Wyniki":
+                    if (listaWynikowListView.SelectedIndex != -1)
+                    {
+                        pokazEdycjeWiersza();
+                    }
+                    break;
+                case "Przedmioty":
+                    if (listaPrzedmiotowListView.SelectedIndex != -1)
+                    {
+                        pokazEdycjeWiersza();
+                    }
+                    break;
+                case "ProwadzacySkladowych":
+                    if (listaProwadzacychSkladowychListView.SelectedIndex != -1)
+                    {
+                        pokazEdycjeWiersza();
+                    }
+                    break;
+                case "SkladowePrzedmiotow":
+                    if (listaSkladowePrzedmiotowListView.SelectedIndex != -1)
+                    {
+                        pokazEdycjeWiersza();
+                    }
+                    break;
+            }
+        }
+
+        private void WstawNowyWierszButton_Click(object sender, RoutedEventArgs e)
+        {
+            pokazEdycjeWiersza(true);
+        }
+
+        private void UsunWierszButton_Click(object sender, RoutedEventArgs e)
+        {
+            bool usunieto = false;
+            switch (((Tabela)StudiaListView.SelectedItem).NazwaTabeli)
+            {
+                case "Studenci":
+                    if (listaStudentowListView.SelectedIndex != -1)
+                    {
+                        Student s = (Student)listaStudentowListView.SelectedItem;
+                        usunieto = Baza.executeQuery("DELETE FROM T_STUDENCI WHERE c_Nr_indeksu = " + s.NrIndeksu);
+                        WyswietlListeStudentow();
+                    }
+                    break;
+                case "Prowadzacy":
+                    if (listaProwadzacychListView.SelectedIndex != -1)
+                    {
+                        Prowadzacy s = (Prowadzacy)listaProwadzacychListView.SelectedItem;
+                        usunieto = Baza.executeQuery("DELETE FROM T_PROWADZACY WHERE c_Id_pracownika = " + s.Id);
+                        WyswietlListeProwadzacych();
+                    }
+                    break;
+                case "Wyniki":
+                    if (listaWynikowListView.SelectedIndex != -1)
+                    {
+                        Wynik s = (Wynik)listaWynikowListView.SelectedItem;
+                        usunieto = Baza.executeQuery("DELETE FROM T_WYNIKI WHERE c_Fk_Student = " + s.NrIndeksu + " AND c_Fk_Przedmiot = '" + s.Przedmiot + "'");
+                        WyswietlListeWynikow();
+                    }
+                    break;
+                case "Przedmioty":
+                    if (listaPrzedmiotowListView.SelectedIndex != -1)
+                    {
+                        Przedmiot s = (Przedmiot)listaPrzedmiotowListView.SelectedItem;
+                        usunieto = Baza.executeQuery("DELETE FROM T_PRZEDMIOTY WHERE c_Nazwa = '" + s.Nazwa + "'");
+                        WyswietlListePrzedmiotow();
+                    }
+                    break;
+                case "ProwadzacySkladowych":
+                    if (listaProwadzacychSkladowychListView.SelectedIndex != -1)
+                    {
+                        ProwadzacySkladowych s = (ProwadzacySkladowych)listaProwadzacychSkladowychListView.SelectedItem;
+                        usunieto = Baza.executeQuery("DELETE FROM t_Prowadzacy_skladowych_czesci WHERE c_Fk_id_skladowej = " + s.ID_Skladowej + " AND c_Fk_id_pracownika = " + s.ID_Pracownika);
+                        WyswietlListeProwadzacychSkladowych();
+                    }
+                    break;
+                case "SkladowePrzedmiotow":
+                    if (listaSkladowePrzedmiotowListView.SelectedIndex != -1)
+                    {
+                        SkladowaPrzedmiotu s = (SkladowaPrzedmiotu)listaSkladowePrzedmiotowListView.SelectedItem;
+                        usunieto = Baza.executeQuery("DELETE FROM t_Skladowe_przedmiotow WHERE c_Id_skladowej = " + s.Id);
+                        WyswietlListeSkladowychPrzedmiotow();
+                    }
+                    break;
+            }
+            if (usunieto)
+                MessageBox.Show("Wiersz został pomyślnie usunięty.");
+            else
+                MessageBox.Show("Błąd podczas próby usunięcia wiersza.");
+        }
+
+        private void pokazEdycjeWiersza(bool nowyWiersz = false)
+        {
+            ZapiszWierszGrid.Visibility = System.Windows.Visibility.Visible;
+            if (nowyWiersz)
+                ZapiszWierszButton.Content = "Dodaj nowy wiersz";
+            else
+                ZapiszWierszButton.Content = "Zapisz";
+
+            if (AktualnaTabela != null)
+                AktualnaTabela.Visibility = System.Windows.Visibility.Hidden;
+
+            switch (((Tabela)StudiaListView.SelectedItem).NazwaTabeli)
+            {
+                case "Studenci":
+                    if (!nowyWiersz && listaStudentowListView.SelectedIndex != -1)
+                    {
+                        Student s = (Student)listaStudentowListView.SelectedItem;
+                        EdycjaWierszaStudentDlugEcts.Text = s.DlugEcts.ToString();
+                        EdycjaWierszaStudentImie.Text = s.Imie;
+                        EdycjaWierszaStudentNazwisko.Text = s.Nazwisko;
+                        EdycjaWierszaStudentNrIndeksu.Text = s.NrIndeksu.ToString();
+                        EdycjaWierszaStudentPesel.Text = s.Pesel;
+                        EdycjaWierszaStudentRok.Text = s.Rok.ToString();
+                        EdycjaWierszaStudentSemestr.Text = s.Semestr.ToString();
+                    }
+                    else
+                    {
+                        EdycjaWierszaStudentDlugEcts.Clear();
+                        EdycjaWierszaStudentImie.Clear();
+                        EdycjaWierszaStudentNazwisko.Clear();
+                        EdycjaWierszaStudentNrIndeksu.Clear();
+                        EdycjaWierszaStudentPesel.Clear();
+                        EdycjaWierszaStudentRok.Clear();
+                        EdycjaWierszaStudentSemestr.Clear();
+                    }
+                    AktualnaTabela = EdycjaWierszaStudenciGrid;
+                    break;
+                case "Prowadzacy":
+                    if (!nowyWiersz && listaProwadzacychListView.SelectedIndex != -1)
+                    {
+                        Prowadzacy s = (Prowadzacy)listaProwadzacychListView.SelectedItem;
+                    }
+                    break;
+                case "Wyniki":
+                    if (!nowyWiersz && listaWynikowListView.SelectedIndex != -1)
+                    {
+                        Wynik s = (Wynik)listaWynikowListView.SelectedItem;
+                    }
+                    break;
+                case "Przedmioty":
+                    if (!nowyWiersz && listaPrzedmiotowListView.SelectedIndex != -1)
+                    {
+                        Przedmiot s = (Przedmiot)listaPrzedmiotowListView.SelectedItem;
+                    }
+                    break;
+                case "ProwadzacySkladowych":
+                    if (!nowyWiersz && listaProwadzacychSkladowychListView.SelectedIndex != -1)
+                    {
+                        ProwadzacySkladowych s = (ProwadzacySkladowych)listaProwadzacychSkladowychListView.SelectedItem;
+                    }
+                    break;
+                case "SkladowePrzedmiotow":
+                    if (!nowyWiersz && listaSkladowePrzedmiotowListView.SelectedIndex != -1)
+                    {
+                        SkladowaPrzedmiotu s = (SkladowaPrzedmiotu)listaSkladowePrzedmiotowListView.SelectedItem;
+                    }
+                    break;
+            }
+            AktualnaTabela.Visibility = System.Windows.Visibility.Visible;
+            
+        }
+
+        private void ZapiszWierszButton_Click(object sender, RoutedEventArgs e)
+        {
+            bool success = false;
+            switch (((Tabela)StudiaListView.SelectedItem).NazwaTabeli)
+            {
+                case "Studenci":
+                    if (ZapiszWierszButton.Content.ToString() == "Dodaj nowy wiersz")
+                    {
+                        string query = "INSERT INTO T_STUDENCI (c_Pesel, c_Imie, c_Nazwisko, c_Rok, c_Semestr, c_Dlug_ects, c_Nr_indeksu) VALUES(" +
+                            EdycjaWierszaStudentPesel.Text + ", '" +
+                            EdycjaWierszaStudentImie.Text + "', '" +
+                            EdycjaWierszaStudentNazwisko.Text + "', " +
+                            EdycjaWierszaStudentRok.Text + ", " +
+                            EdycjaWierszaStudentSemestr.Text + ", " +
+                            EdycjaWierszaStudentDlugEcts.Text + ", " +
+                            EdycjaWierszaStudentNrIndeksu.Text + ")";
+                        success = Baza.executeQuery(query);
+                    }
+                    else
+                    {
+                        string query = "UPDATE T_STUDENCI Set c_Pesel='" + EdycjaWierszaStudentPesel.Text +
+                            "', c_Imie='" + EdycjaWierszaStudentImie.Text +
+                            "', c_Nazwisko='" + EdycjaWierszaStudentNazwisko.Text +
+                            "', c_Rok=" + EdycjaWierszaStudentRok.Text +
+                            ", c_Semestr=" + EdycjaWierszaStudentSemestr.Text +
+                            ", c_Dlug_ects=" + EdycjaWierszaStudentDlugEcts.Text +
+                            " Where c_Nr_indeksu=" + EdycjaWierszaStudentNrIndeksu.Text + ";";
+                        success = Baza.executeQuery(query);
+                    }
+                    WyswietlListeStudentow();
+                    break;
+                case "Prowadzacy":
+                    break;
+                case "Wyniki":
+                    break;
+                case "Przedmioty":
+                    break;
+                case "ProwadzacySkladowych":
+                    break;
+                case "SkladowePrzedmiotow":
+                    break;
+            }
+            if (success)
+            {
+                MessageBox.Show("Wiersz został poprawnie zapisany.");
+                StudiaListView_SelectionChanged(null, null);
+            }
+            else
+                MessageBox.Show("Błąd podczas próby pisania do bazy.");
+        }
     }
+
+
 }

@@ -15,6 +15,7 @@ namespace klient
 {
     class DataBase
     {
+        public int IdSesji;
         public static String SecureStringToString(SecureString value)
         {
             IntPtr valuePtr = IntPtr.Zero;
@@ -33,6 +34,7 @@ namespace klient
         private SqlConnection connect;
         public DataBase(string user, string pass, string instance, string dbdir)
         {
+            IdSesji = 0;
             try
             {
                 connect = new SqlConnection();
@@ -58,6 +60,26 @@ namespace klient
             dt.Load(dr);
             sqlc.Connection.Close();
             return dt;
+        }
+
+        public bool executeQuery(string q)
+        {
+            try
+            {
+                SqlCommand command = new SqlCommand(q, this.connect);
+                command.Connection.Open();
+                int rows = command.ExecuteNonQuery();
+                command.Connection.Close();
+                if (rows == 0)
+                    return false;
+            } 
+            catch(Exception e)
+            {
+                if (this.connect.State != ConnectionState.Closed)
+                    this.connect.Close();
+                return false;
+            }
+            return true;
         }
 
         public List<Operacja> pobierzOperacje(string where = "")
@@ -275,26 +297,26 @@ namespace klient
         {
             string query = "INSERT INTO T_ROLE(c_rola, c_grupy_ktorych_dotyczy) VALUES ('" 
                 + r.Nazwa + "', " + r.Grupy_ktorych_dotyczy + ")";
-            pobierz_dane(query); // pobierz_dane :d
+            executeQuery(query); // pobierz_dane :d
         }
 
         public void insertNewUser(Uzytkownik u)
         {
             string query = "INSERT INTO t_Uzytkownicy(c_Fk_nr_indeksu, c_Fk_id_pracownika, c_login, c_haslo, c_grupa) values (NULL, NULL, '" +
                 u.NazwaUzytkownika + "', '04c72343945e2a6ef09221862164ac3a9e914373'," + u.Grupa + ")";
-            pobierz_dane(query); // pobierz_dane :d
+            executeQuery(query); // pobierz_dane :d
         }
         public void insertNewPrivilege(Przywilej p)
         {
             string query = "INSERT INTO t_Przywileje(c_Fk_id_roli, c_Fk_id_operacji) VALUES ("
                 + p.IdRoli + ", " + p.IdOperacji + ")";
-            pobierz_dane(query); // pobierz_dane :d
+            executeQuery(query); // pobierz_dane :d
         }
 
         private void DeleteAllPrivilegesWithThisRole(Rola rola)
         {
             string query = "DELETE FROM t_Przywileje WHERE c_Fk_id_roli='" + rola.Id + "';";
-            pobierz_dane(query); // pobierz_dane :d
+            executeQuery(query); // pobierz_dane :d
         }
         public void ModyfikujUyztkownika(Uzytkownik wybrany, string Login, List<Rola> wybraneRole, List<Rola> Role)
         {
@@ -304,13 +326,13 @@ namespace klient
                 posiadaneRole += (int)Math.Pow(2, Role.IndexOf(r));
             }
             string query = "UPDATE t_Uzytkownicy Set c_login='" + Login + "', c_grupa='"+posiadaneRole+"' Where c_login='" + wybrany.NazwaUzytkownika + "';";
-            pobierz_dane(query);
+            executeQuery(query);
         }
 
         public void ModyfikujRole(string nazwaRoli, Rola rola, List<Operacja> listaOperacji)
         {
             string query = "UPDATE T_ROLE Set c_rola='" + nazwaRoli + "' Where c_rola='" + rola.Nazwa + "';";
-            pobierz_dane(query);
+            executeQuery(query);
 
             DeleteAllPrivilegesWithThisRole(rola);
             foreach (Operacja o in listaOperacji)
@@ -319,5 +341,46 @@ namespace klient
                 insertNewPrivilege(przywilej);
             }    
         }
+
+        public void keepSession(int idUzytkownika, int idRoli)
+        {
+            DateTime now = DateTime.Now;
+            string query = "UPDATE t_Sesje Set c_dataWygasniecia ='" + (now.AddMinutes(5)).ToString() + "' Where c_Fk_id_uzytkownika =" + idUzytkownika + " and c_Fk_id_roli = " + idRoli;
+            executeQuery(query);
+        }
+
+        public bool createSession(int idUzytkownika, int idRoli)
+        {
+            DateTime now = DateTime.Now;
+            DataTable inneSesje = pobierz_dane("SELECT * FROM T_SESJE WHERE c_Fk_id_uzytkownika = " + idUzytkownika + " and c_Fk_id_roli != " + idRoli + " and c_dataWygasniecia > '" + now.ToString() + "'");
+            if (inneSesje.Rows.Count > 0)
+                return false;
+
+            DataTable sesja = pobierz_dane("SELECT * FROM T_SESJE WHERE c_Fk_id_uzytkownika = " + idUzytkownika + " and c_Fk_id_roli = " + idRoli);
+            if (sesja.Rows.Count > 0)
+            {
+                string query = "UPDATE t_Sesje Set c_dataWygasniecia ='" + (now.AddMinutes(5)).ToString() + "' Where c_Fk_id_uzytkownika =" + idUzytkownika + " and c_Fk_id_roli = " + idRoli;
+                executeQuery(query);
+            }
+            else
+            {
+                string query = "INSERT INTO t_Sesje(c_Fk_id_uzytkownika, c_Fk_id_roli, c_dataWygasniecia) VALUES ("
+                         + idUzytkownika + ", " + idRoli + ", '" + (now.AddMinutes(5)).ToString() + "')";
+                executeQuery(query);
+            }
+
+            DataTable dane = pobierz_dane("SELECT * FROM T_SESJE WHERE c_Fk_id_uzytkownika = " + idUzytkownika + " and c_Fk_id_roli = " + idRoli );
+            if(dane.Rows.Count == 0)
+                return false;
+            return true;
+        }
+
+        public void destroySession(int idUzytkownika, int idRoli)
+        {
+            DateTime now = DateTime.Now;
+            string query = "UPDATE t_Sesje Set c_dataWygasniecia ='" + (now.AddSeconds(-1)).ToString() + "' Where c_Fk_id_uzytkownika =" + idUzytkownika + " and c_Fk_id_roli = " + idRoli;
+            executeQuery(query);
+        }
+
     }
 }

@@ -69,7 +69,7 @@
                                     <ColumnDefinition Width="1*" />
                                     <ColumnDefinition Width="2*" />
                                 </Grid.ColumnDefinitions>
-                                <Grid Name="StudiaGridColumn1" Grid.Column="0">
+                                <Grid Name="StudiaGridColumn1" Grid.Column="0" >
                                     <ListView Name="StudiaListView" Grid.Row="2" Margin="7" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="4" SelectionChanged="StudiaListView_SelectionChanged" >
                                         <ListView.View>
                                             <GridView>
@@ -81,6 +81,10 @@
                                     </ListView>
                                 </Grid>
                                 <Grid Name="StudiaGridColumn2" Grid.Column="1">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="8*" />
+                                        <RowDefinition Height="1*" />
+                                    </Grid.RowDefinitions>
                                     <Grid Name="StudentGrid" Visibility="Hidden">
                                         <ListView Name="listaStudentowListView">
                                             <ListView.View>
@@ -101,7 +105,8 @@
                                         <ListView Name="listaProwadzacychListView">
                                             <ListView.View>
                                                 <GridView>
-                                                    <GridView.Columns> <!--430 szerokosci-->
+                                                    <GridView.Columns>
+                                                        <!--430 szerokosci-->
                                                         <GridViewColumn Width="40" DisplayMemberBinding="{Binding Tytul}" Header="Tytul Naukowy"/>
                                                         <GridViewColumn Width="70" DisplayMemberBinding="{Binding Imie}" Header="Imie"/>
                                                         <GridViewColumn Width="80" DisplayMemberBinding="{Binding Nazwisko}" Header="Nazwisko"/>
@@ -167,6 +172,59 @@
                                                 </GridView>
                                             </ListView.View>
                                         </ListView>
+                                    </Grid>
+                                    <Grid Name="EdycjaTabeliGrid" Grid.Row="1" Visibility="Hidden">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="1*" />
+                                            <ColumnDefinition Width="1*" />
+                                            <ColumnDefinition Width="1*" />
+                                            <ColumnDefinition Width="2*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Button Name="EdytujWierszButton" Content="Edytuj wiersz" Margin="7" Grid.Column="0" Click="EdytujWierszButton_Click"></Button>
+                                        <Button Name="WstawNowyWierszButton" Content="Wstaw wiersz" Margin="7" Grid.Column="1" Click="WstawNowyWierszButton_Click"></Button>
+                                        <Button Name="UsunWierszButton" Content="Usuń wiersz" Margin="7" Grid.Column="2" Click="UsunWierszButton_Click"></Button>
+                                    </Grid>
+                                    <Grid Name="EdycjaWierszaGrid">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="1*" />
+                                            <RowDefinition Height="8*" />
+                                        </Grid.RowDefinitions>
+                                        <Grid Grid.Row="0" Name="ZapiszWierszGrid" Visibility="Hidden">
+                                            <Button Content="Zapisz" Name="ZapiszWierszButton" Margin="5" Click="ZapiszWierszButton_Click"></Button>
+                                        </Grid>
+                                        <Grid Name="EdycjaWierszaStudenciGrid" Grid.Row="1" Visibility="Hidden">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="59*" />
+                                                <ColumnDefinition Width="122*" />
+                                                <ColumnDefinition Width="56*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="1*" />
+                                                <RowDefinition Height="1*" />
+                                                <RowDefinition Height="1*" />
+                                                <RowDefinition Height="1*" />
+                                                <RowDefinition Height="1*" />
+                                                <RowDefinition Height="1*" />
+                                                <RowDefinition Height="1*" />
+                                                <RowDefinition Height="1*" />
+                                                <RowDefinition Height="1*" />
+                                                <RowDefinition Height="1*" />
+                                            </Grid.RowDefinitions>
+                                            <Label Margin="0,5,5,5" HorizontalAlignment="Right" Content="Numer indeksu: " Grid.Row="0"/>
+                                            <Label Margin="0,5,5,5" HorizontalAlignment="Right" Content="Pesel: " Grid.Row="1"/>
+                                            <Label Margin="0,5,5,5" HorizontalAlignment="Right" Content="Imię: " Grid.Row="2"/>
+                                            <Label Margin="0,5,5,5" HorizontalAlignment="Right" Content="Nazwisko: " Grid.Row="3"/>
+                                            <Label Margin="0,5,5,5" HorizontalAlignment="Right" Content="Rok: " Grid.Row="4"/>
+                                            <Label Margin="0,5,5,5" HorizontalAlignment="Right" Content="Semestr: " Grid.Row="5"/>
+                                            <Label Margin="0,5,5,5" HorizontalAlignment="Right" Content="Dług ECTS: " Grid.Row="6"/>
+                                            <TextBox Margin="5,5,0,5" Width="200" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" Name="EdycjaWierszaStudentNrIndeksu" ></TextBox>
+                                            <TextBox Margin="5,5,0,5" Width="200" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Name="EdycjaWierszaStudentPesel" ></TextBox>
+                                            <TextBox Margin="5,5,0,5" Width="200" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" Name="EdycjaWierszaStudentImie" ></TextBox>
+                                            <TextBox Margin="5,5,0,5" Width="200" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left" Name="EdycjaWierszaStudentNazwisko" ></TextBox>
+                                            <TextBox Margin="5,5,0,5" Width="200" Grid.Column="1" Grid.Row="4" HorizontalAlignment="Left" Name="EdycjaWierszaStudentRok" ></TextBox>
+                                            <TextBox Margin="5,5,0,5" Width="200" Grid.Column="1" Grid.Row="5" HorizontalAlignment="Left" Name="EdycjaWierszaStudentSemestr" ></TextBox>
+                                            <TextBox Margin="5,5,0,5" Width="200" Grid.Column="1" Grid.Row="6" HorizontalAlignment="Left" Name="EdycjaWierszaStudentDlugEcts" ></TextBox>
+                                        </Grid>
                                     </Grid>
                                 </Grid>
                             </Grid>
@@ -268,8 +326,8 @@
                             <Grid Name="EdycjaRolGrid">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="1*" />
-                                    <ColumnDefinition Width="3*" />                                    
-                                </Grid.ColumnDefinitions>                                
+                                    <ColumnDefinition Width="3*" />
+                                </Grid.ColumnDefinitions>
                                 <Grid Name="EdycjaRolColumn1Grid" Grid.Column="0" Background="GhostWhite">
                                     <Border Background="GhostWhite" BorderBrush="Silver" BorderThickness="0,0,1,0">
                                         <Grid>
@@ -281,7 +339,7 @@
                                             <ListView Name="RolesListView" Grid.Row="2" Margin="7" SelectionChanged="RolesListView_SelectionChanged">
                                                 <ListView.View>
                                                     <GridView>
-                                                        <GridView.Columns>                                                            
+                                                        <GridView.Columns>
                                                             <GridViewColumn Width="150" DisplayMemberBinding="{Binding Nazwa}" />
                                                         </GridView.Columns>
                                                     </GridView>
@@ -311,7 +369,7 @@
                                         <RowDefinition Height="1*" />
                                         <RowDefinition Height="3*" />
                                     </Grid.RowDefinitions>
-                                    
+
                                     <Label Content="Nazwa roli: " Margin="3" Grid.Column="0" Grid.Row="0"></Label>
                                     <TextBox Name="RoleNameTextBox" Margin="4" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="2" ></TextBox>
 
@@ -322,7 +380,7 @@
                                         <ListView.View>
                                             <GridView>
                                                 <GridView.Columns>
-                                                    <GridViewColumn Width="180" DisplayMemberBinding="{Binding NazwaOperacji}" />                                                    
+                                                    <GridViewColumn Width="180" DisplayMemberBinding="{Binding NazwaOperacji}" />
                                                 </GridView.Columns>
                                             </GridView>
                                         </ListView.View>

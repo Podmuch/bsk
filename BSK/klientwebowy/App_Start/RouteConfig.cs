@@ -15,8 +15,16 @@ namespace klientwebowy
 
             routes.MapRoute(
                 name: "Default",
-                url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+                url: "{controller}/{action}/{par1}/{par2}/{par3}/{par4}",
+                defaults: new
+                {
+                    controller = "Home",
+                    action = "Index",
+                    par1 = UrlParameter.Optional,
+                    par2 = UrlParameter.Optional,
+                    par3 = UrlParameter.Optional,
+                    par4 = UrlParameter.Optional
+                }
             );
         }
     }

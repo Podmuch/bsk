@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace klient.Model
 {
-    class Przedmiot
+    public class Przedmiot
     {
         public string Nazwa { get; set; }
         //public Prowadzacy GlownyProwadzacy;

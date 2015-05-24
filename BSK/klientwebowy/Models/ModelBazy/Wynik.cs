@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace klient.Model
 {
-    class Wynik
+    public class Wynik
     {
         //public Prowadzacy ProwadzacyKtoryWstawilOcene;
         //public Student StudentKtoryOtrzymalOcene;

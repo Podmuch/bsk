@@ -33,6 +33,22 @@
     {
         window.location.href = "../../../Home/Wylogowywanie";
     }
+    function PrzejdzDo(nazwaTablicy)
+    {
+        window.location.href = "../../../Home/Index/"+nazwaTablicy;
+    }
+    function Dodaj(nazwaTablicy)
+    {
+        //dodawanie nowego wpisu <- potrzebne nowe okno chyba
+    }
+    function Usun(nazwaTablicy, klucz)
+    {
+        //usuwanie studenta
+    }
+    function Aktualizuj(nazwaTablicy, klucz)
+    {
+        //aktualizuj studenta <- potrzebne nowe okno chyba (np to samo co do wpisu tylko z parametrami)
+    }
 </script>
 @{
     <div class="detailsheader">
@@ -80,7 +96,95 @@
                     }
                     else
                     {
-                        
+                        //ViewBag.Operacje
+                        List<klient.Model.Tabela> DostepneTabele = (List<klient.Model.Tabela>)ViewBag.DostepneTabele;
+                        if(DostepneTabele!=null)
+                        {
+                            <table>
+                                <tr>
+                                @{
+                                    for (int i = 0; i < DostepneTabele.Count; i++)
+                                    {
+                                        <td><button type="button" onclick="PrzejdzDo(@DostepneTabele[i].NazwaTabeli)">@DostepneTabele[i].NazwaTabeli</button></td>
+                                    }
+                                }
+                                </tr>
+                                @{
+                                    string nazwaTabeli = (string)ViewBag.NazwaWybranejTabeli;
+                                    switch (nazwaTabeli)
+                                    {
+                                        case "Studenci":
+                                            List<klient.Model.Operacja> Operacje = (List<klient.Model.Operacja>)ViewBag.PrzywilejeDanejTabeliTabela;
+                                            if(Operacje.Exists((o)=>o.NazwaOperacji.Equals("t_Studenci_select")))
+                                            { 
+                                                List<klient.Model.Student> Studenci = (List<klient.Model.Student>)ViewBag.DaneTabeli;
+                                                bool czyUpdate = Operacje.Exists((o) => o.NazwaOperacji.Equals("t_Studenci_update"));
+                                                bool czyInsert = Operacje.Exists((o) => o.NazwaOperacji.Equals("t_Studenci_insert"));
+                                                bool czyDelete = Operacje.Exists((o) => o.NazwaOperacji.Equals("t_Studenci_delete"));
+                                                <tr>
+                                                    <th><p style="font-size:15px"><b>Imie</b></p></th>
+                                                    <th><p style="font-size:15px"><b>Nazwisko</b></p></th>
+                                                    <th><p style="font-size:15px"><b>NrIndeksu</b></p></th>
+                                                    <th><p style="font-size:15px"><b>Pesel</b></p></th>
+                                                    <th><p style="font-size:15px"><b>Rok</b></p></th>
+                                                    <th><p style="font-size:15px"><b>Semestr</b></p></th>
+                                                    <th><p style="font-size:15px"><b>DlugEcts</b></p></th>
+                                                    @if (czyInsert)
+                                                    { 
+                                                        <th><button type="button" onclick="Dodaj(@nazwaTabeli)">Dodaj Wpis</button></th>
+                                                    }
+                                                </tr>
+                                                for (int i = 0; i < Studenci.Count; i++)
+                                                {
+                                                    <tr>
+                                                        <td><p style="font-size:15px">@Studenci[i].Imie</p></td>
+                                                        <td><p style="font-size:15px">@Studenci[i].Nazwisko</p></td>
+                                                        <td><p style="font-size:15px">@Studenci[i].NrIndeksu</p></td>
+                                                        <td><p style="font-size:15px">@Studenci[i].Pesel</p></td>
+                                                        <td><p style="font-size:15px">@Studenci[i].Rok</p></td>
+                                                        <td><p style="font-size:15px">@Studenci[i].Semestr</p></td>
+                                                        <td><p style="font-size:15px">@Studenci[i].DlugEcts</p></td>
+                                                        @if(czyDelete)
+                                                        { 
+                                                            <td><button type="button" onclick="Usun(@nazwaTabeli, @Studenci[i].NrIndeksu)">Usun</button></td>
+                                                        }
+                                                        @if(czyUpdate)
+                                                        { 
+                                                            <td><button type="button" onclick="Aktualizuj(@nazwaTabeli, @Studenci[i].NrIndeksu)">Aktualizuj</button></td>
+                                                        }
+                                                    </tr>
+                                                }
+                                            }
+                                            break;
+                                        //case "Prowadzacy":
+                                        //    ViewBag.NazwaWybranejTabeli = nazwaTabeli;
+                                        //    ViewBag.PrzywilejeDanejTabeliTabela = Operacje.FindAll((o) => o.NazwaOperacji.Contains("t_Prowadzacy"));
+                                        //    ViewBag.DaneTabeli = Baza.pobierzProwadzacych();
+                                        //    break;
+                                        //case "Wyniki":
+                                        //    ViewBag.NazwaWybranejTabeli = nazwaTabeli;
+                                        //    ViewBag.PrzywilejeDanejTabeliTabela = Operacje.FindAll((o) => o.NazwaOperacji.Contains("t_Wyniki"));
+                                        //    ViewBag.DaneTabeli = Baza.pobierzWyniki();
+                                        //    break;
+                                        //case "Przedmioty":
+                                        //    ViewBag.NazwaWybranejTabeli = nazwaTabeli;
+                                        //    ViewBag.PrzywilejeDanejTabeliTabela = Operacje.FindAll((o) => o.NazwaOperacji.Contains("t_Przedmioty"));
+                                        //    ViewBag.DaneTabeli = Baza.pobierzPrzedmioty();
+                                        //    break;
+                                        //case "ProwadzacySkladowych":
+                                        //    ViewBag.NazwaWybranejTabeli = nazwaTabeli;
+                                        //    ViewBag.PrzywilejeDanejTabeliTabela = Operacje.FindAll((o) => o.NazwaOperacji.Contains("t_Prowadzacy_Skladowych"));
+                                        //    ViewBag.DaneTabeli = Baza.pobierzProwadzacychSkladowych();
+                                        //    break;
+                                        //case "SkladowePrzedmiotow":
+                                        //    ViewBag.NazwaWybranejTabeli = nazwaTabeli;
+                                        //    ViewBag.PrzywilejeDanejTabeliTabela = Operacje.FindAll((o) => o.NazwaOperacji.Contains("t_Skladowe_Przedmiotow"));
+                                        //    ViewBag.DaneTabeli = Baza.pobierzProwadzacychSkladowych();
+                                        //    break;
+                                    }
+                                }
+                            </table>
+                        }
                     }
                 </td>
             </tr>

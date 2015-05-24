@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace klient.Model
 {
-    class SkladowaPrzedmiotu
+    public class SkladowaPrzedmiotu
     {
         public int Id { get; set; }
         public string Nazwa { get; set; }

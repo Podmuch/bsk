@@ -52,6 +52,7 @@ namespace klientwebowy.Controllers
             if(Session["Operacje"]!=null)
             {
                 Operacje = (List<Operacja>)Session["Operacje"];
+                ViewBag.Operacje = Operacje;
             }
             if(Session["Uzytkownicy"]!=null)
             {
@@ -66,15 +67,50 @@ namespace klientwebowy.Controllers
             {
                 ViewBag.Blad = (string)Session["Blad"];
             }
-            if (Session["DostepneTabele"]!=null)
+            if (Session["DostepneTabele"] != null)
             {
                 ViewBag.DostepneTabele = Session["DostepneTabele"];
             }
         }
-        public ActionResult Index()
+
+        public ActionResult Index(string name, string par1 = "brak")
         {
             Init();
             ViewBag.Role = Role;
+            string nazwaTabeli = par1;
+            switch (nazwaTabeli)
+            {
+                case "Studenci":
+                    ViewBag.NazwaWybranejTabeli = nazwaTabeli;
+                    ViewBag.PrzywilejeDanejTabeliTabela = Operacje.FindAll((o) => o.NazwaOperacji.Contains("t_Studenci"));
+                    ViewBag.DaneTabeli = Baza.pobierzStudentow();
+                    break;
+                case "Prowadzacy":
+                    ViewBag.NazwaWybranejTabeli = nazwaTabeli;
+                    ViewBag.PrzywilejeDanejTabeliTabela = Operacje.FindAll((o) => o.NazwaOperacji.Contains("t_Prowadzacy"));
+                    ViewBag.DaneTabeli = Baza.pobierzProwadzacych();
+                    break;
+                case "Wyniki":
+                    ViewBag.NazwaWybranejTabeli = nazwaTabeli;
+                    ViewBag.PrzywilejeDanejTabeliTabela = Operacje.FindAll((o) => o.NazwaOperacji.Contains("t_Wyniki"));
+                    ViewBag.DaneTabeli = Baza.pobierzWyniki();
+                    break;
+                case "Przedmioty":
+                    ViewBag.NazwaWybranejTabeli = nazwaTabeli;
+                    ViewBag.PrzywilejeDanejTabeliTabela = Operacje.FindAll((o) => o.NazwaOperacji.Contains("t_Przedmioty"));
+                    ViewBag.DaneTabeli = Baza.pobierzPrzedmioty();
+                    break;
+                case "ProwadzacySkladowych":
+                    ViewBag.NazwaWybranejTabeli = nazwaTabeli;
+                    ViewBag.PrzywilejeDanejTabeliTabela = Operacje.FindAll((o) => o.NazwaOperacji.Contains("t_Prowadzacy_Skladowych"));
+                    ViewBag.DaneTabeli = Baza.pobierzProwadzacychSkladowych();
+                    break;
+                case "SkladowePrzedmiotow":
+                    ViewBag.NazwaWybranejTabeli = nazwaTabeli;
+                    ViewBag.PrzywilejeDanejTabeliTabela = Operacje.FindAll((o) => o.NazwaOperacji.Contains("t_Skladowe_Przedmiotow"));
+                    ViewBag.DaneTabeli = Baza.pobierzProwadzacychSkladowych();
+                    break;
+            }
             return View();
         }
 

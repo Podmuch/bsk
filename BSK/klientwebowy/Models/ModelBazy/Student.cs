@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace klient.Model
 {
-    class Student
+    public class Student
     {
         public int NrIndeksu { get; set; }
         public string Imie { get; set; }

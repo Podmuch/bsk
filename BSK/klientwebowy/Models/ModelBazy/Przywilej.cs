@@ -6,9 +6,7 @@ using System.Threading.Tasks;
 
 namespace klient.Model
 {
-    
-
-    class Przywilej
+    public class Przywilej
     {
         public int IdRoli;
         public int IdOperacji;

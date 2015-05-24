@@ -43,7 +43,7 @@
     }
     function Usun(nazwaTablicy, klucz)
     {
-        //usuwanie studenta
+        window.location.href = "../../../Home/Index/"+ nazwaTablicy + "/Delete/" + klucz;
     }
     function Aktualizuj(nazwaTablicy, klucz)
     {
@@ -54,10 +54,9 @@
     {
         // dla np wyników
     }
-    function Usun(nazwaTablicy, klucz1, klucz2)
+    function Usun2(nazwaTablicy, klucz1, klucz2)
     {
-        // 
-        // dla np wyników
+        window.location.href = "../../../Home/Index/" + nazwaTablicy + "/Delete/" + klucz1 + "/" + klucz2;
     }
 </script>
 @{
@@ -151,7 +150,7 @@
                                             <th><p style="font-size:15px"><b>DlugEcts</b></p></th>
                                             @if (czyInsert)
                                             {
-                                                <th><button type="button" onclick="Dodaj(@nazwaTabeli)">Dodaj Wpis</button></th>
+                                                <th><button type="button" onclick="Dodaj('@nazwaTabeli')">Dodaj Wpis</button></th>
                                             }
                                         </tr>
                                         for (int i = (numerStrony - 1) * 10; i < StudenciList.Count && i < numerStrony * 10; i++)
@@ -166,11 +165,11 @@
                                                 <td><p style="font-size:15px">@StudenciList[i].DlugEcts</p></td>
                                                 @if (czyDelete)
                                                 {
-                                                    <td><button type="button" onclick="Usun(@nazwaTabeli, @StudenciList[i].NrIndeksu)">Usun</button></td>
+                                                    <td><button type="button" onclick="Usun('@nazwaTabeli', @StudenciList[i].NrIndeksu)">Usun</button></td>
                                                 }
                                                 @if (czyUpdate)
                                                 {
-                                                    <td><button type="button" onclick="Aktualizuj(@nazwaTabeli, @StudenciList[i].NrIndeksu)">Aktualizuj</button></td>
+                                                    <td><button type="button" onclick="Aktualizuj('@nazwaTabeli', @StudenciList[i].NrIndeksu)">Aktualizuj</button></td>
                                                 }
                                             </tr>
                                         }
@@ -218,7 +217,7 @@
                                             <th><p style="font-size:15px"><b>Wydział</b></p></th>
                                             @if (czyInsert)
                                             {
-                                                <th><button type="button" onclick="Dodaj(@nazwaTabeli)">Dodaj Wpis</button></th>
+                                                <th><button type="button" onclick="Dodaj('@nazwaTabeli')">Dodaj Wpis</button></th>
                                             }
                                         </tr>
                                         for (int i = (numerStrony - 1) * 10; i < ProwadzacyList.Count && i < numerStrony * 10; i++)
@@ -235,11 +234,11 @@
                                                 <td><p style="font-size:15px">@ProwadzacyList[i].Wydzial</p></td>
                                                 @if (czyDelete)
                                                 {
-                                                    <td><button type="button" onclick="Usun(@nazwaTabeli, @ProwadzacyList[i].Id)">Usun</button></td>
+                                                    <td><button type="button" onclick="Usun('@nazwaTabeli', @ProwadzacyList[i].Id)">Usun</button></td>
                                                 }
                                                 @if (czyUpdate)
                                                 {
-                                                    <td><button type="button" onclick="Aktualizuj(@nazwaTabeli, @ProwadzacyList[i].Id)">Aktualizuj</button></td>
+                                                    <td><button type="button" onclick="Aktualizuj('@nazwaTabeli', @ProwadzacyList[i].Id)">Aktualizuj</button></td>
                                                 }
                                             </tr>
                                         }
@@ -278,7 +277,7 @@
                                             <th><p style="font-size:15px"><b>Ocena</b></p></th>                                            
                                             @if (czyInsert)
                                             {
-                                                <th><button type="button" onclick="Dodaj(@nazwaTabeli)">Dodaj Wpis</button></th>
+                                                <th><button type="button" onclick="Dodaj('@nazwaTabeli')">Dodaj Wpis</button></th>
                                             }
                                         </tr>
                                         for (int i = (numerStrony - 1) * 10; i < WynikiList.Count && i < numerStrony * 10; i++)
@@ -289,11 +288,11 @@
                                                 <td><p style="font-size:15px">@WynikiList[i].Ocena</p></td>
                                                 @if (czyDelete)
                                                 {
-                                                    <td><button type="button" onclick="Usun(@nazwaTabeli, @WynikiList[i].NrIndeksu, '@WynikiList[i].Przedmiot')">Usun</button></td>
+                                                    <td><button type="button" onclick="Usun2('@nazwaTabeli', @WynikiList[i].NrIndeksu, '@WynikiList[i].Przedmiot')">Usun</button></td>
                                                 }
                                                 @if (czyUpdate)
                                                 {
-                                                    <td><button type="button" onclick="Aktualizuj(@nazwaTabeli, @WynikiList[i].NrIndeksu, '@WynikiList[i].Przedmiot')">Aktualizuj</button></td>
+                                                    <td><button type="button" onclick="Aktualizuj('@nazwaTabeli', @WynikiList[i].NrIndeksu, '@WynikiList[i].Przedmiot')">Aktualizuj</button></td>
                                                 }
                                             </tr>
                                         }
@@ -334,7 +333,7 @@
                                             <th><p style="font-size:15px"><b>Ilość godzin</b></p></th>
                                             @if (czyInsert)
                                             {
-                                                <th><button type="button" onclick="Dodaj(@nazwaTabeli)">Dodaj Wpis</button></th>
+                                                <th><button type="button" onclick="Dodaj('@nazwaTabeli')">Dodaj Wpis</button></th>
                                             }
                                         </tr>
                                         for (int i = (numerStrony - 1) * 10; i < PrzedmiotyList.Count && i < numerStrony * 10; i++)
@@ -347,11 +346,11 @@
                                                 <td><p style="font-size:15px">@PrzedmiotyList[i].IloscGodzin</p></td>
                                                 @if (czyDelete)
                                                 {
-                                                    <td><button type="button" onclick="Usun(@nazwaTabeli, '@PrzedmiotyList[i].Nazwa')">Usun</button></td>
+                                                    <td><button type="button" onclick="Usun('@nazwaTabeli', '@PrzedmiotyList[i].Nazwa')">Usun</button></td>
                                                 }
                                                 @if (czyUpdate)
                                                 {
-                                                    <td><button type="button" onclick="Aktualizuj(@nazwaTabeli, '@PrzedmiotyList[i].Nazwa')">Aktualizuj</button></td>
+                                                    <td><button type="button" onclick="Aktualizuj('@nazwaTabeli', '@PrzedmiotyList[i].Nazwa')">Aktualizuj</button></td>
                                                 }
                                             </tr>
                                         }
@@ -389,7 +388,7 @@
                                             <th><p style="font-size:15px"><b>Id pracownika</b></p></th>
                                             @if (czyInsert)
                                             {
-                                                <th><button type="button" onclick="Dodaj(@nazwaTabeli)">Dodaj Wpis</button></th>
+                                                <th><button type="button" onclick="Dodaj('@nazwaTabeli')">Dodaj Wpis</button></th>
                                             }
                                         </tr>
                                         for (int i = (numerStrony - 1) * 10; i < ProwadzacySkladowychList.Count && i < numerStrony * 10; i++)
@@ -399,11 +398,11 @@
                                                 <td><p style="font-size:15px">@ProwadzacySkladowychList[i].ID_Pracownika</p></td>
                                                 @if (czyDelete)
                                                 {
-                                                    <td><button type="button" onclick="Usun(@nazwaTabeli, @ProwadzacySkladowychList[i].ID_Skladowej, '@ProwadzacySkladowychList[i].ID_Pracownika')">Usun</button></td>
+                                                    <td><button type="button" onclick="Usun2('@nazwaTabeli', @ProwadzacySkladowychList[i].ID_Skladowej, '@ProwadzacySkladowychList[i].ID_Pracownika')">Usun</button></td>
                                                 }
                                                 @if (czyUpdate)
                                                 {
-                                                    <td><button type="button" onclick="Aktualizuj(@nazwaTabeli, @ProwadzacySkladowychList[i].ID_Skladowej, '@ProwadzacySkladowychList[i].ID_Pracownika')">Aktualizuj</button></td>
+                                                    <td><button type="button" onclick="Aktualizuj('@nazwaTabeli', @ProwadzacySkladowychList[i].ID_Skladowej, '@ProwadzacySkladowychList[i].ID_Pracownika')">Aktualizuj</button></td>
                                                 }
                                             </tr>
                                         }
@@ -444,7 +443,7 @@
                                             <th><p style="font-size:15px"><b>Id odpowiedzialnego</b></p></th>
                                             @if (czyInsert)
                                             {
-                                                <th><button type="button" onclick="Dodaj(@nazwaTabeli)">Dodaj Wpis</button></th>
+                                                <th><button type="button" onclick="Dodaj('@nazwaTabeli')">Dodaj Wpis</button></th>
                                             }
                                         </tr>
                                         for (int i = (numerStrony - 1) * 10; i < SkladowePrzedmiotowList.Count && i < numerStrony * 10; i++)
@@ -457,11 +456,11 @@
                                                 <td><p style="font-size:15px">@SkladowePrzedmiotowList[i].IdOdpowiedzialnego</p></td>
                                                 @if (czyDelete)
                                                 {
-                                                    <td><button type="button" onclick="Usun(@nazwaTabeli, @SkladowePrzedmiotowList[i].Id)">Usun</button></td>
+                                                    <td><button type="button" onclick="Usun('@nazwaTabeli', @SkladowePrzedmiotowList[i].Id)">Usun</button></td>
                                                 }
                                                 @if (czyUpdate)
                                                 {
-                                                    <td><button type="button" onclick="Aktualizuj(@nazwaTabeli, @SkladowePrzedmiotowList[i].Id)">Aktualizuj</button></td>
+                                                    <td><button type="button" onclick="Aktualizuj('@nazwaTabeli', @SkladowePrzedmiotowList[i].Id)">Aktualizuj</button></td>
                                                 }
                                             </tr>
                                         }

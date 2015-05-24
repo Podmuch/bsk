@@ -73,11 +73,12 @@ namespace klientwebowy.Controllers
             }
         }
 
-        public ActionResult Index(string name, string par1 = "brak")
+        public ActionResult Index(string name, string par1 = "brak", int par2 = 1)
         {
             Init();
             ViewBag.Role = Role;
             string nazwaTabeli = par1;
+            ViewBag.NumerStrony = par2;
             switch (nazwaTabeli)
             {
                 case "Studenci":
@@ -108,7 +109,7 @@ namespace klientwebowy.Controllers
                 case "SkladowePrzedmiotow":
                     ViewBag.NazwaWybranejTabeli = nazwaTabeli;
                     ViewBag.PrzywilejeDanejTabeliTabela = Operacje.FindAll((o) => o.NazwaOperacji.Contains("t_Skladowe_Przedmiotow"));
-                    ViewBag.DaneTabeli = Baza.pobierzProwadzacychSkladowych();
+                    ViewBag.DaneTabeli = Baza.pobierzSkladowePrzedmiotow();
                     break;
             }
             return View();

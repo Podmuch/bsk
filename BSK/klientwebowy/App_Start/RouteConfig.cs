@@ -15,7 +15,7 @@ namespace klientwebowy
 
             routes.MapRoute(
                 name: "Default",
-                url: "{controller}/{action}/{par1}/{par2}/{par3}/{par4}",
+                url: "{controller}/{action}/{par1}/{par2}/{par3}/{par4}/{par5}",
                 defaults: new
                 {
                     controller = "Home",
@@ -23,7 +23,8 @@ namespace klientwebowy
                     par1 = UrlParameter.Optional,
                     par2 = UrlParameter.Optional,
                     par3 = UrlParameter.Optional,
-                    par4 = UrlParameter.Optional
+                    par4 = UrlParameter.Optional,
+                    par5 = UrlParameter.Optional
                 }
             );
         }

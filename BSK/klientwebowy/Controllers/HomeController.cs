@@ -73,40 +73,101 @@ namespace klientwebowy.Controllers
             }
         }
 
-        public ActionResult Index(string name, string par1 = "brak", int par2 = 1)
+        public ActionResult Index(string name, string par1 = "brak", int par2 = 1, string par3 = "brak", string par4 = "brak", string par5 = "brak")
         {
             Init();
             ViewBag.Role = Role;
             string nazwaTabeli = par1;
             ViewBag.NumerStrony = par2;
+            ViewBag.Blad = null;
             switch (nazwaTabeli)
             {
                 case "Studenci":
+                    if (par3 == "Delete" && Operacje.Exists((o) => o.NazwaOperacji.Contains("t_Studenci_delete")))
+                    {
+                        if (par4 != "brak")
+                        {
+                            if (!Baza.executeQuery("DELETE FROM T_STUDENCI WHERE c_Nr_indeksu = " + par3))
+                            {
+                                ViewBag.Blad = "Nie można usunąć rekordu, gdyż istnieją inne z nim powiązane";
+                            }
+                        }
+                    }
                     ViewBag.NazwaWybranejTabeli = nazwaTabeli;
                     ViewBag.PrzywilejeDanejTabeliTabela = Operacje.FindAll((o) => o.NazwaOperacji.Contains("t_Studenci"));
                     ViewBag.DaneTabeli = Baza.pobierzStudentow();
                     break;
                 case "Prowadzacy":
+                    if (par3 == "Delete" && Operacje.Exists((o) => o.NazwaOperacji.Contains("t_Prowadzacy_delete")))
+                    {
+                        if (par4 != "brak")
+                        {
+                            if (!Baza.executeQuery("DELETE FROM T_PROWADZACY WHERE c_Id_pracownika = " + par4))
+                            {
+                                ViewBag.Blad = "Nie można usunąć rekordu, gdyż istnieją inne z nim powiązane";
+                            }
+                        }
+                    }
                     ViewBag.NazwaWybranejTabeli = nazwaTabeli;
                     ViewBag.PrzywilejeDanejTabeliTabela = Operacje.FindAll((o) => o.NazwaOperacji.Contains("t_Prowadzacy"));
                     ViewBag.DaneTabeli = Baza.pobierzProwadzacych();
                     break;
                 case "Wyniki":
+                    if (par3 == "Delete" && Operacje.Exists((o) => o.NazwaOperacji.Contains("t_Wyniki_delete")))
+                    {
+                        if (par4 != "brak" && par5 != "brak")
+                        {
+                            if (!Baza.executeQuery("DELETE FROM T_WYNIKI WHERE c_Fk_Student = " + par4 + " AND c_Fk_Przedmiot = '" + par5 + "'"))
+                            {
+                                ViewBag.Blad = "Nie można usunąć rekordu, gdyż istnieją inne z nim powiązane";
+                            }
+                        }
+                    }
                     ViewBag.NazwaWybranejTabeli = nazwaTabeli;
                     ViewBag.PrzywilejeDanejTabeliTabela = Operacje.FindAll((o) => o.NazwaOperacji.Contains("t_Wyniki"));
                     ViewBag.DaneTabeli = Baza.pobierzWyniki();
                     break;
                 case "Przedmioty":
+                    if (par3 == "Delete" && Operacje.Exists((o) => o.NazwaOperacji.Contains("t_Przedmioty_delete")))
+                    {
+                        if (par4 != "brak")
+                        {
+                            if (!Baza.executeQuery("DELETE FROM T_PRZEDMIOTY WHERE c_Nazwa = '" + par4 + "'"))
+                            {
+                                ViewBag.Blad = "Nie można usunąć rekordu, gdyż istnieją inne z nim powiązane";
+                            }
+                        }
+                    }
                     ViewBag.NazwaWybranejTabeli = nazwaTabeli;
                     ViewBag.PrzywilejeDanejTabeliTabela = Operacje.FindAll((o) => o.NazwaOperacji.Contains("t_Przedmioty"));
                     ViewBag.DaneTabeli = Baza.pobierzPrzedmioty();
                     break;
                 case "ProwadzacySkladowych":
+                    if (par3 == "Delete" && Operacje.Exists((o) => o.NazwaOperacji.Contains("t_Prowadzacy_Skladowych_delete")))
+                    {
+                        if (par4 != "brak" && par5 != "brak")
+                        {
+                            if (!Baza.executeQuery("DELETE FROM t_Prowadzacy_skladowych_czesci WHERE c_Fk_id_skladowej = " + par4 + " AND c_Fk_id_pracownika = " + par5))
+                            {
+                                ViewBag.Blad = "Nie można usunąć rekordu, gdyż istnieją inne z nim powiązane";
+                            }
+                        }
+                    }
                     ViewBag.NazwaWybranejTabeli = nazwaTabeli;
                     ViewBag.PrzywilejeDanejTabeliTabela = Operacje.FindAll((o) => o.NazwaOperacji.Contains("t_Prowadzacy_Skladowych"));
                     ViewBag.DaneTabeli = Baza.pobierzProwadzacychSkladowych();
                     break;
                 case "SkladowePrzedmiotow":
+                    if (par3 == "Delete" && Operacje.Exists((o) => o.NazwaOperacji.Contains("t_Skladowe_Przedmiotow_delete")))
+                    {
+                        if (par4 != "brak")
+                        {
+                            if (!Baza.executeQuery("DELETE FROM t_Skladowe_przedmiotow WHERE c_Id_skladowej = " + par4))
+                            {
+                                ViewBag.Blad = "Nie można usunąć rekordu, gdyż istnieją inne z nim powiązane";
+                            }
+                        }
+                    }
                     ViewBag.NazwaWybranejTabeli = nazwaTabeli;
                     ViewBag.PrzywilejeDanejTabeliTabela = Operacje.FindAll((o) => o.NazwaOperacji.Contains("t_Skladowe_Przedmiotow"));
                     ViewBag.DaneTabeli = Baza.pobierzSkladowePrzedmiotow();
@@ -115,6 +176,107 @@ namespace klientwebowy.Controllers
             return View();
         }
 
+        public ActionResult Modyfikuj()
+        {
+            Init();
+            return View();
+        }
+
+        public ActionResult Dodaj()
+        {
+            Init();
+            return View();
+        }
+
+        public ActionResult Dodawanie(string name, string par1 = "brak", string par2 = "brak", string par3 = "brak")
+        {
+            Init();
+            ViewBag.Role = Role;
+            string nazwaTabeli = par1;
+            ViewBag.Blad = null;
+            switch (nazwaTabeli)
+            {
+                case "Studenci":
+                    if (par2 == "brak" && Operacje.Exists((o) => o.NazwaOperacji.Contains("t_Studenci_insert")))
+                    {
+                        ViewBag.Przywilej = Operacje.Find((o) => o.NazwaOperacji.Contains("t_Studenci_insert"));
+                        ViewBag.Dana = null;
+                    }
+                    else if(par2 != "brak" && Operacje.Exists((o) => o.NazwaOperacji.Contains("t_Studenci_update")))
+                    {
+                        ViewBag.Przywilej = Operacje.Find((o) => o.NazwaOperacji.Contains("t_Studenci_update"));
+                        ViewBag.Dana = Baza.pobierzStudentow(" WHERE c_Nr_indeksu = " + par2).First();
+                    }
+                    ViewBag.NazwaWybranejTabeli = nazwaTabeli;
+                    break;
+                case "Prowadzacy":
+                    if (par2 == "brak" && Operacje.Exists((o) => o.NazwaOperacji.Contains("t_Prowadzacy_insert")))
+                    {
+                        ViewBag.Przywilej = Operacje.Find((o) => o.NazwaOperacji.Contains("t_Prowadzacy_insert"));
+                        ViewBag.Dana = null;
+                    }
+                    else if (par2 != "brak" && Operacje.Exists((o) => o.NazwaOperacji.Contains("t_Prowadzacy_update")))
+                    {
+                        ViewBag.Przywilej = Operacje.Find((o) => o.NazwaOperacji.Contains("t_Prowadzacy_update"));
+                        ViewBag.Dana = Baza.pobierzProwadzacych(" WHERE c_Id_pracownika = " + par2).First();
+                    }
+                    ViewBag.NazwaWybranejTabeli = nazwaTabeli;
+                    break;
+                case "Wyniki":
+                    if (par2 == "brak" && Operacje.Exists((o) => o.NazwaOperacji.Contains("t_Wyniki_insert")))
+                    {
+                        ViewBag.Przywilej = Operacje.Find((o) => o.NazwaOperacji.Contains("t_Wyniki_insert"));
+                        ViewBag.Dana = null;
+                    }
+                    else if (par2 != "brak" && par3 != "brak" && Operacje.Exists((o) => o.NazwaOperacji.Contains("t_Wyniki_update")))
+                    {
+                        ViewBag.Przywilej = Operacje.Find((o) => o.NazwaOperacji.Contains("t_Wyniki_update"));
+                        ViewBag.Dana = Baza.pobierzWyniki(" WHERE c_Fk_Student = " + par2 + " AND c_Fk_Przedmiot = '" + par3 + "'").First();
+                    }
+                    ViewBag.NazwaWybranejTabeli = nazwaTabeli;
+                    break;
+                case "Przedmioty":
+                    if (par2 == "brak" && Operacje.Exists((o) => o.NazwaOperacji.Contains("t_Przedmioty_insert")))
+                    {
+                        ViewBag.Przywilej = Operacje.Find((o) => o.NazwaOperacji.Contains("t_Przedmioty_insert"));
+                        ViewBag.Dana = null;
+                    }
+                    else if (par2 != "brak" && Operacje.Exists((o) => o.NazwaOperacji.Contains("t_Przedmioty_update")))
+                    {
+                        ViewBag.Przywilej = Operacje.Find((o) => o.NazwaOperacji.Contains("t_Przedmioty_update"));
+                        ViewBag.Dana = Baza.pobierzPrzedmioty(" WHERE c_Nazwa = '" + par2 + "'").First();
+                    }
+                    ViewBag.NazwaWybranejTabeli = nazwaTabeli;
+                    break;
+                case "ProwadzacySkladowych":
+                    if (par2 == "brak" && Operacje.Exists((o) => o.NazwaOperacji.Contains("t_Prowadzacy_Skladowych_insert")))
+                    {
+                        ViewBag.Przywilej = Operacje.Find((o) => o.NazwaOperacji.Contains("t_Prowadzacy_Skladowych_insert"));
+                        ViewBag.Dana = null;
+                    }
+                    else if (par2 != "brak" && par3 != "brak" && Operacje.Exists((o) => o.NazwaOperacji.Contains("t_Prowadzacy_Skladowych_update")))
+                    {
+                        ViewBag.Przywilej = Operacje.Find((o) => o.NazwaOperacji.Contains("t_Prowadzacy_Skladowych_update"));
+                        ViewBag.Dana = Baza.pobierzProwadzacychSkladowych(" WHERE c_Fk_id_skladowej = " + par2 + " AND c_Fk_id_pracownika = " + par3).First();
+                    }
+                    ViewBag.NazwaWybranejTabeli = nazwaTabeli;
+                    break;
+                case "SkladowePrzedmiotow":
+                    if (par2 == "brak" && Operacje.Exists((o) => o.NazwaOperacji.Contains("t_Skladowe_Przedmiotow_insert")))
+                    {
+                        ViewBag.Przywilej = Operacje.Find((o) => o.NazwaOperacji.Contains("t_Skladowe_Przedmiotow_insert"));
+                        ViewBag.Dana = null;
+                    }
+                    else if (par2 != "brak" && Operacje.Exists((o) => o.NazwaOperacji.Contains("t_Skladowe_Przedmiotow_update")))
+                    {
+                        ViewBag.Przywilej = Operacje.Find((o) => o.NazwaOperacji.Contains("t_Skladowe_Przedmiotow_update"));
+                        ViewBag.Dana = Baza.pobierzSkladowePrzedmiotow(" WHERE c_Id_skladowej = " + par2).First();
+                    }
+                    ViewBag.NazwaWybranejTabeli = nazwaTabeli;
+                    break;
+            }
+            return View();
+        }
         public ActionResult Wylogowywanie(string name)
         {
             Init();

@@ -1,4 +1,8 @@
-﻿<style>
+﻿@if ((klient.Model.Uzytkownik)ViewBag.Uzytkownik == null)
+{
+    <meta http-equiv="refresh" content="0; URL=../../../../../../../../../../../../Home/Index">
+}
+<style>
     .tablesize {
         margin-left: 5%;
         margin-right: 5%;
@@ -12,197 +16,85 @@
         font-size: 20px;
         margin-left: 3%;
     }
+
     .bladtekst {
         color: red;
         font-size: 20px;
     }
 </style>
 <script>
-    function Zaloguj() {
-        var login = document.getElementById("login").value;
-        var haslo = document.getElementById("haslo").value;
-        var rola = document.getElementById("rola").value;
-        if (login.length > 0 && haslo.length > 0 && rola.length >0) {
-            window.location.href = "../../../../../../../../../Home/WeryfikujLogowanie/" + login + "/" + haslo + "/" + rola;
-        } 
-        else {
-            alert("puste pola");
-        }
-    }
     function Wyloguj()
     {
         window.location.href = "../../../../../../../../../Home/Wylogowywanie";
     }
-    function PrzejdzDo(nazwaTablicy, strona)
+    function Modyfikuj()
     {
         window.location.href = "../../../../../../../../../Home/Index/"+nazwaTablicy+"/"+strona;
     }
-    function Dodaj(nazwaTablicy)
+    function Dodaj()
     {
         window.location.href = "../../../../../../../../../Home/Dodawanie/" + nazwaTablicy;
     }
-    function Usun(nazwaTablicy, strona, klucz)
+    function Sprawdz()
     {
-        window.location.href = "../../../../../../../../../Home/Index/"+ nazwaTablicy + "/" + strona + "/Delete/" + klucz;
-    }
-    function Aktualizuj(nazwaTablicy, klucz)
-    {
-        window.location.href = "../../../../../../../../../Home/Dodawanie/" + nazwaTablicy + "/" + klucz;
-    }
-    function Aktualizuj2(nazwaTablicy, klucz1, klucz2)
-    {
-        window.location.href = "../../../../../../../../../Home/Dodawanie/" + nazwaTablicy + "/" + klucz1 + "/" + klucz2;
-    }
-    function Usun2(nazwaTablicy, strona, klucz1, klucz2)
-    {
-        window.location.href = "../../../../../../../../../Home/Index/" + nazwaTablicy + "/" + strona + "/Delete/" + klucz1 + "/" + klucz2;
+
     }
 </script>
 @{
     <div class="detailsheader">
-    @if ((klient.Model.Uzytkownik)ViewBag.Uzytkownik == null)
-    {
-        <p class="headertekst"><b>Logowanie</b></p>
-    }
-    else
-    {
-        klient.Model.Uzytkownik Uzytkownik = (klient.Model.Uzytkownik)ViewBag.Uzytkownik;
-        klient.Model.Rola Rola = (klient.Model.Rola)ViewBag.Rola;
-        <p style="font-size:15px"><b>Uzytkownik: @Uzytkownik.NazwaUzytkownika Rola: @Rola.Nazwa </b></p>
-        <button type="button" onclick="Wyloguj()">Wyloguj</button>
-    }
+        @if ((klient.Model.Uzytkownik)ViewBag.Uzytkownik != null)
+        {
+            klient.Model.Uzytkownik Uzytkownik = (klient.Model.Uzytkownik)ViewBag.Uzytkownik;
+            klient.Model.Rola Rola = (klient.Model.Rola)ViewBag.Rola;
+            <p style="font-size:15px"><b>Uzytkownik: @Uzytkownik.NazwaUzytkownika Rola: @Rola.Nazwa </b></p>
+            klient.Model.Operacja Operacja = (klient.Model.Operacja)ViewBag.Przywilej;
+            string nazwaTabeli = (string)ViewBag.NazwaWybranejTabeli;
+            <p style="font-size:15px"><b>Operacja @Operacja.NazwaOperacji na tabeli @nazwaTabeli </b></p>
+            <button type="button" onclick="Wyloguj()">Wyloguj</button>
+        }
     </div>
     <div class="tablesize">
         <table>
             <tr>
                 <td>
-                    @if ((klient.Model.Uzytkownik)ViewBag.Uzytkownik == null)
+                    @if ((klient.Model.Uzytkownik)ViewBag.Uzytkownik != null)
                     {
                         if (ViewBag.Blad != null)
                         {
                             string Blad = (string)ViewBag.Blad;
                             <p class="bladtekst"><b>@Blad</b></p>
                         }
-                        <p style="font-size:15px"><b>Login: <input id="login" type="text" name="fname"> </b></p>
-                        <p style="font-size:15px"><b>Haslo: <input id="haslo" type="password" name="fname"> </b></p>
-                        {
-                            System.Collections.ObjectModel.ObservableCollection<klient.Model.Rola> Role = (System.Collections.ObjectModel.ObservableCollection<klient.Model.Rola>)ViewBag.Role;
-                            if (Role != null)
-                            {
-                                <p style="font-size:15px">
-                                    <b>
-                                        Rola: <select id="rola">
-                                            @for (int i = 0; i < Role.Count; i++)
-                                            {
-                                                <option value="@Role[i].Nazwa">@Role[i].Nazwa</option>
-                                            }
-                                        </select>
-                                    </b>
-                                </p>
-                            }
-                            else
-                            {
-                                <p style="font-size:15px"><b>Blad - dane o istniejacych rolach nie zostaly wczytane </b></p>
-                            }
-                        }
-                    }
-                    else
-                    {
-                        if (ViewBag.Blad != null)
-                        {
-                            string Blad = (string)ViewBag.Blad;
-                            <p class="bladtekst"><b>@Blad</b></p>
-                        }
-                        //ViewBag.Operacje
-                        List<klient.Model.Tabela> DostepneTabele = (List<klient.Model.Tabela>)ViewBag.DostepneTabele;
-                        if (DostepneTabele != null)
-                        {
-                            <table>
-                                <tr><td colspan="100">
-                                    @{
-                            for (int i = 0; i < DostepneTabele.Count; i++)
-                            {
-                                //<td><button type="button" onclick="PrzejdzDo(@DostepneTabele[i].NazwaTabeli)">@DostepneTabele[i].NazwaTabeli</button></td>
-                                <button type="button" onclick="PrzejdzDo('@DostepneTabele[i].NazwaTabeli', 1)">@DostepneTabele[i].NazwaTabeli</button>
-                            }
-                                    }
-                                </td></tr>
-                                @{
+                        <table>
+                        @{
                             string nazwaTabeli = (string)ViewBag.NazwaWybranejTabeli;
-                            int numerStrony = (int)ViewBag.NumerStrony;
-                            if (numerStrony < 1)
-                            {
-                                numerStrony = 1;
-                            }
+                            klient.Model.Operacja Operacja = (klient.Model.Operacja)ViewBag.Przywilej;
                             switch (nazwaTabeli)
                             {
                                 case "Studenci":
-                                    List<klient.Model.Operacja> Operacje = (List<klient.Model.Operacja>)ViewBag.PrzywilejeDanejTabeliTabela;
-                                    if (Operacje.Exists((o) => o.NazwaOperacji.Equals("t_"+nazwaTabeli+"_select")))
-                                    {
-                                        List<klient.Model.Student> StudenciList = (List<klient.Model.Student>)ViewBag.DaneTabeli;
-                                        bool czyUpdate = Operacje.Exists((o) => o.NazwaOperacji.Equals("t_" + nazwaTabeli + "_update"));
-                                        bool czyInsert = Operacje.Exists((o) => o.NazwaOperacji.Equals("t_" + nazwaTabeli + "_insert"));
-                                        bool czyDelete = Operacje.Exists((o) => o.NazwaOperacji.Equals("t_" + nazwaTabeli + "_delete"));
-                                        <tr>
-                                            <th><p style="font-size:15px"><b>Imie</b></p></th>
-                                            <th><p style="font-size:15px"><b>Nazwisko</b></p></th>
-                                            <th><p style="font-size:15px"><b>NrIndeksu</b></p></th>
-                                            <th><p style="font-size:15px"><b>Pesel</b></p></th>
-                                            <th><p style="font-size:15px"><b>Rok</b></p></th>
-                                            <th><p style="font-size:15px"><b>Semestr</b></p></th>
-                                            <th><p style="font-size:15px"><b>DlugEcts</b></p></th>
-                                            @if (czyInsert)
-                                            {
-                                                <th><button type="button" onclick="Dodaj('@nazwaTabeli')">Dodaj Wpis</button></th>
+                                    klient.Model.Student Dana = (klient.Model.Student)ViewBag.Dana;
+                                    <tr><td><p style="font-size:15px"><b>Imie <input id="login" type="text" name="fname" value="@Dana.Imie"></b></p></td></tr>
+                                    <tr><td><p style="font-size:15px"><b>Nazwisko <input id="login" type="text" name="fname" value="@Dana.Nazwisko"></b></p></td></tr>
+                                    <tr><td><p style="font-size:15px"><b>NrIndeksu <input id="login" type="text" name="fname" value="@Dana.NrIndeksu"></b></p></td></tr>
+                                    <tr><td><p style="font-size:15px"><b>Pesel <input id="login" type="text" name="fname" value="@Dana.Pesel"></b></p></td></tr>
+                                    <tr><td><p style="font-size:15px"><b>Rok <input id="login" type="text" name="fname" value="@Dana.Rok"></b></p></td></tr>
+                                    <tr><td><p style="font-size:15px"><b>Semestr <input id="login" type="text" name="fname" value="@Dana.Semestr"></b></p></td></tr>
+                                    <tr><td><p style="font-size:15px"><b>DlugEcts <input id="login" type="text" name="fname" value="@Dana.DlugEcts"></b></p></td></tr>
+                                    <tr>
+                                        <td colspan="100">
+                                            @if (Operacja.NazwaOperacji == "t_Studenci_insert")
+                                            { 
+                                                <button type="button" onclick="Dodaj()">Dodaj</button>
                                             }
-                                        </tr>
-                                        for (int i = (numerStrony - 1) * 10; i < StudenciList.Count && i < numerStrony * 10; i++)
-                                        {
-                                            <tr>
-                                                <td><p style="font-size:15px">@StudenciList[i].Imie</p></td>
-                                                <td><p style="font-size:15px">@StudenciList[i].Nazwisko</p></td>
-                                                <td><p style="font-size:15px">@StudenciList[i].NrIndeksu</p></td>
-                                                <td><p style="font-size:15px">@StudenciList[i].Pesel</p></td>
-                                                <td><p style="font-size:15px">@StudenciList[i].Rok</p></td>
-                                                <td><p style="font-size:15px">@StudenciList[i].Semestr</p></td>
-                                                <td><p style="font-size:15px">@StudenciList[i].DlugEcts</p></td>
-                                                @if (czyDelete)
-                                                {
-                                                    <td><button type="button" onclick="Usun('@nazwaTabeli', @numerStrony, @StudenciList[i].NrIndeksu.ToString())">Usun</button></td>
-                                                }
-                                                @if (czyUpdate)
-                                                {
-                                                    <td><button type="button" onclick="Aktualizuj('@nazwaTabeli', @StudenciList[i].NrIndeksu.ToString())">Aktualizuj</button></td>
-                                                }
-                                            </tr>
-                                        }
-                                        <tr>
-                                            <td colspan="100">
-                                                @{
-                                        //for(int ile = 0, i = numerStrony - 1 ; ile < 3 && i > 0 && (numerStrony-1)*10 < Studenci.Count; ile++, i--)
-                                        //{
-                                        //    <td><button type="button" onclick="PrzejdzDo('Studenci', i)">i</button></td>
-                                        //}
-                                        for (int ile = 0, i = numerStrony - 3; ile < 3 && (numerStrony - 1) * 10 < StudenciList.Count; ile++, i++)
-                                        {
-                                            if (i > 0)
+                                            else
                                             {
-                                                <button type="button" onclick="PrzejdzDo('@nazwaTabeli', @i)">@i</button>
+                                                <button type="button" onclick="Modyfikuj()">Modyfikuj</button>
                                             }
-                                        }
-                                        <button style="background-color: dimgray" type="button" onclick="PrzejdzDo('@nazwaTabeli', @numerStrony)">@numerStrony</button>
-                                        for (int ile = 0, i = numerStrony + 1; ile < 3 && (i - 1) * 10 < StudenciList.Count; ile++, i++)
-                                        {
-                                            <button type="button" onclick="PrzejdzDo('@nazwaTabeli', @i)">@i</button>
-                                        }
-}
-                                            </td>
-                                        </tr>
-                                    }
+                                        </td>
+                                    </tr>
+
                                     break;
                                 case "Prowadzacy":
-                                    Operacje = (List<klient.Model.Operacja>)ViewBag.PrzywilejeDanejTabeliTabela;
+                                    @*Operacje = (List<klient.Model.Operacja>)ViewBag.PrzywilejeDanejTabeliTabela;
                                     if (Operacje.Exists((o) => o.NazwaOperacji.Equals("t_" + nazwaTabeli + "_select")))
                                     {
                                         List<klient.Model.Prowadzacy> ProwadzacyList = (List<klient.Model.Prowadzacy>)ViewBag.DaneTabeli;
@@ -262,13 +154,14 @@
                                         {
                                             <button type="button" onclick="PrzejdzDo('@nazwaTabeli', @i)">@i</button>
                                         }
-}
+                                                }
                                             </td>
                                         </tr>
-                                    }
+                                    }*@
+                            
                                     break;
                                 case "Wyniki":
-                                    Operacje = (List<klient.Model.Operacja>)ViewBag.PrzywilejeDanejTabeliTabela;
+                                    @*Operacje = (List<klient.Model.Operacja>)ViewBag.PrzywilejeDanejTabeliTabela;
                                     if (Operacje.Exists((o) => o.NazwaOperacji.Equals("t_" + nazwaTabeli + "_select")))
                                     {
                                         List<klient.Model.Wynik> WynikiList = (List<klient.Model.Wynik>)ViewBag.DaneTabeli;
@@ -278,7 +171,7 @@
                                         <tr>
                                             <th><p style="font-size:15px"><b>NrIndeksu</b></p></th>
                                             <th><p style="font-size:15px"><b>Przedmiot</b></p></th>
-                                            <th><p style="font-size:15px"><b>Ocena</b></p></th>                                            
+                                            <th><p style="font-size:15px"><b>Ocena</b></p></th>
                                             @if (czyInsert)
                                             {
                                                 <th><button type="button" onclick="Dodaj('@nazwaTabeli')">Dodaj Wpis</button></th>
@@ -319,10 +212,10 @@
                                                 }
                                             </td>
                                         </tr>
-                                    }
+                                    }*@
                                     break;
                                 case "Przedmioty":
-                                    Operacje = (List<klient.Model.Operacja>)ViewBag.PrzywilejeDanejTabeliTabela;
+                                    @*Operacje = (List<klient.Model.Operacja>)ViewBag.PrzywilejeDanejTabeliTabela;
                                     if (Operacje.Exists((o) => o.NazwaOperacji.Equals("t_" + nazwaTabeli + "_select")))
                                     {
                                         List<klient.Model.Przedmiot> PrzedmiotyList = (List<klient.Model.Przedmiot>)ViewBag.DaneTabeli;
@@ -377,10 +270,10 @@
                                                 }
                                             </td>
                                         </tr>
-                                    }
+                                    }*@
                                     break;
                                 case "ProwadzacySkladowych":
-                                    Operacje = (List<klient.Model.Operacja>)ViewBag.PrzywilejeDanejTabeliTabela;
+                                    @*Operacje = (List<klient.Model.Operacja>)ViewBag.PrzywilejeDanejTabeliTabela;
                                     if (Operacje.Exists((o) => o.NazwaOperacji.Equals("t_Prowadzacy_Skladowych_select")))
                                     {
                                         List<klient.Model.ProwadzacySkladowych> ProwadzacySkladowychList = (List<klient.Model.ProwadzacySkladowych>)ViewBag.DaneTabeli;
@@ -429,10 +322,10 @@
                                                 }
                                             </td>
                                         </tr>
-                                    }
+                                    }*@
                                     break;
                                 case "SkladowePrzedmiotow":
-                                    Operacje = (List<klient.Model.Operacja>)ViewBag.PrzywilejeDanejTabeliTabela;
+                                    @*Operacje = (List<klient.Model.Operacja>)ViewBag.PrzywilejeDanejTabeliTabela;
                                     if (Operacje.Exists((o) => o.NazwaOperacji.Equals("t_Skladowe_Przedmiotow_select")))
                                     {
                                         List<klient.Model.SkladowaPrzedmiotu> SkladowePrzedmiotowList = (List<klient.Model.SkladowaPrzedmiotu>)ViewBag.DaneTabeli;
@@ -484,23 +377,14 @@
                                         {
                                             <button type="button" onclick="PrzejdzDo('@nazwaTabeli', @i)">@i</button>
                                         }
-}
+                                                }
                                             </td>
                                         </tr>
-                                    }
+                                    }*@
                                     break;
                             }
-}
-                            </table>
                         }
-                    }
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    @if ((klient.Model.Uzytkownik)ViewBag.Uzytkownik == null)
-                    {
-                        <button type="button" onclick="Zaloguj()">Zaloguj</button>
+                        </table>
                     }
                 </td>
             </tr>

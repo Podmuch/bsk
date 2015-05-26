@@ -11,9 +11,9 @@ using System.Security;
 using System.Runtime.InteropServices;
 using klient.Model;
 
-namespace klient
+namespace klientwebowy.Controllers
 {
-    class DataBase
+    public class DataBase
     {
         public int IdSesji;
         public static String SecureStringToString(SecureString value)

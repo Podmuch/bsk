@@ -76,6 +76,10 @@ namespace klientwebowy.Controllers
         public ActionResult Index(string name, string par1 = "brak", int par2 = 1, string par3 = "brak", string par4 = "brak", string par5 = "brak")
         {
             Init();
+            if (zalogowanyUzytkownik != null)
+            {
+                Baza.keepSession(zalogowanyUzytkownik.IdUzytkownika, aktualnaRola.Id);
+            }
             ViewBag.Role = Role;
             string nazwaTabeli = par1;
             ViewBag.NumerStrony = par2;
@@ -191,7 +195,14 @@ namespace klientwebowy.Controllers
         public ActionResult Dodawanie(string name, string par1 = "brak", string par2 = "brak", string par3 = "brak")
         {
             Init();
+            if(zalogowanyUzytkownik != null)
+            {
+                Baza.keepSession(zalogowanyUzytkownik.IdUzytkownika, aktualnaRola.Id);
+            }
             ViewBag.Role = Role;
+            ViewBag.Baza = Baza;
+            ViewBag.par1 = par2;
+            ViewBag.par2 = par3;
             string nazwaTabeli = par1;
             ViewBag.Blad = null;
             switch (nazwaTabeli)
@@ -280,6 +291,10 @@ namespace klientwebowy.Controllers
         public ActionResult Wylogowywanie(string name)
         {
             Init();
+            if(zalogowanyUzytkownik != null)
+            {
+                Baza.destroySession(zalogowanyUzytkownik.IdUzytkownika, aktualnaRola.Id);
+            }
             Session["Uzytkownik"] = null;
             Session["AktualnaRola"] = null;
             Session["Operacje"] = null;

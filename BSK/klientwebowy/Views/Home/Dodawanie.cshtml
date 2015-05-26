@@ -60,136 +60,450 @@
                             string Blad = (string)ViewBag.Blad;
                             <p class="bladtekst"><b>@Blad</b></p>
                         }
+                        string action = (string)ViewBag.NazwaWybranejTabeli;
+                        if ((string)ViewBag.par1 != "brak")
+                        {
+                            action = "../" + action;
+                        }
+                        if ((string)ViewBag.par2 != "brak")
+                        {
+                            action = "../" +  action;                           
+                        }                        
+                        
+                        <form action="@action" method="POST">
                         <table>
                         @{
                             string nazwaTabeli = (string)ViewBag.NazwaWybranejTabeli;
                             klient.Model.Operacja Operacja = (klient.Model.Operacja)ViewBag.Przywilej;
+                            string edit = (string)Request["Edit"];
+                            klientwebowy.Controllers.DataBase Baza = (klientwebowy.Controllers.DataBase)ViewBag.Baza;   
                             switch (nazwaTabeli)
                             {
-                                case "Studenci":
-                                    klient.Model.Student student = (klient.Model.Student)ViewBag.Dana;
-                                    <tr><td><p style="font-size:15px"><b>Imie <input id="login" type="text" name="fname" value="@student.Imie"></b></p></td></tr>
-                                    <tr><td><p style="font-size:15px"><b>Nazwisko <input id="login" type="text" name="fname" value="@student.Nazwisko"></b></p></td></tr>
-                                    <tr><td><p style="font-size:15px"><b>NrIndeksu <input id="login" type="text" name="fname" value="@student.NrIndeksu"></b></p></td></tr>
-                                    <tr><td><p style="font-size:15px"><b>Pesel <input id="login" type="text" name="fname" value="@student.Pesel"></b></p></td></tr>
-                                    <tr><td><p style="font-size:15px"><b>Rok <input id="login" type="text" name="fname" value="@student.Rok"></b></p></td></tr>
-                                    <tr><td><p style="font-size:15px"><b>Semestr <input id="login" type="text" name="fname" value="@student.Semestr"></b></p></td></tr>
-                                    <tr><td><p style="font-size:15px"><b>DlugEcts <input id="login" type="text" name="fname" value="@student.DlugEcts"></b></p></td></tr>
-                                    <tr>
-                                        <td colspan="100">
-                                            @if (Operacja.NazwaOperacji == "t_Studenci_insert")
-                                            { 
-                                                <button type="button" onclick="Dodaj()">Dodaj</button>
+                                case "Studenci":  
+                                    if(edit != null)
+                                    {                                                        
+                                        if(edit == "addRow")
+                                        {
+                                            string query = "INSERT INTO T_STUDENCI (c_Pesel, c_Imie, c_Nazwisko, c_Rok, c_Semestr, c_Dlug_ects, c_Nr_indeksu) VALUES(" +
+                                                (string)Request["Pesel"] + ", '" +
+                                                (string)Request["Imie"] + "', '" +
+                                                (string)Request["Nazwisko"] + "', " +
+                                                (string)Request["Rok"] + ", " +
+                                                (string)Request["Semestr"] + ", " +
+                                                (string)Request["DlugEcts"] + ", " +
+                                                (string)Request["NrIndeksu"] + ")";
+                                            if(Baza.executeQuery(query))
+                                            {
+                                                <tr><td colspan="100" style="color: green">NOWY WIERSZ ZOSTAŁ WSTAWIONY</td></tr>
                                             }
                                             else
                                             {
-                                                <button type="button" onclick="Modyfikuj()">Modyfikuj</button>
+                                                <tr><td colspan="100" style="color: red">BŁĄD PODCZAS PRÓBY WSTAWIENIA NOWEGO WIERSZA</td></tr>
                                             }
-                                        </td>
-                                    </tr>
+                                        }
+                                        else if(edit == "editRow")
+                                        {
+                                            string query = "UPDATE T_STUDENCI Set c_Pesel='" + (string)Request["Pesel"] +
+                                                "', c_Imie='" + (string)Request["Imie"] +
+                                                "', c_Nazwisko='" + (string)Request["Nazwisko"] +
+                                                "', c_Rok=" + (string)Request["Rok"] +
+                                                ", c_Semestr=" + (string)Request["Semestr"] +
+                                                ", c_Dlug_ects=" + (string)Request["DlugEcts"] +
+                                                " Where c_Nr_indeksu=" + (string)Request["NrIndeksu"] + ";";
+                                            if(Baza.executeQuery(query))
+                                            {
+                                                <tr><td colspan="100" style="color: green">WIERSZ ZOSTAŁ POMYŚLNIE ZAKTUALIZOWANY</td></tr>
+                                            }
+                                            else
+                                            {
+                                                <tr><td colspan="100" style="color: red">BŁĄD PODCZAS PRÓBY AKTUALIZACJI WIERSZA</td></tr>
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        klient.Model.Student student;
+                                        if (ViewBag.Dana != null)
+                                        {
+                                            student = (klient.Model.Student)ViewBag.Dana;
+                                        }
+                                        else
+                                        {
+                                            student = new klient.Model.Student(0, "", "", "", 0, 0, 0);
+                                        }
+                                        <tr><td><p style="font-size:15px"><b>Imie <input id="login" type="text" name="Imie" value="@student.Imie"></b></p></td></tr>
+                                        <tr><td><p style="font-size:15px"><b>Nazwisko <input id="login" type="text" name="Nazwisko" value="@student.Nazwisko"></b></p></td></tr>
+                                        <tr><td><p style="font-size:15px"><b>NrIndeksu <input id="login" type="text" name="NrIndeksu" value="@student.NrIndeksu"></b></p></td></tr>
+                                        <tr><td><p style="font-size:15px"><b>Pesel <input id="login" type="text" name="Pesel" value="@student.Pesel"></b></p></td></tr>
+                                        <tr><td><p style="font-size:15px"><b>Rok <input id="login" type="text" name="Rok" value="@student.Rok"></b></p></td></tr>
+                                        <tr><td><p style="font-size:15px"><b>Semestr <input id="login" type="text" name="Semestr" value="@student.Semestr"></b></p></td></tr>
+                                        <tr><td><p style="font-size:15px"><b>DlugEcts <input id="login" type="text" name="DlugEcts" value="@student.DlugEcts"></b></p></td></tr>
+                                        <tr>
+                                            <td colspan="100">
+                                                @if (Operacja.NazwaOperacji == "t_Studenci_insert")
+                                                {
+                                                    //<button type="button" onclick="Dodaj()">Dodaj</button>
+                                                    <input type="hidden" value="addRow" name="Edit" />
+                                                    <button type="submit">Dodaj</button>
+                                                }
+                                                else
+                                                {
+                                                    //<button type="button" onclick="Modyfikuj()">Modyfikuj</button>
+                                                    <input type="hidden" value="editRow" name="Edit" />
+                                                    <button type="submit">Modyfikuj</button>
+                                                }
+                                            </td>
+                                        </tr>
+                                    }
+
                                     break;
                                 case "Prowadzacy":
-                                    klient.Model.Prowadzacy prowadzacy = (klient.Model.Prowadzacy)ViewBag.Dana;
-                                    <tr><td><p style="font-size:15px"><b>Id <input id="login" type="text" name="fname" value="@prowadzacy.Id"></b></p></td></tr>
-                                    <tr><td><p style="font-size:15px"><b>Imie <input id="login" type="text" name="fname" value="@prowadzacy.Imie"></b></p></td></tr>
-                                    <tr><td><p style="font-size:15px"><b>Nazwisko <input id="login" type="text" name="fname" value="@prowadzacy.Nazwisko"></b></p></td></tr>
-                                    <tr><td><p style="font-size:15px"><b>Pesel <input id="login" type="text" name="fname" value="@prowadzacy.Pesel"></b></p></td></tr>
-                                    <tr><td><p style="font-size:15px"><b>Wiek <input id="login" type="text" name="fname" value="@prowadzacy.Wiek"></b></p></td></tr>
-                                    <tr><td><p style="font-size:15px"><b>Staz <input id="login" type="text" name="fname" value="@prowadzacy.Staz"></b></p></td></tr>
-                                    <tr><td><p style="font-size:15px"><b>Katedra <input id="login" type="text" name="fname" value="@prowadzacy.Katedra"></b></p></td></tr>
-                                    <tr><td><p style="font-size:15px"><b>Tytuł <input id="login" type="text" name="fname" value="@prowadzacy.Tytul"></b></p></td></tr>
-                                    <tr><td><p style="font-size:15px"><b>Wydział <input id="login" type="text" name="fname" value="@prowadzacy.Wydzial"></b></p></td></tr>
-                                    <tr>
-                                        <td colspan="100">
-                                            @if (Operacja.NazwaOperacji == "t_Prowadzacy_insert")
+                                    if (edit != null)
+                                    {
+                                        if (edit == "addRow")
+                                        {
+                                            string query = "INSERT INTO T_PROWADZACY (c_Id_pracownika, c_Imie, c_Nazwisko, c_Katedra, c_Pesel, c_Wiek, c_Staz, c_Tytul, c_Wydzial) VALUES(" +
+                                                (string)Request["Id"] + ", '" +
+                                                (string)Request["Imie"] + "', '" +
+                                                (string)Request["Nazwisko"] + "', '" +
+                                                (string)Request["Katedra"] + "', '" +
+                                                (string)Request["Pesel"] + "', " +
+                                                (string)Request["Wiek"] + ", " +
+                                                (string)Request["Staz"] + ", '" +
+                                                (string)Request["Tytul"] + "', '" +
+                                                (string)Request["Wydzial"] + "')";
+                                            if (Baza.executeQuery(query))
                                             {
-                                                <button type="button" onclick="Dodaj()">Dodaj</button>
+                                                <tr><td colspan="100" style="color: green">NOWY WIERSZ ZOSTAŁ WSTAWIONY</td></tr>
                                             }
                                             else
                                             {
-                                                <button type="button" onclick="Modyfikuj()">Modyfikuj</button>
+                                                <tr><td colspan="100" style="color: red">BŁĄD PODCZAS PRÓBY WSTAWIENIA NOWEGO WIERSZA</td></tr>
                                             }
-                                        </td>
-                                    </tr>
+                                        }
+                                        else if (edit == "editRow")
+                                        {
+                                            string query = "UPDATE T_PROWADZACY Set c_Katedra='" + (string)Request["Katedra"] +
+                                                "', c_Imie='" + (string)Request["Imie"] +
+                                                "', c_Nazwisko='" + (string)Request["Nazwisko"] +
+                                                "', c_Pesel='" + (string)Request["Pesel"] +
+                                                "', c_Wiek=" + (string)Request["Wiek"] +
+                                                ", c_Staz=" + (string)Request["Staz"] +
+                                                ", c_Tytul='" + (string)Request["Tytul"] +
+                                                "', c_Wydzial='" + (string)Request["Wydzial"] +
+                                                "' Where c_Id_pracownika=" + (string)Request["Id"] + ";";
+                                            if (Baza.executeQuery(query))
+                                            {
+                                                <tr><td colspan="100" style="color: green">WIERSZ ZOSTAŁ POMYŚLNIE ZAKTUALIZOWANY</td></tr>
+                                            }
+                                            else
+                                            {
+                                                <tr><td colspan="100" style="color: red">BŁĄD PODCZAS PRÓBY AKTUALIZACJI WIERSZA</td></tr>
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        klient.Model.Prowadzacy prowadzacy;
+                                        if (ViewBag.Dana != null)
+                                        {
+                                            prowadzacy = (klient.Model.Prowadzacy)ViewBag.Dana;
+                                        }
+                                        else
+                                        {
+                                            prowadzacy = new klient.Model.Prowadzacy(0, 0, 0, "", "", "", "", "", "");
+                                        }
+                                        <tr><td><p style="font-size:15px"><b>Id <input id="login" type="text" name="Id" value="@prowadzacy.Id"></b></p></td></tr>
+                                        <tr><td><p style="font-size:15px"><b>Imie <input id="login" type="text" name="Imie" value="@prowadzacy.Imie"></b></p></td></tr>
+                                        <tr><td><p style="font-size:15px"><b>Nazwisko <input id="login" type="text" name="Nazwisko" value="@prowadzacy.Nazwisko"></b></p></td></tr>
+                                        <tr><td><p style="font-size:15px"><b>Pesel <input id="login" type="text" name="Pesel" value="@prowadzacy.Pesel"></b></p></td></tr>
+                                        <tr><td><p style="font-size:15px"><b>Wiek <input id="login" type="text" name="Wiek" value="@prowadzacy.Wiek"></b></p></td></tr>
+                                        <tr><td><p style="font-size:15px"><b>Staz <input id="login" type="text" name="Staz" value="@prowadzacy.Staz"></b></p></td></tr>
+                                        <tr><td><p style="font-size:15px"><b>Katedra <input id="login" type="text" name="Katedra" value="@prowadzacy.Katedra"></b></p></td></tr>
+                                        <tr><td><p style="font-size:15px"><b>Tytuł <input id="login" type="text" name="Tytul" value="@prowadzacy.Tytul"></b></p></td></tr>
+                                        <tr><td><p style="font-size:15px"><b>Wydział <input id="login" type="text" name="Wydzial" value="@prowadzacy.Wydzial"></b></p></td></tr>
+                                        <tr>
+                                            <td colspan="100">
+                                                @if (Operacja.NazwaOperacji == "t_Prowadzacy_insert")
+                                                {
+                                                    //<button type="button" onclick="Dodaj()">Dodaj</button>
+                                                    <input type="hidden" value="addRow" name="Edit" />
+                                                    <button type="submit">Dodaj</button>
+                                                }
+                                                else
+                                                {
+                                                    //<button type="button" onclick="Modyfikuj()">Modyfikuj</button>
+                                                    <input type="hidden" value="editRow" name="Edit" />
+                                                    <button type="submit">Modyfikuj</button>
+                                                }
+                                            </td>
+                                        </tr>
+                                    }
+
                                     break;
                                 case "Wyniki":
-                                    klient.Model.Wynik wynik = (klient.Model.Wynik)ViewBag.Dana;
-                                    <tr><td><p style="font-size:15px"><b>NrIndeksu <input id="login" type="text" name="fname" value="@wynik.NrIndeksu"></b></p></td></tr>
-                                    <tr><td><p style="font-size:15px"><b>Przedmiot <input id="login" type="text" name="fname" value="@wynik.Przedmiot"></b></p></td></tr>
-                                    <tr><td><p style="font-size:15px"><b>Ocena <input id="login" type="text" name="fname" value="@wynik.Ocena"></b></p></td></tr>
-                                    <tr>
-                                        <td colspan="100">
-                                            @if (Operacja.NazwaOperacji == "t_Wyniki_insert")
+                                    if(edit != null)
+                                    {
+                                        if(edit == "addRow")
+                                        {
+                                            string query = "INSERT INTO T_WYNIKI (c_Fk_Student, c_Fk_Przedmiot, c_Wynik) VALUES(" +
+                                                (string)Request["NrIndeksu"] + ", '" +
+                                                (string)Request["Przedmiot"] + "', " +
+                                                (string)Request["Ocena"] + ")";
+                                            if(Baza.executeQuery(query))
                                             {
-                                                <button type="button" onclick="Dodaj()">Dodaj</button>
+                                                <tr><td colspan="100" style="color: green">NOWY WIERSZ ZOSTAŁ WSTAWIONY</td></tr>
                                             }
                                             else
                                             {
-                                                <button type="button" onclick="Modyfikuj()">Modyfikuj</button>
+                                                <tr><td colspan="100" style="color: red">BŁĄD PODCZAS PRÓBY WSTAWIENIA NOWEGO WIERSZA</td></tr>
                                             }
-                                        </td>
-                                    </tr>
-                                            break;
+                                        }
+                                        else if(edit == "editRow")
+                                        {
+                                            string query = "UPDATE T_WYNIKI Set c_Wynik=" + (string)Request["Ocena"] +
+                                                " Where c_Fk_Student=" + (string)Request["NrIndeksu"] + " and c_Fk_Przedmiot='" + (string)Request["Przedmiot"] + "';";
+                                            if(Baza.executeQuery(query))
+                                            {
+                                                <tr><td colspan="100" style="color: green">WIERSZ ZOSTAŁ POMYŚLNIE ZAKTUALIZOWANY</td></tr>
+                                            }
+                                            else
+                                            {
+                                                <tr><td colspan="100" style="color: red">BŁĄD PODCZAS PRÓBY AKTUALIZACJI WIERSZA</td></tr>
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        klient.Model.Wynik wynik;
+                                        if (ViewBag.Dana != null)
+                                        {
+                                            wynik = (klient.Model.Wynik)ViewBag.Dana;
+                                        }
+                                        else
+                                        {
+                                            wynik = new klient.Model.Wynik(0, "", 0);
+                                        }
+                                        <tr><td><p style="font-size:15px"><b>NrIndeksu <input id="login" type="text" name="NrIndeksu" value="@wynik.NrIndeksu"></b></p></td></tr>
+                                        <tr><td><p style="font-size:15px"><b>Przedmiot <input id="login" type="text" name="Przedmiot" value="@wynik.Przedmiot"></b></p></td></tr>
+                                        <tr><td><p style="font-size:15px"><b>Ocena <input id="login" type="text" name="Ocena" value="@wynik.Ocena"></b></p></td></tr>
+                                        <tr>
+                                            <td colspan="100">
+                                                @if (Operacja.NazwaOperacji == "t_Wyniki_insert")
+                                                {
+                                                    //<button type="button" onclick="Dodaj()">Dodaj</button>
+                                                    <input type="hidden" value="addRow" name="Edit" />
+                                                    <button type="submit">Dodaj</button>
+                                                }
+                                                else
+                                                {
+                                                    //<button type="button" onclick="Modyfikuj()">Modyfikuj</button>
+                                                    <input type="hidden" value="editRow" name="Edit" />
+                                                    <button type="submit">Modyfikuj</button>
+                                                }
+                                            </td>
+                                        </tr>
+                                    }
+                                    break;
                                 case "Przedmioty":
-                                    klient.Model.Przedmiot przedmiot = (klient.Model.Przedmiot)ViewBag.Dana;
-                                    <tr><td><p style="font-size:15px"><b>Nazwa <input id="login" type="text" name="fname" value="@przedmiot.Nazwa"></b></p></td></tr>
-                                    <tr><td><p style="font-size:15px"><b>Id Prowadzącego <input id="login" type="text" name="fname" value="@przedmiot.IdProwadzacego"></b></p></td></tr>
-                                    <tr><td><p style="font-size:15px"><b>Semestr <input id="login" type="text" name="fname" value="@przedmiot.Semestr"></b></p></td></tr>
-                                    <tr><td><p style="font-size:15px"><b>Ilość ECTS <input id="login" type="text" name="fname" value="@przedmiot.IloscEcts"></b></p></td></tr>
-                                    <tr><td><p style="font-size:15px"><b>Ilość godzin <input id="login" type="text" name="fname" value="@przedmiot.IloscGodzin"></b></p></td></tr>
-                                    <tr>
-                                        <td colspan="100">
-                                            @if (Operacja.NazwaOperacji == "t_Przedmioty_insert")
+                                    if(edit != null)
+                                    {
+                                        if(edit == "addRow")
+                                        {
+                                            string query = "INSERT INTO T_PRZEDMIOTY (c_Nazwa, c_Semestr, c_Ilosc_godzin, c_Ilosc_ects, c_Fk_gl_prowadz) VALUES('" +
+                                                (string)Request["Nazwa"] + "', " +
+                                                (string)Request["Semestr"] + ", " +
+                                                (string)Request["IloscGodzin"] + ", " +
+                                                (string)Request["IloscEcts"] + ", " +
+                                                (string)Request["IdProwadzacego"] + ")";
+                                            if(Baza.executeQuery(query))
                                             {
-                                                <button type="button" onclick="Dodaj()">Dodaj</button>
+                                                <tr><td colspan="100" style="color: green">NOWY WIERSZ ZOSTAŁ WSTAWIONY</td></tr>
                                             }
                                             else
                                             {
-                                                <button type="button" onclick="Modyfikuj()">Modyfikuj</button>
+                                                <tr><td colspan="100" style="color: red">BŁĄD PODCZAS PRÓBY WSTAWIENIA NOWEGO WIERSZA</td></tr>
                                             }
-                                        </td>
-                                    </tr>
+                                        }
+                                        else if(edit == "editRow")
+                                        {
+                                            string query = "UPDATE T_PRZEDMIOTY Set c_Semestr=" + (string)Request["Semestr"] +
+                                                ", c_Ilosc_godzin=" + (string)Request["IloscGodzin"] +
+                                                ", c_Ilosc_ects=" + (string)Request["IloscEcts"] +
+                                                ", c_Fk_gl_prowadz=" + (string)Request["IdProwadzacego"] +
+                                                " Where c_Nazwa='" + (string)Request["Nazwa"] + "';";
+                                            if(Baza.executeQuery(query))
+                                            {
+                                                <tr><td colspan="100" style="color: green">WIERSZ ZOSTAŁ POMYŚLNIE ZAKTUALIZOWANY</td></tr>
+                                            }
+                                            else
+                                            {
+                                                <tr><td colspan="100" style="color: red">BŁĄD PODCZAS PRÓBY AKTUALIZACJI WIERSZA</td></tr>
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        klient.Model.Przedmiot przedmiot;
+                                        if (ViewBag.Dana != null)
+                                        {
+                                            przedmiot = (klient.Model.Przedmiot)ViewBag.Dana;
+                                        }
+                                        else
+                                        {
+                                            przedmiot = new klient.Model.Przedmiot("",0,0,0,0);
+                                        }
+                                        <tr><td><p style="font-size:15px"><b>Nazwa <input id="login" type="text" name="Nazwa" value="@przedmiot.Nazwa"></b></p></td></tr>
+                                        <tr><td><p style="font-size:15px"><b>Id Prowadzącego <input id="login" type="text" name="IdProwadzacego" value="@przedmiot.IdProwadzacego"></b></p></td></tr>
+                                        <tr><td><p style="font-size:15px"><b>Semestr <input id="login" type="text" name="Semestr" value="@przedmiot.Semestr"></b></p></td></tr>
+                                        <tr><td><p style="font-size:15px"><b>Ilość ECTS <input id="login" type="text" name="IloscEcts" value="@przedmiot.IloscEcts"></b></p></td></tr>
+                                        <tr><td><p style="font-size:15px"><b>Ilość godzin <input id="login" type="text" name="IloscGodzin" value="@przedmiot.IloscGodzin"></b></p></td></tr>
+                                        <tr>
+                                            <td colspan="100">
+                                                @if (Operacja.NazwaOperacji == "t_Przedmioty_insert")
+                                                {
+                                                    //<button type="button" onclick="Dodaj()">Dodaj</button>
+                                                    <input type="hidden" value="addRow" name="Edit" />
+                                                    <button type="submit">Dodaj</button>
+                                                }
+                                                else
+                                                {
+                                                    //<button type="button" onclick="Modyfikuj()">Modyfikuj</button>
+                                                    <input type="hidden" value="editRow" name="Edit" />
+                                                    <button type="submit">Modyfikuj</button>
+                                                }
+                                            </td>
+                                        </tr>
+                                    }
                                     break;
                                 case "ProwadzacySkladowych":
-                                    klient.Model.ProwadzacySkladowych prowadzacySkladowych = (klient.Model.ProwadzacySkladowych)ViewBag.Dana;
-                                    <tr><td><p style="font-size:15px"><b>Id składowej <input id="login" type="text" name="fname" value="@prowadzacySkladowych.ID_Skladowej"></b></p></td></tr>
-                                    <tr><td><p style="font-size:15px"><b>Id pracownika <input id="login" type="text" name="fname" value="@prowadzacySkladowych.ID_Pracownika"></b></p></td></tr>
-                                    <tr>
-                                        <td colspan="100">
-                                            @if (Operacja.NazwaOperacji == "t_Prowadzacy_Skladowych_insert")
+                                    if(edit != null)
+                                    {
+                                        if(edit == "addRow")
+                                        {
+                                            string query = "INSERT INTO t_Prowadzacy_skladowych_czesci (c_Fk_id_skladowej, c_Fk_id_pracownika) VALUES(" +
+                                                (string)Request["ID_Skladowej"] + ", " +
+                                                (string)Request["ID_Pracownika"] + ")";
+                                            if(Baza.executeQuery(query))
                                             {
-                                                <button type="button" onclick="Dodaj()">Dodaj</button>
+                                                <tr><td colspan="100" style="color: green">NOWY WIERSZ ZOSTAŁ WSTAWIONY</td></tr>
                                             }
                                             else
                                             {
-                                                <button type="button" onclick="Modyfikuj()">Modyfikuj</button>
+                                                <tr><td colspan="100" style="color: red">BŁĄD PODCZAS PRÓBY WSTAWIENIA NOWEGO WIERSZA</td></tr>
                                             }
-                                        </td>
-                                    </tr>
+                                        }
+                                        else if(edit == "editRow")
+                                        {
+                                            // tu update'u nie zrobimy xD, bynajmniej nie w ten sposób
+                                            <tr><td colspan="100" style="color: red">BŁĄD PODCZAS PRÓBY AKTUALIZACJI WIERSZA</td></tr>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        klient.Model.ProwadzacySkladowych prowadzacySkladowych;
+                                        if (ViewBag.Dana != null)
+                                        {
+                                            prowadzacySkladowych = (klient.Model.ProwadzacySkladowych)ViewBag.Dana;
+                                        }
+                                        else
+                                        {
+                                            prowadzacySkladowych = new klient.Model.ProwadzacySkladowych(0,0);
+                                        }
+                                        <tr><td><p style="font-size:15px"><b>Id składowej <input id="login" type="text" name="ID_Skladowej" value="@prowadzacySkladowych.ID_Skladowej"></b></p></td></tr>
+                                        <tr><td><p style="font-size:15px"><b>Id pracownika <input id="login" type="text" name="ID_Pracownika" value="@prowadzacySkladowych.ID_Pracownika"></b></p></td></tr>
+                                        <tr>
+                                            <td colspan="100">
+                                                @if (Operacja.NazwaOperacji == "t_Prowadzacy_Skladowych_insert")
+                                                {
+                                                    //<button type="button" onclick="Dodaj()">Dodaj</button>
+                                                    <input type="hidden" value="addRow" name="Edit" />
+                                                    <button type="submit">Dodaj</button>
+                                                }
+                                                else
+                                                {
+                                                    //<button type="button" onclick="Modyfikuj()">Modyfikuj</button>
+                                                    <input type="hidden" value="editRow" name="Edit" />
+                                                    <button type="submit">Modyfikuj</button>
+                                                }
+                                            </td>
+                                        </tr>
+                                    }
                                     break;
                                 case "SkladowePrzedmiotow":
-                                    klient.Model.SkladowaPrzedmiotu skladowaPrzedmiotu = (klient.Model.SkladowaPrzedmiotu)ViewBag.Dana;
-                                    <tr><td><p style="font-size:15px"><b>Id <input id="login" type="text" name="fname" value="@skladowaPrzedmiotu.Id"></b></p></td></tr>
-                                    <tr><td><p style="font-size:15px"><b>Nazwa <input id="login" type="text" name="fname" value="@skladowaPrzedmiotu.Nazwa"></b></p></td></tr>
-                                    <tr><td><p style="font-size:15px"><b>Ilość godzin <input id="login" type="text" name="fname" value="@skladowaPrzedmiotu.IloscGodzin"></b></p></td></tr>
-                                    <tr><td><p style="font-size:15px"><b>Przedmiot <input id="login" type="text" name="fname" value="@skladowaPrzedmiotu.Przedmiot"></b></p></td></tr>
-                                    <tr><td><p style="font-size:15px"><b>Id odpowiedzialnego <input id="login" type="text" name="fname" value="@skladowaPrzedmiotu.IdOdpowiedzialnego"></b></p></td></tr>
-                                    <tr>
-                                        <td colspan="100">
-                                            @if (Operacja.NazwaOperacji == "t_Skladowe_Przedmiotow_insert")
+                                    if(edit != null)
+                                    {
+                                        if(edit == "addRow")
+                                        {
+                                            string query = "INSERT INTO t_Skladowe_przedmiotow (c_Id_skladowej, c_Fk_Przedmiot, c_Fk_skladowa, c_Ilosc_godzin, c_Fk_osoby_odp) VALUES(" +
+                                                (string)Request["Id"] + ", '" +
+                                                (string)Request["Przedmiot"] + "', '" +
+                                                (string)Request["Nazwa"] + "', " +
+                                                (string)Request["IloscGodzin"] + ", " +
+                                                (string)Request["IdOdpowiedzialnego"] + ")";
+                                            if(Baza.executeQuery(query))
                                             {
-                                                <button type="button" onclick="Dodaj()">Dodaj</button>
+                                                <tr><td colspan="100" style="color: green">NOWY WIERSZ ZOSTAŁ WSTAWIONY</td></tr>
                                             }
                                             else
                                             {
-                                                <button type="button" onclick="Modyfikuj()">Modyfikuj</button>
+                                                <tr><td colspan="100" style="color: red">BŁĄD PODCZAS PRÓBY WSTAWIENIA NOWEGO WIERSZA</td></tr>
                                             }
-                                        </td>
-                                    </tr>
+                                        }
+                                        else if(edit == "editRow")
+                                        {
+                                            string query = "UPDATE t_Skladowe_przedmiotow Set c_Fk_Przedmiot='" + (string)Request["Przedmiot"] +
+                                                "', c_Fk_skladowa='" + (string)Request["Nazwa"] +
+                                                "', c_Ilosc_godzin=" + (string)Request["IloscGodzin"] +
+                                                ", c_Fk_osoby_odp=" + (string)Request["IdOdpowiedzialnego"] +
+                                                " Where c_Id_skladowej=" + (string)Request["Id"] + ";";
+                                            if(Baza.executeQuery(query))
+                                            {
+                                                <tr><td colspan="100" style="color: green">WIERSZ ZOSTAŁ POMYŚLNIE ZAKTUALIZOWANY</td></tr>
+                                            }
+                                            else
+                                            {
+                                                <tr><td colspan="100" style="color: red">BŁĄD PODCZAS PRÓBY AKTUALIZACJI WIERSZA</td></tr>
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        klient.Model.SkladowaPrzedmiotu skladowaPrzedmiotu;
+                                        if (ViewBag.Dana != null)
+                                        {
+                                            skladowaPrzedmiotu = (klient.Model.SkladowaPrzedmiotu)ViewBag.Dana;
+                                        }
+                                        else
+                                        {
+                                            skladowaPrzedmiotu = new klient.Model.SkladowaPrzedmiotu(0,"",0,"",0);
+                                        }
+                                        <tr><td><p style="font-size:15px"><b>Id <input id="login" type="text" name="Id" value="@skladowaPrzedmiotu.Id"></b></p></td></tr>
+                                        <tr><td><p style="font-size:15px"><b>Nazwa <input id="login" type="text" name="Nazwa" value="@skladowaPrzedmiotu.Nazwa"></b></p></td></tr>
+                                        <tr><td><p style="font-size:15px"><b>Ilość godzin <input id="login" type="text" name="IloscGodzin" value="@skladowaPrzedmiotu.IloscGodzin"></b></p></td></tr>
+                                        <tr><td><p style="font-size:15px"><b>Przedmiot <input id="login" type="text" name="Przedmiot" value="@skladowaPrzedmiotu.Przedmiot"></b></p></td></tr>
+                                        <tr><td><p style="font-size:15px"><b>Id odpowiedzialnego <input id="login" type="text" name="IdOdpowiedzialnego" value="@skladowaPrzedmiotu.IdOdpowiedzialnego"></b></p></td></tr>
+                                        <tr>
+                                            <td colspan="100">
+                                                @if (Operacja.NazwaOperacji == "t_Skladowe_Przedmiotow_insert")
+                                                {
+                                                    //<button type="button" onclick="Dodaj()">Dodaj</button>
+                                                    <input type="hidden" value="addRow" name="Edit" />
+                                                    <button type="submit">Dodaj</button>
+                                                }
+                                                else
+                                                {
+                                                    //<button type="button" onclick="Modyfikuj()">Modyfikuj</button>
+                                                    <input type="hidden" value="editRow" name="Edit" />
+                                                    <button type="submit">Modyfikuj</button>
+                                                }
+                                            </td>
+                                        </tr>
+                                    }
                                     break;
                             }
                         }
-                        </table>
+                        </table></form>
                     }
                 </td>
             </tr>

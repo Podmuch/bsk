@@ -35,33 +35,36 @@ namespace klientwebowy.Controllers
             {
                 Baza = (DataBase)Session["baza"];
             }
-            if(Session["role"] == null)
-            {
-                Role = new ObservableCollection<Rola>(Baza.pobierzRole());
-                Session["role"] = Role;
-            }
-            else
-            {
-                Role = (ObservableCollection<Rola>)Session["role"];
-            }
+            Role = new ObservableCollection<Rola>(Baza.pobierzRole());
             if(Session["Uzytkownik"]!=null)
             {
                 zalogowanyUzytkownik = (Uzytkownik)Session["Uzytkownik"];
+                zalogowanyUzytkownik = Baza.pobierzUzytkownikow(" where c_id_uzytkownika = " + zalogowanyUzytkownik.IdUzytkownika).First();
+                Session["Uzytkownik"] = zalogowanyUzytkownik;
                 ViewBag.Uzytkownik = zalogowanyUzytkownik;
+            }
+            if (Session["AktualnaRola"] != null)
+            {
+                aktualnaRola = (Rola)Session["AktualnaRola"];
+                ViewBag.Rola = aktualnaRola;
             }
             if(Session["Operacje"]!=null)
             {
-                Operacje = (List<Operacja>)Session["Operacje"];
+                if (aktualnaRola.Nazwa.ToLower() == "administrator")
+                {
+                    Operacje = Baza.pobierzOperacje();
+                }
+                else
+                {
+                    Operacje = Baza.pobierzOperacje(" join t_przywileje on c_Fk_id_operacji = c_id_operacji where c_Fk_id_roli = " + aktualnaRola.Id);
+                }
+                Session["Operacje"] = Operacje;
                 ViewBag.Operacje = Operacje;
             }
             if(Session["Uzytkownicy"]!=null)
             {
-                Uzytkownicy = (ObservableCollection<Uzytkownik>)Session["Uzytkownicy"];
-            }
-            if(Session["AktualnaRola"]!=null)
-            {
-                aktualnaRola = (Rola)Session["AktualnaRola"];
-                ViewBag.Rola = aktualnaRola;
+                Uzytkownicy = new ObservableCollection<Uzytkownik>(Baza.pobierzUzytkownikow());
+                Session["Uzytkownicy"] = Uzytkownicy;
             }
             if(Session["Blad"]!=null)
             {
@@ -69,7 +72,8 @@ namespace klientwebowy.Controllers
             }
             if (Session["DostepneTabele"] != null)
             {
-                ViewBag.DostepneTabele = Session["DostepneTabele"];
+                Session["DostepneTabele"] = WybierzDostepneTabele();
+                ViewBag.DostepneTabele = WybierzDostepneTabele();
             }
         }
 
@@ -83,7 +87,7 @@ namespace klientwebowy.Controllers
             ViewBag.Role = Role;
             string nazwaTabeli = par1;
             ViewBag.NumerStrony = par2;
-            ViewBag.Blad = null;
+            //ViewBag.Blad = null;
             switch (nazwaTabeli)
             {
                 case "Studenci":

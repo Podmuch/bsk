@@ -35,6 +35,10 @@
     {
         window.location.href = "../../../../../../../../../Home/Dodawanie/" + nazwaTablicy;
     }
+    function Powrot(nazwaTablicy, strona)
+    {
+        window.location.href = "../../../../../../../../../Home/Index/" + nazwaTablicy + "/" + strona;
+    }
 </script>
 @{
     <div class="detailsheader">
@@ -95,6 +99,7 @@
                                             if(Baza.executeQuery(query))
                                             {
                                                 <tr><td colspan="100" style="color: green">NOWY WIERSZ ZOSTAŁ WSTAWIONY</td></tr>
+                                                <tr><td colspan="100"><button type="button" onclick="Powrot('@nazwaTabeli', 1)">Powrot</button></td></tr>
                                             }
                                             else
                                             {
@@ -113,6 +118,7 @@
                                             if(Baza.executeQuery(query))
                                             {
                                                 <tr><td colspan="100" style="color: green">WIERSZ ZOSTAŁ POMYŚLNIE ZAKTUALIZOWANY</td></tr>
+                                                <tr><td colspan="100"><button type="button" onclick="Powrot('@nazwaTabeli', 1)">Powrot</button></td></tr>
                                             }
                                             else
                                             {
@@ -175,6 +181,7 @@
                                             if (Baza.executeQuery(query))
                                             {
                                                 <tr><td colspan="100" style="color: green">NOWY WIERSZ ZOSTAŁ WSTAWIONY</td></tr>
+                                                <tr><td colspan="100"><button type="button" onclick="Powrot('@nazwaTabeli', 1)">Powrot</button></td></tr>
                                             }
                                             else
                                             {
@@ -195,6 +202,7 @@
                                             if (Baza.executeQuery(query))
                                             {
                                                 <tr><td colspan="100" style="color: green">WIERSZ ZOSTAŁ POMYŚLNIE ZAKTUALIZOWANY</td></tr>
+                                                <tr><td colspan="100"><button type="button" onclick="Powrot('@nazwaTabeli', 1)">Powrot</button></td></tr>
                                             }
                                             else
                                             {
@@ -253,6 +261,7 @@
                                             if(Baza.executeQuery(query))
                                             {
                                                 <tr><td colspan="100" style="color: green">NOWY WIERSZ ZOSTAŁ WSTAWIONY</td></tr>
+                                                <tr><td colspan="100"><button type="button" onclick="Powrot('@nazwaTabeli', 1)">Powrot</button></td></tr>
                                             }
                                             else
                                             {
@@ -266,6 +275,7 @@
                                             if(Baza.executeQuery(query))
                                             {
                                                 <tr><td colspan="100" style="color: green">WIERSZ ZOSTAŁ POMYŚLNIE ZAKTUALIZOWANY</td></tr>
+                                                <tr><td colspan="100"><button type="button" onclick="Powrot('@nazwaTabeli', 1)">Powrot</button></td></tr>
                                             }
                                             else
                                             {
@@ -319,6 +329,7 @@
                                             if(Baza.executeQuery(query))
                                             {
                                                 <tr><td colspan="100" style="color: green">NOWY WIERSZ ZOSTAŁ WSTAWIONY</td></tr>
+                                                <tr><td colspan="100"><button type="button" onclick="Powrot('@nazwaTabeli', 1)">Powrot</button></td></tr>
                                             }
                                             else
                                             {
@@ -335,6 +346,7 @@
                                             if(Baza.executeQuery(query))
                                             {
                                                 <tr><td colspan="100" style="color: green">WIERSZ ZOSTAŁ POMYŚLNIE ZAKTUALIZOWANY</td></tr>
+                                                <tr><td colspan="100"><button type="button" onclick="Powrot('@nazwaTabeli', 1)">Powrot</button></td></tr>
                                             }
                                             else
                                             {
@@ -387,6 +399,7 @@
                                             if(Baza.executeQuery(query))
                                             {
                                                 <tr><td colspan="100" style="color: green">NOWY WIERSZ ZOSTAŁ WSTAWIONY</td></tr>
+                                                <tr><td colspan="100"><button type="button" onclick="Powrot('@nazwaTabeli', 1)">Powrot</button></td></tr>
                                             }
                                             else
                                             {
@@ -397,6 +410,7 @@
                                         {
                                             // tu update'u nie zrobimy xD, bynajmniej nie w ten sposób
                                             <tr><td colspan="100" style="color: red">BŁĄD PODCZAS PRÓBY AKTUALIZACJI WIERSZA</td></tr>
+                                                <tr><td colspan="100"><button type="button" onclick="Powrot('@nazwaTabeli', 1)">Powrot</button></td></tr>
                                         }
                                     }
                                     else
@@ -444,6 +458,7 @@
                                             if(Baza.executeQuery(query))
                                             {
                                                 <tr><td colspan="100" style="color: green">NOWY WIERSZ ZOSTAŁ WSTAWIONY</td></tr>
+                                                <tr><td colspan="100"><button type="button" onclick="Powrot('@nazwaTabeli', 1)">Powrot</button></td></tr>
                                             }
                                             else
                                             {
@@ -460,6 +475,7 @@
                                             if(Baza.executeQuery(query))
                                             {
                                                 <tr><td colspan="100" style="color: green">WIERSZ ZOSTAŁ POMYŚLNIE ZAKTUALIZOWANY</td></tr>
+                                                <tr><td colspan="100"><button type="button" onclick="Powrot('@nazwaTabeli', 1)">Powrot</button></td></tr>
                                             }
                                             else
                                             {

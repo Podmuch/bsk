@@ -523,6 +523,22 @@
             </relationshipOwnedElementsInternal>
             <elementDefinition Id="5a69bcd2-2f6e-4866-a3b3-4e484eee86cd" />
           </association>
+          <association Id="05157e0b-93d4-461d-8ac3-918428b5860f" isDerived="false" sourceEndRoleName="T_Role" targetEndRoleName="T_Sesje" isLeaf="false" isAbstract="false">
+            <classMoniker Id="e8020d11-a986-4bc8-9862-afe3ba52f03b" LastKnownName="T_Sesje" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="8dfa5d52-5473-4a47-a096-8a824f567462" name="T_Role" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="3df54198-22e8-4025-b817-dcd23be2ad46" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="29492167-d307-4e8b-b356-177468a70d1b" name="T_Sesje" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="773e855e-c3af-4eec-9a47-9a47540d9a2d" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="c85f41b5-4044-4717-a462-a923af647a01" />
+          </association>
         </targetEnds>
         <ownedAttributesInternal>
           <property Id="61ede1de-c433-40f4-9a95-134dfaa67b31" name="id_roli" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
@@ -608,6 +624,24 @@
     <logicalClassDesignerModelHasTypes>
       <class Id="b08b36fc-88c3-436b-af5b-f3c95edc09d3" name="T_Uzytkownicy" isAbstract="false" isLeaf="false" isActiveClass="false">
         <elementDefinition Id="2f9131c5-ab46-48c0-8d07-5722135380b2" />
+        <targetEnds>
+          <association Id="c29fe872-6234-4d66-b980-4f29f4c8678c" isDerived="false" sourceEndRoleName="T_Uzytkownicy" targetEndRoleName="T_Sesje" isLeaf="false" isAbstract="false">
+            <classMoniker Id="e8020d11-a986-4bc8-9862-afe3ba52f03b" LastKnownName="T_Sesje" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="685db551-4358-4190-aacb-6467418b5874" name="T_Uzytkownicy" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="9ebbecd0-b862-4594-a021-6b9804ca48d3" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="aaa7b0d1-54c4-42a4-b4a0-aa071a094b8a" name="T_Sesje" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="956a2460-8fa5-4a44-93ce-dcd34a9735ac" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="74c2e6c6-1f93-49f0-8c7b-914ebe682948" />
+          </association>
+        </targetEnds>
         <ownedAttributesInternal>
           <property Id="6c065449-169c-4cf8-bb1e-8f7a93796548" name="id_uzytkownika" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
             <elementDefinition Id="71077613-8fb0-4d5e-8a6f-f32075714154" />
@@ -677,6 +711,22 @@
         <ownedAttributesInternal>
           <property Id="13827e48-3c51-436f-831c-b39abe9a28a6" name="nazwa" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
             <elementDefinition Id="e0197d2c-b16a-4da4-a5e4-7fff30c101a2" />
+          </property>
+        </ownedAttributesInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="e8020d11-a986-4bc8-9862-afe3ba52f03b" name="T_Sesje" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="bc751956-fbba-4e1f-b2f9-5ef9b05a22b2" />
+        <ownedAttributesInternal>
+          <property Id="3541cb86-d15a-4d46-a6d6-9722940ada82" name="fk_id_uztkownika" visibility="Private" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="52215da1-4ead-4cdb-8b78-b0d64cd6db31" />
+          </property>
+          <property Id="d5f5b69e-ec47-4077-a8ee-da4c7572966a" name="fk_id_roli" visibility="Private" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="b8011c0f-d0ce-42f8-aa60-341c798da6ae" />
+          </property>
+          <property Id="62ddd79c-6311-4fe0-b4ba-a6dc482f51e5" name="dataWygasniecia" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="2db7332c-782e-41ae-b8b7-20ac4fb34252" />
           </property>
         </ownedAttributesInternal>
       </class>

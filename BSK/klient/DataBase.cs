@@ -280,7 +280,7 @@ namespace klient
             }            
         }
 
-        public void dodajNowegoUzytkownika(string login, List<Rola> listaRol, List<Rola> Role)
+        public void dodajNowegoUzytkownika(string login, List<Rola> listaRol, List<Rola> Role, string haslo)
         {
             var uzytkownicy = pobierzUzytkownikow(" WHERE c_login = '" + login + "'");
             if (uzytkownicy.Count > 0 || string.IsNullOrEmpty(login))
@@ -290,7 +290,7 @@ namespace klient
             {
                 posiadaneRole += (int)Math.Pow(2, Role.IndexOf(r));
             }
-            Uzytkownik uzytkownik = new Uzytkownik(-1, -1,-1, login, posiadaneRole, "domyslne");
+            Uzytkownik uzytkownik = new Uzytkownik(-1, -1, -1, login, posiadaneRole, haslo);
             insertNewUser(uzytkownik);         
         }
         public void insertNewRole(Rola r)
@@ -303,7 +303,7 @@ namespace klient
         public void insertNewUser(Uzytkownik u)
         {
             string query = "INSERT INTO t_Uzytkownicy(c_Fk_nr_indeksu, c_Fk_id_pracownika, c_login, c_haslo, c_grupa) values (NULL, NULL, '" +
-                u.NazwaUzytkownika + "', '04c72343945e2a6ef09221862164ac3a9e914373'," + u.Grupa + ")";
+                u.NazwaUzytkownika + "', '"+u.Haslo+"'," + u.Grupa + ")";
             executeQuery(query); // pobierz_dane :d
         }
         public void insertNewPrivilege(Przywilej p)
@@ -320,13 +320,16 @@ namespace klient
         }
         public void ModyfikujUyztkownika(Uzytkownik wybrany, string Login, List<Rola> wybraneRole, List<Rola> Role)
         {
-            int posiadaneRole = 0;
-            foreach (Rola r in wybraneRole)
+            if (wybrany != null)
             {
-                posiadaneRole += (int)Math.Pow(2, Role.IndexOf(r));
+                int posiadaneRole = 0;
+                foreach (Rola r in wybraneRole)
+                {
+                    posiadaneRole += (int)Math.Pow(2, Role.IndexOf(r));
+                }
+                string query = "UPDATE t_Uzytkownicy Set c_login='" + Login + "', c_grupa='" + posiadaneRole + "' Where c_login='" + wybrany.NazwaUzytkownika + "';";
+                executeQuery(query);
             }
-            string query = "UPDATE t_Uzytkownicy Set c_login='" + Login + "', c_grupa='"+posiadaneRole+"' Where c_login='" + wybrany.NazwaUzytkownika + "';";
-            executeQuery(query);
         }
 
         public void ModyfikujRole(string nazwaRoli, Rola rola, List<Operacja> listaOperacji)

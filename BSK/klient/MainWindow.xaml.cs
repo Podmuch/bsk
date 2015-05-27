@@ -55,7 +55,7 @@ namespace klient
                 WybraneOperacje = new ObservableCollection<Operacja>();
                 SelectedOperationsListView.ItemsSource = WybraneOperacje;
                 PozostaleOperacje = new ObservableCollection<Operacja>(Baza.pobierzOperacje());
-                OperationsListView.ItemsSource = PozostaleOperacje;
+                //OperationsListView.ItemsSource = PozostaleOperacje;
 
                 WybraneRole = new ObservableCollection<Rola>();
                 PozostaleRole = new ObservableCollection<Rola>();
@@ -100,6 +100,7 @@ namespace klient
                             UserGrid.Visibility = System.Windows.Visibility.Hidden;
                             AdministratorGrid.Visibility = System.Windows.Visibility.Visible;
                             EdycjaRolColumn2Grid.Visibility = System.Windows.Visibility.Hidden;
+                            TabeleListView.ItemsSource = PobierzWszystkieTabele();
                         }
                         else
                         {
@@ -143,6 +144,15 @@ namespace klient
         private string PobierzHaslo()
         {
             byte[] result = System.Security.Cryptography.SHA1.Create().ComputeHash(Encoding.UTF8.GetBytes(DataBase.SecureStringToString(PasswordBox.SecurePassword)));
+            StringBuilder s = new StringBuilder();
+            foreach (byte b in result)
+                s.Append(b.ToString("x2").ToLower());
+            return s.ToString();
+        }
+
+        private string PobierzHaslo(System.Security.SecureString haslo)
+        {
+            byte[] result = System.Security.Cryptography.SHA1.Create().ComputeHash(Encoding.UTF8.GetBytes(DataBase.SecureStringToString(haslo)));
             StringBuilder s = new StringBuilder();
             foreach (byte b in result)
                 s.Append(b.ToString("x2").ToLower());
@@ -223,6 +233,8 @@ namespace klient
                 }
             }
             SaveUserButton.Content = "Dodaj uzytkownika";
+            PasswordLabel.Visibility = System.Windows.Visibility.Visible;
+            UserPasswordBox.Visibility = System.Windows.Visibility.Visible;
             EdycjaRolColumn2Grid.Visibility = System.Windows.Visibility.Visible;
         }
         private void UsersListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -244,6 +256,8 @@ namespace klient
                 UserNameTextBox.Text = wybranyUzytkownik.NazwaUzytkownika;
                 SaveUserButton.Content = "Zapisz zmiany";
                 EdycjaUzytkownikowColumn2Grid.Visibility = System.Windows.Visibility.Visible;
+                PasswordLabel.Visibility = System.Windows.Visibility.Hidden;
+                UserPasswordBox.Visibility = System.Windows.Visibility.Hidden;
             }
         }
 
@@ -278,6 +292,7 @@ namespace klient
                 RoleNameTextBox.Text = wybranaRola.Nazwa;
                 SaveRoleButton.Content = "Zapisz zmiany";
                 EdycjaRolColumn2Grid.Visibility = System.Windows.Visibility.Visible;
+                CheckSelectedTableAndGetOperations();
             }
         }
         private void SaveUserButton_Click(object sender, RoutedEventArgs e)
@@ -289,16 +304,23 @@ namespace klient
                     MessageBox.Show("Wprowadz nazwę dla nowego uzytkownika.");
                     return;
                 }
+                if (string.IsNullOrEmpty(PobierzHaslo(UserPasswordBox.SecurePassword)))
+                {
+                    MessageBox.Show("Wprowadz haslo dla nowego uzytkownika.");
+                    return;
+                }
                 if (Baza.pobierzUzytkownikow(" WHERE c_login = '" + UserNameTextBox.Text + "'").Count > 0)
                 {
                     MessageBox.Show("Uzytkownik o podanej nazwie już istnieje.");
                     return;
                 }
-                Baza.dodajNowegoUzytkownika(UserNameTextBox.Text, WybraneRole.ToList(), Role.ToList());
+                Baza.dodajNowegoUzytkownika(UserNameTextBox.Text, WybraneRole.ToList(), Role.ToList(), PobierzHaslo(UserPasswordBox.SecurePassword));
                 Uzytkownicy = new ObservableCollection<Uzytkownik>(Baza.pobierzUzytkownikow());
                 UsersListView.ItemsSource = Uzytkownicy;
                 UpdateLoginRoleComboBox();
                 EdycjaUzytkownikowColumn2Grid.Visibility = System.Windows.Visibility.Hidden;
+                PasswordLabel.Visibility = System.Windows.Visibility.Hidden;
+                UserPasswordBox.Visibility = System.Windows.Visibility.Hidden;
                 MessageBox.Show("Uzytkownik został dodany.");
             }
             else if(SaveUserButton.Content.ToString() =="Zapisz zmiany")
@@ -333,10 +355,13 @@ namespace klient
             }
             else if (SaveRoleButton.Content.ToString() == "Zapisz zmiany")
             {
-                Baza.ModyfikujRole(RoleNameTextBox.Text, (Rola)RolesListView.SelectedItem, WybraneOperacje.ToList());
-                Role = new ObservableCollection<Rola>(Baza.pobierzRole());
-                RolesListView.ItemsSource = Role;
-                MessageBox.Show("Zmiany zostaly zapisane.");
+                if (RolesListView.SelectedItem != null)
+                {
+                    Baza.ModyfikujRole(RoleNameTextBox.Text, (Rola)RolesListView.SelectedItem, WybraneOperacje.ToList());
+                    Role = new ObservableCollection<Rola>(Baza.pobierzRole());
+                    RolesListView.ItemsSource = Role;
+                    MessageBox.Show("Zmiany zostaly zapisane.");
+                }
             }          
 
         }
@@ -384,6 +409,7 @@ namespace klient
                 PozostaleOperacje.Remove(o);
                 WybraneOperacje.Add(o);
             }
+            CheckSelectedTableAndGetOperations();
         }
 
         private void OperationsSelectAll_Click(object sender, RoutedEventArgs e)
@@ -393,6 +419,7 @@ namespace klient
                 PozostaleOperacje.Remove(o);
                 WybraneOperacje.Add(o);
             }
+            CheckSelectedTableAndGetOperations();
         }
 
         private void OperationsDeselect_Click(object sender, RoutedEventArgs e)
@@ -403,6 +430,7 @@ namespace klient
                 WybraneOperacje.Remove(o);
                 PozostaleOperacje.Add(o);
             }
+            CheckSelectedTableAndGetOperations();
         }
 
         private void OperationsDeselectAll_Click(object sender, RoutedEventArgs e)
@@ -412,6 +440,7 @@ namespace klient
                 WybraneOperacje.Remove(o);
                 PozostaleOperacje.Add(o);
             }
+            CheckSelectedTableAndGetOperations();
         }
 
         private void UpdateLoginRoleComboBox()
@@ -422,6 +451,38 @@ namespace klient
                 RoleBox.Items.Add(r.Nazwa);
             }
             RoleBox.SelectedIndex = 0;
+        }
+        private void TabeleListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            CheckSelectedTableAndGetOperations();
+        }
+
+        private void CheckSelectedTableAndGetOperations()
+        {
+            if (TabeleListView.SelectedIndex != -1)
+            {
+                switch (((Tabela)TabeleListView.SelectedItem).NazwaTabeli)
+                {
+                    case "Studenci":
+                        OperationsListView.ItemsSource = PozostaleOperacje.ToList().FindAll((op) => op.NazwaOperacji.Contains("t_Studenci"));
+                        break;
+                    case "Prowadzacy":
+                        OperationsListView.ItemsSource = PozostaleOperacje.ToList().FindAll((op) => op.NazwaOperacji.Contains("t_Prowadzacy")&&!op.NazwaOperacji.Contains("Skladowych"));
+                        break;
+                    case "Wyniki":
+                        OperationsListView.ItemsSource = PozostaleOperacje.ToList().FindAll((op) => op.NazwaOperacji.Contains("t_Wyniki"));
+                        break;
+                    case "Przedmioty":
+                        OperationsListView.ItemsSource = PozostaleOperacje.ToList().FindAll((op) => op.NazwaOperacji.Contains("t_Przedmioty"));
+                        break;
+                    case "ProwadzacySkladowych":
+                        OperationsListView.ItemsSource = PozostaleOperacje.ToList().FindAll((op) => op.NazwaOperacji.Contains("t_Prowadzacy_Skladowych"));
+                        break;
+                    case "SkladowePrzedmiotow":
+                        OperationsListView.ItemsSource = PozostaleOperacje.ToList().FindAll((op) => op.NazwaOperacji.Contains("t_Skladowe_Przedmiotow"));
+                        break;
+                }
+            }
         }
 
         private void StudiaListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -533,6 +594,18 @@ namespace klient
                                           operacjeSelect[i].NazwaOperacji.Contains("Wyniki") ? "Wyniki" :
                                           operacjeSelect[i].NazwaOperacji.Contains("Prowadzacy") ? "Prowadzacy" : "SkladowePrzedmiotow"));
             }
+            return listaTabel;
+        }
+
+        private List<Tabela> PobierzWszystkieTabele()
+        {
+            List<Tabela> listaTabel = new List<Tabela>();
+            listaTabel.Add(new Tabela("ProwadzacySkladowych"));
+            listaTabel.Add(new Tabela("Przedmioty"));
+            listaTabel.Add(new Tabela("Studenci"));
+            listaTabel.Add(new Tabela("Wyniki"));
+            listaTabel.Add(new Tabela("Prowadzacy"));
+            listaTabel.Add(new Tabela("SkladowePrzedmiotow"));
             return listaTabel;
         }
 

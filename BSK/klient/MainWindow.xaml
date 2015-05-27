@@ -61,7 +61,7 @@
                 </Border>
             </Grid>
             <Grid Grid.Row="1">
-                <Grid Name="UserGrid" Visibility="Visible">
+                <Grid Name="UserGrid" Visibility="Hidden">
                     <TabControl>
                         <TabItem Name="StudiaTaBItem" Header="Tabele">
                             <Grid>
@@ -295,9 +295,11 @@
                                     <TextBox Name="UserNameTextBox" Margin="4" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="2" ></TextBox>
 
                                     <Button Name="SaveUserButton" Click="SaveUserButton_Click" Margin="8" Grid.Column="3" Grid.Row="0" Grid.ColumnSpan="2" Grid.RowSpan="2" Style="{StaticResource TabButton}"></Button>
+                                    <Label Name="PasswordLabel" Content="Haslo:" Margin="3,2.6,0,0" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" Visibility="Hidden" VerticalAlignment="Top" Width="42"/>
+                                    <PasswordBox Name="UserPasswordBox" Margin="4,3.6,0,0" Grid.ColumnSpan="2" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" Visibility="Hidden" VerticalContentAlignment="Center" VerticalAlignment="Top" Width="133" Height="26"/>
 
-                                    <Label Content="Role: " Margin="3" Grid.Column="0" Grid.Row="1"></Label>
-                                    <ListView Name="UserRolesListView" Grid.Row="2" Margin="7" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="4" >
+                                    <Label Content="Role: " Margin="3" Grid.Column="0" Grid.Row="2"></Label>
+                                    <ListView Name="UserRolesListView" Grid.Row="3" Margin="7" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="4" >
                                         <ListView.View>
                                             <GridView>
                                                 <GridView.Columns>
@@ -306,11 +308,11 @@
                                             </GridView>
                                         </ListView.View>
                                     </ListView>
-                                    <Button Name="RolesSelect" Grid.Column="2" Grid.Row="2" Margin="15,6" Content=">" Style="{StaticResource ArrowButton}" Click="RolesSelect_Click" ></Button>
-                                    <Button Name="RolesSelectAll" Grid.Column="2" Grid.Row="3" Margin="15,6" Content=">>" Style="{StaticResource ArrowButton}" Click="RolesSelectAll_Click" ></Button>
-                                    <Button Name="RolesDeselect" Grid.Column="2" Grid.Row="4" Margin="15,6" Content="&lt;" Style="{StaticResource ArrowButton}" Click="RolesDeselect_Click" ></Button>
-                                    <Button Name="RolesDeselectAll" Grid.Column="2" Grid.Row="5" Margin="15,6" Content="&lt;&lt;" Style="{StaticResource ArrowButton}" Click="RolesDeselectAll_Click" ></Button>
-                                    <ListView Name="SelectedRolesListView" Grid.Row="2" Grid.Column="3" Margin="7" Grid.ColumnSpan="2" Grid.RowSpan="4" >
+                                    <Button Name="RolesSelect" Grid.Column="2" Grid.Row="3" Margin="15,6" Content=">" Style="{StaticResource ArrowButton}" Click="RolesSelect_Click" ></Button>
+                                    <Button Name="RolesSelectAll" Grid.Column="2" Grid.Row="4" Margin="15,6" Content=">>" Style="{StaticResource ArrowButton}" Click="RolesSelectAll_Click" ></Button>
+                                    <Button Name="RolesDeselect" Grid.Column="2" Grid.Row="5" Margin="15,6" Content="&lt;" Style="{StaticResource ArrowButton}" Click="RolesDeselect_Click" ></Button>
+                                    <Button Name="RolesDeselectAll" Grid.Column="2" Grid.Row="6" Margin="15,6" Content="&lt;&lt;" Style="{StaticResource ArrowButton}" Click="RolesDeselectAll_Click" ></Button>
+                                    <ListView Name="SelectedRolesListView" Grid.Row="3" Grid.Column="3" Margin="7" Grid.ColumnSpan="2" Grid.RowSpan="4" >
                                         <ListView.View>
                                             <GridView>
                                                 <GridView.Columns>
@@ -375,8 +377,19 @@
 
                                     <Button Name="SaveRoleButton" Click="SaveRoleButton_Click" Margin="8" Grid.Column="3" Grid.Row="0" Grid.ColumnSpan="2" Grid.RowSpan="2" Style="{StaticResource TabButton}"></Button>
 
-                                    <Label Content="Operacje: " Margin="3" Grid.Column="0" Grid.Row="1"></Label>
-                                    <ListView Name="OperationsListView" Grid.Row="2" Margin="7" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="5" >
+                                    <Label Content="Tabela: " Margin="3" Grid.Column="0" Grid.Row="1"></Label>
+                                    <ListView Name="TabeleListView" Grid.Row="2" Margin="7" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="4" SelectionChanged="TabeleListView_SelectionChanged">
+                                        <ListView.View>
+                                            <GridView>
+                                                <GridView.Columns>
+                                                    <GridViewColumn Width="180" DisplayMemberBinding="{Binding NazwaTabeli}" />
+                                                </GridView.Columns>
+                                            </GridView>
+                                        </ListView.View>
+                                    </ListView>
+
+                                    <Label Content="Operacje: " Margin="3" Grid.Column="0" Grid.Row="6"></Label>
+                                    <ListView Name="OperationsListView" Grid.Row="7" Margin="7" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="4" >
                                         <ListView.View>
                                             <GridView>
                                                 <GridView.Columns>
@@ -385,11 +398,11 @@
                                             </GridView>
                                         </ListView.View>
                                     </ListView>
-                                    <Button Name="OperationsSelect" Grid.Column="2" Grid.Row="2" Margin="15,6" Content=">" Style="{StaticResource ArrowButton}" Click="OperationsSelect_Click" ></Button>
-                                    <Button Name="OperationsSelectAll" Grid.Column="2" Grid.Row="3" Margin="15,6" Content=">>" Style="{StaticResource ArrowButton}" Click="OperationsSelectAll_Click" ></Button>
-                                    <Button Name="OperationsDeselect" Grid.Column="2" Grid.Row="4" Margin="15,6" Content="&lt;" Style="{StaticResource ArrowButton}" Click="OperationsDeselect_Click" ></Button>
-                                    <Button Name="OperationsDeselectAll" Grid.Column="2" Grid.Row="5" Margin="15,6" Content="&lt;&lt;" Style="{StaticResource ArrowButton}" Click="OperationsDeselectAll_Click" ></Button>
-                                    <ListView Name="SelectedOperationsListView" Grid.Row="2" Grid.Column="3" Margin="7" Grid.ColumnSpan="2" Grid.RowSpan="5" >
+                                    <Button Name="OperationsSelect" Grid.Column="2" Grid.Row="7" Margin="15,6" Content=">" Style="{StaticResource ArrowButton}" Click="OperationsSelect_Click" ></Button>
+                                    <Button Name="OperationsSelectAll" Grid.Column="2" Grid.Row="8" Margin="15,6" Content=">>" Style="{StaticResource ArrowButton}" Click="OperationsSelectAll_Click" ></Button>
+                                    <Button Name="OperationsDeselect" Grid.Column="2" Grid.Row="9" Margin="15,6" Content="&lt;" Style="{StaticResource ArrowButton}" Click="OperationsDeselect_Click" ></Button>
+                                    <Button Name="OperationsDeselectAll" Grid.Column="2" Grid.Row="10" Margin="15,6" Content="&lt;&lt;" Style="{StaticResource ArrowButton}" Click="OperationsDeselectAll_Click" ></Button>
+                                    <ListView Name="SelectedOperationsListView" Grid.Row="7" Grid.Column="3" Margin="7" Grid.ColumnSpan="2" Grid.RowSpan="4" >
                                         <ListView.View>
                                             <GridView>
                                                 <GridView.Columns>

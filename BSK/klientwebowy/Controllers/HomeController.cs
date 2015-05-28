@@ -80,11 +80,26 @@ namespace klientwebowy.Controllers
         public ActionResult Index(string name, string par1 = "brak", int par2 = 1, string par3 = "brak", string par4 = "brak", string par5 = "brak")
         {
             Init();
+            ViewBag.Role = Role;
             if (zalogowanyUzytkownik != null)
             {
-                Baza.keepSession(zalogowanyUzytkownik.IdUzytkownika, aktualnaRola.Id);
+                if (aktualnaRola != null)
+                {
+                    Baza.keepSession(zalogowanyUzytkownik.IdUzytkownika, aktualnaRola.Id);
+                }
+                else
+                {
+                    ObservableCollection<Rola> roleUzytkownika = new ObservableCollection<Rola>();
+                    for (int i = 0; i < Role.Count; i++ )
+                    {
+                        if ((zalogowanyUzytkownik.Grupa >> i)% 2 == 1)
+                        {
+                            roleUzytkownika.Add(Role[i]);
+                        }
+                    }
+                    ViewBag.Role = roleUzytkownika;
+                }
             }
-            ViewBag.Role = Role;
             string nazwaTabeli = par1;
             ViewBag.NumerStrony = par2;
             //ViewBag.Blad = null;
@@ -297,7 +312,10 @@ namespace klientwebowy.Controllers
             Init();
             if(zalogowanyUzytkownik != null)
             {
-                Baza.destroySession(zalogowanyUzytkownik.IdUzytkownika, aktualnaRola.Id);
+                if (aktualnaRola != null)
+                {
+                    Baza.destroySession(zalogowanyUzytkownik.IdUzytkownika, aktualnaRola.Id);
+                }
             }
             Session["Uzytkownik"] = null;
             Session["AktualnaRola"] = null;
@@ -310,25 +328,33 @@ namespace klientwebowy.Controllers
 
         public ActionResult WeryfikujLogowanie(string name, string par1 = "brak", string par2 = "brak", string par3 = "brak")
         {
-            string login = "", haslo = "", rola = "";
-            if (!string.IsNullOrEmpty(Request["login"]))
-                login = Request["login"].Trim();
-            if(!string.IsNullOrEmpty(Request["haslo"]))
-                haslo = PobierzHashHasla(Request["haslo"]);
-            if (!string.IsNullOrEmpty(Request["haslo"]))
-                rola = Request["rola"].ToLower();
             Init();
+            string login = "", haslo = "", rola = "";
+            if (zalogowanyUzytkownik == null)
+            {
+                if (!string.IsNullOrEmpty(Request["login"]))
+                    login = Request["login"].Trim();
+                if (!string.IsNullOrEmpty(Request["haslo"]))
+                    haslo = PobierzHashHasla(Request["haslo"]);
+            }
+            else
+            {
+                login = zalogowanyUzytkownik.NazwaUzytkownika;
+                haslo = zalogowanyUzytkownik.Haslo;
+            }
+            if (!string.IsNullOrEmpty(Request["rola"]))
+                rola = Request["rola"].ToLower();
             if (!string.IsNullOrEmpty(login) && !string.IsNullOrEmpty(haslo) && CzyIstniejeUzytkownikODanymLoginie(login) &&
                CzyHasloJestPrawidlowe(login, haslo))
             {
                 Uzytkownik uzytkownik = Baza.pobierzUzytkownikow(" WHERE C_LOGIN = '" + login + "'").First();
+                Session["Uzytkownik"] = uzytkownik;
                 if (!string.IsNullOrEmpty(rola) && (uzytkownik.Grupa >> (Role.IndexOf(Role.First((r)=>r.Nazwa.ToLower().Equals(rola))))) % 2 == 1)
                 {
                     zalogowanyUzytkownik = uzytkownik;
                     aktualnaRola = Baza.pobierzRole(" WHERE C_ROLA = '" + rola + "'").First();
                     if (Baza.createSession(zalogowanyUzytkownik.IdUzytkownika, aktualnaRola.Id))
                     {
-                        Session["Uzytkownik"] = zalogowanyUzytkownik;
                         Session["AktualnaRola"] = aktualnaRola;
                         if (rola == "administrator")
                         {
@@ -354,8 +380,11 @@ namespace klientwebowy.Controllers
                 }
                 else
                 {
-                    ViewBag.Blad = "Użytkownik nie posiada wybranej roli";
-                    Session["Blad"] = (string)ViewBag.Blad;
+                    if (!string.IsNullOrEmpty(rola))
+                    { 
+                        ViewBag.Blad = "Użytkownik nie posiada wybranej roli";
+                        Session["Blad"] = (string)ViewBag.Blad;
+                    }
                 }
             }
             else

@@ -310,15 +310,19 @@ namespace klientwebowy.Controllers
 
         public ActionResult WeryfikujLogowanie(string name, string par1 = "brak", string par2 = "brak", string par3 = "brak")
         {
-            string login = par1.Trim();
-            string haslo = PobierzHashHasla(par2);
-            string rola = par3.ToLower();
+            string login = "", haslo = "", rola = "";
+            if (!string.IsNullOrEmpty(Request["login"]))
+                login = Request["login"].Trim();
+            if(!string.IsNullOrEmpty(Request["haslo"]))
+                haslo = PobierzHashHasla(Request["haslo"]);
+            if (!string.IsNullOrEmpty(Request["haslo"]))
+                rola = Request["rola"].ToLower();
             Init();
-            if (CzyIstniejeUzytkownikODanymLoginie(login) &&
+            if (!string.IsNullOrEmpty(login) && !string.IsNullOrEmpty(haslo) && CzyIstniejeUzytkownikODanymLoginie(login) &&
                CzyHasloJestPrawidlowe(login, haslo))
             {
                 Uzytkownik uzytkownik = Baza.pobierzUzytkownikow(" WHERE C_LOGIN = '" + login + "'").First();
-                if ((uzytkownik.Grupa >> (Role.IndexOf(Role.First((r)=>r.Nazwa.ToLower().Equals(rola))))) % 2 == 1)
+                if (!string.IsNullOrEmpty(rola) && (uzytkownik.Grupa >> (Role.IndexOf(Role.First((r)=>r.Nazwa.ToLower().Equals(rola))))) % 2 == 1)
                 {
                     zalogowanyUzytkownik = uzytkownik;
                     aktualnaRola = Baza.pobierzRole(" WHERE C_ROLA = '" + rola + "'").First();

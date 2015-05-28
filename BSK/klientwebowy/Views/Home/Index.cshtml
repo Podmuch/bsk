@@ -78,33 +78,39 @@
                 <td>
                     @if ((klient.Model.Uzytkownik)ViewBag.Uzytkownik == null)
                     {
+
                         if (ViewBag.Blad != null)
                         {
                             string Blad = (string)ViewBag.Blad;
                             <p class="bladtekst"><b>@Blad</b></p>
                         }
-                        <p style="font-size:15px"><b>Login: <input id="login" type="text" name="fname"> </b></p>
-                        <p style="font-size:15px"><b>Haslo: <input id="haslo" type="password" name="fname"> </b></p>
-                        {
-                            System.Collections.ObjectModel.ObservableCollection<klient.Model.Rola> Role = (System.Collections.ObjectModel.ObservableCollection<klient.Model.Rola>)ViewBag.Role;
-                            if (Role != null)
-                            {
-                                <p style="font-size:15px">
-                                    <b>
-                                        Rola: <select id="rola">
-                                            @for (int i = 0; i < Role.Count; i++)
-                                            {
-                                                <option value="@Role[i].Nazwa">@Role[i].Nazwa</option>
-                                            }
-                                        </select>
-                                    </b>
-                                </p>
-                            }
-                            else
-                            {
-                                <p style="font-size:15px"><b>Blad - dane o istniejacych rolach nie zostaly wczytane </b></p>
-                            }
-                        }
+                        <form action="WeryfikujLogowanie" method="post">
+                            <p style="font-size:15px"><b>Login: <input id="login" type="text" name="login"> </b></p>
+                            <p style="font-size:15px"><b>Haslo: <input id="haslo" type="password" name="haslo"> </b></p>
+                            @{
+                            System.Collections.ObjectModel.ObservableCollection<klient.Model.Rola>
+                                Role = (System.Collections.ObjectModel.ObservableCollection<klient.Model.Rola>
+                                    )ViewBag.Role;
+                                    if (Role != null)
+                                    {
+                                    <p style="font-size:15px">
+                                        <b>
+                                            Rola: <select id="rola" name="rola">
+                                                @for (int i = 0; i < Role.Count; i++)
+                                                {
+                                                    <option value="@Role[i].Nazwa">@Role[i].Nazwa</option>
+                                                }
+                                            </select>
+                                        </b>
+                                    </p>
+                                    <button type="submit" >Zaloguj</button>
+                                    }
+                                    else
+                                    {
+                                    <p style="font-size:15px"><b>Blad - dane o istniejacych rolach nie zostaly wczytane </b></p>
+                                    }
+                             }
+                        </form>
                     }
                     else
                     {
@@ -118,15 +124,17 @@
                         if (DostepneTabele != null)
                         {
                             <table>
-                                <tr><td colspan="100">
-                                    @{
+                                <tr>
+                                    <td colspan="100">
+                                        @{
                             for (int i = 0; i < DostepneTabele.Count; i++)
                             {
                                 //<td><button type="button" onclick="PrzejdzDo(@DostepneTabele[i].NazwaTabeli)">@DostepneTabele[i].NazwaTabeli</button></td>
                                 <button type="button" onclick="PrzejdzDo('@DostepneTabele[i].NazwaTabeli', 1)">@DostepneTabele[i].NazwaTabeli</button>
                             }
-                                    }
-                                </td></tr>
+                                        }
+                                    </td>
+                                </tr>
                                 @{
                             string nazwaTabeli = (string)ViewBag.NazwaWybranejTabeli;
                             int numerStrony = (int)ViewBag.NumerStrony;
@@ -138,7 +146,7 @@
                             {
                                 case "Studenci":
                                     List<klient.Model.Operacja> Operacje = (List<klient.Model.Operacja>)ViewBag.PrzywilejeDanejTabeliTabela;
-                                    if (Operacje.Exists((o) => o.NazwaOperacji.Equals("t_"+nazwaTabeli+"_select")))
+                                    if (Operacje.Exists((o) => o.NazwaOperacji.Equals("t_" + nazwaTabeli + "_select")))
                                     {
                                         List<klient.Model.Student> StudenciList = (List<klient.Model.Student>)ViewBag.DaneTabeli;
                                         bool czyUpdate = Operacje.Exists((o) => o.NazwaOperacji.Equals("t_" + nazwaTabeli + "_update"));
@@ -196,7 +204,7 @@
                                         {
                                             <button type="button" onclick="PrzejdzDo('@nazwaTabeli', @i)">@i</button>
                                         }
-}
+                                                }
                                             </td>
                                         </tr>
                                     }
@@ -262,7 +270,7 @@
                                         {
                                             <button type="button" onclick="PrzejdzDo('@nazwaTabeli', @i)">@i</button>
                                         }
-}
+                                                }
                                             </td>
                                         </tr>
                                     }
@@ -278,7 +286,7 @@
                                         <tr>
                                             <th><p style="font-size:15px"><b>NrIndeksu</b></p></th>
                                             <th><p style="font-size:15px"><b>Przedmiot</b></p></th>
-                                            <th><p style="font-size:15px"><b>Ocena</b></p></th>                                            
+                                            <th><p style="font-size:15px"><b>Ocena</b></p></th>
                                             @if (czyInsert)
                                             {
                                                 <th><button type="button" onclick="Dodaj('@nazwaTabeli')">Dodaj Wpis</button></th>
@@ -484,25 +492,18 @@
                                         {
                                             <button type="button" onclick="PrzejdzDo('@nazwaTabeli', @i)">@i</button>
                                         }
-}
+                                                }
                                             </td>
                                         </tr>
                                     }
                                     break;
                             }
-}
+                                }
                             </table>
                         }
                     }
                 </td>
-            </tr>
-            <tr>
-                <td>
-                    @if ((klient.Model.Uzytkownik)ViewBag.Uzytkownik == null)
-                    {
-                        <button type="button" onclick="Zaloguj()">Zaloguj</button>
-                    }
-                </td>
+
             </tr>
         </table>
     </div>
